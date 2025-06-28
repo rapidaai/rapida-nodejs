@@ -1,0 +1,35 @@
+{
+    "name": "rapida-nodejs",
+    "version": "1.0.0",
+    "description": "Enable to interact with rapida platform",
+    "main": "index.js",
+    "directories": {
+        "example": "examples"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://git@github.com/rapidaai/rapida-nodejs.git"
+    },
+    "keywords": [
+        "rapida"
+    ],
+    "author": "Prashant Srivastav <ps@rapida.ai>",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/rapidaai/rapida-nodejs/issues"
+    },
+    "homepage": "https://github.com/rapidaai/rapida-nodejs#readme",
+    "devDependencies": {
+        "@types/node": "^24.0.6",
+        "grpc-tools": "^1.13.0",
+        "ts-proto": "^2.7.5",
+        "typescript": "^5.8.3"
+    },
+    "dependencies": {
+        "@grpc/grpc-js": "^1.13.4",
+        "@grpc/proto-loader": "^0.7.15"
+    }
+}
