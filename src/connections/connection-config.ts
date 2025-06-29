@@ -23,7 +23,12 @@
  *
  */
 import { TalkServiceClient } from "@/rapida/clients/protos/talk-api_pb_service";
-import { ASSISTANT_API, LOCAL_ASSISTANT_API } from "@/rapida/configs";
+import {
+  ASSISTANT_API,
+  ENDPOINT_API,
+  LOCAL_ASSISTANT_API,
+  LOCAL_ENDPOINT_API,
+} from "@/rapida/configs";
 import { ClientAuthInfo, getClientInfo, UserAuthInfo } from "@/rapida/clients";
 import { AssistantServiceClient } from "@/rapida/clients/protos/assistant-api_pb_service";
 import { DEBUGGER_SOURCE, NODESDK_SOURCE } from "@/rapida/utils/rapida_source";
@@ -33,6 +38,7 @@ import {
   HEADER_PROJECT_ID,
   HEADER_SOURCE_KEY,
 } from "@/rapida/utils/rapida_header";
+import { DeploymentClient } from "@/rapida/clients/protos/invoker-api_pb_service";
 
 /**
  * Represents a connection to the TalkService, providing both a conversation client
@@ -48,6 +54,11 @@ export class ConnectionConfig {
    * gRPC client for assistant apis
    */
   assistantClient: AssistantServiceClient;
+
+  /**
+   * deployment client to invoke endpoint
+   */
+  endpointClient: DeploymentClient;
 
   /**
    * Authentication information for the client, supporting both client and user authentication.
@@ -108,20 +119,28 @@ export class ConnectionConfig {
    */
   constructor(
     auth: ClientAuthInfo | UserAuthInfo,
-    endpoint?: string,
+    assistantEndpoint?: string,
+    deploymentEndpoint?: string,
     debug?: boolean
   ) {
     this.auth = auth;
     this.auth.Client = getClientInfo(this.auth.Client);
     this.conversationClient = new TalkServiceClient(
-      endpoint ? endpoint : ASSISTANT_API,
+      assistantEndpoint ? assistantEndpoint : ASSISTANT_API,
       {
         debug: debug ? debug : false,
       }
     );
 
     this.assistantClient = new AssistantServiceClient(
-      endpoint ? endpoint : ASSISTANT_API,
+      assistantEndpoint ? assistantEndpoint : ASSISTANT_API,
+      {
+        debug: debug ? debug : false,
+      }
+    );
+
+    this.endpointClient = new DeploymentClient(
+      deploymentEndpoint ? deploymentEndpoint : ENDPOINT_API,
       {
         debug: debug ? debug : false,
       }
@@ -133,7 +152,7 @@ export class ConnectionConfig {
    * @returns
    */
   withLocal(): this {
-    return this.withCustomEndpoint(LOCAL_ASSISTANT_API);
+    return this.withCustomEndpoint(LOCAL_ASSISTANT_API, LOCAL_ENDPOINT_API);
   }
 
   /**
@@ -141,12 +160,20 @@ export class ConnectionConfig {
    * @param endpoint
    * @returns
    */
-  withCustomEndpoint(endpoint: string, debug?: boolean): this {
-    this.conversationClient = new TalkServiceClient(endpoint, {
+  withCustomEndpoint(
+    assistantEndpoint: string,
+    deploymentEndpoint: string,
+    debug?: boolean
+  ): this {
+    this.conversationClient = new TalkServiceClient(assistantEndpoint, {
       debug: debug ? debug : false,
     });
 
-    this.assistantClient = new AssistantServiceClient(endpoint, {
+    this.assistantClient = new AssistantServiceClient(assistantEndpoint, {
+      debug: debug ? debug : false,
+    });
+
+    this.endpointClient = new DeploymentClient(deploymentEndpoint, {
       debug: debug ? debug : false,
     });
     return this;

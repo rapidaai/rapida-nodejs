@@ -31,11 +31,9 @@ import {
   GetAssistantRequest,
   GetAssistantResponse,
 } from "@/rapida/clients/protos/assistant-api_pb";
-import {
-  AssistantServiceClient,
-  ServiceError,
-} from "@/rapida/clients/protos/assistant-api_pb_service";
+import { ServiceError } from "@/rapida/clients/protos/assistant-api_pb_service";
 import { UnaryResponse } from "@/rapida/clients/protos/talk-api_pb_service";
+import { ConnectionConfig } from "@/rapida/connections/connection-config";
 /**
  * Retrieve details of a specific assistant.
  *
@@ -46,16 +44,19 @@ import { UnaryResponse } from "@/rapida/clients/protos/talk-api_pb_service";
  * @returns UnaryResponse - The gRPC response object.
  */
 export function GetAssistant(
-  client: AssistantServiceClient,
+  connectionCfg: ConnectionConfig,
   assistantId: string,
   assistantProviderModelId: string | null,
-  cb: (err: ServiceError | null, response: GetAssistantResponse | null) => void,
-  authHeader: ClientAuthInfo | UserAuthInfo
+  cb: (err: ServiceError | null, response: GetAssistantResponse | null) => void
 ): UnaryResponse {
   const req = new GetAssistantRequest();
   req.setId(assistantId);
   if (assistantProviderModelId) {
     req.setAssistantprovidermodelid(assistantProviderModelId);
   }
-  return client.getAssistant(req, WithAuthContext(authHeader), cb);
+  return connectionCfg.assistantClient.getAssistant(
+    req,
+    WithAuthContext(connectionCfg.auth),
+    cb
+  );
 }

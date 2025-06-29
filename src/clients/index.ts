@@ -51,17 +51,16 @@ import {
   HEADER_LATITUDE,
   HEADER_LONGITUDE,
 } from "@/rapida/utils/rapida_header";
-import { grpc } from "@improbable-eng/grpc-web";
 import { ALL_REGION } from "@/rapida/utils/rapida_region";
 import { RapidaSource } from "@/rapida/utils/rapida_source";
-
+import { Metadata } from "@grpc/grpc-js";
 /**
  * Configures gRPC metadata with platform-specific and environment-specific headers.
  *
  * @param il - The gRPC metadata to configure.
  * @returns The configured gRPC metadata.
  */
-export const WithPlatform = (il: grpc.Metadata): grpc.Metadata => {
+export const WithPlatform = (il: Metadata): Metadata => {
   // Set the source header based on the platform
   // Set the region header to 'all' by default
   il.set(HEADER_REGION_KEY, ALL_REGION);
@@ -77,8 +76,8 @@ export const WithPlatform = (il: grpc.Metadata): grpc.Metadata => {
  */
 export const WithAuthContext = (
   authHeader?: ClientAuthInfo | UserAuthInfo
-): grpc.Metadata => {
-  const metadata = WithClientContext(WithPlatform(new grpc.Metadata()));
+): Metadata => {
+  const metadata = WithClientContext(WithPlatform(new Metadata()));
   if (authHeader) {
     for (const [key, value] of Object.entries(authHeader)) {
       if (key === "Client") {
@@ -180,12 +179,12 @@ export const getClientInfo = (
  * through the client info and sets each non-undefined value in the
  * metadata object.
  *
- * @param {grpc.Metadata} metadata - Optional gRPC metadata object to enhance.
- * @returns {grpc.Metadata} The enhanced metadata object with client context.
+ * @param {Metadata} metadata - Optional gRPC metadata object to enhance.
+ * @returns {Metadata} The enhanced metadata object with client context.
  */
 export const WithClientContext = (
-  metadata: grpc.Metadata = new grpc.Metadata()
-): grpc.Metadata => {
+  metadata: Metadata = new Metadata()
+): Metadata => {
   const clientInfo = getClientInfo();
 
   for (const [key, value] of Object.entries(clientInfo)) {

@@ -27,6 +27,10 @@ import {
   AssistantMessagingRequest,
   AssistantDefinition,
   AssistantMessagingResponse,
+  InitiateAssistantTalkRequest,
+  InitiateAssistantTalkResponse,
+  InitiateAssistantTalkParameter,
+  InitiateBulkAssistantTalkRequest,
 } from "@/rapida/clients/protos/talk-api_pb";
 import {
   GetAllConversationMessageRequest,
@@ -47,6 +51,7 @@ import {
 } from "@/rapida/clients/protos/talk-api_pb_service";
 import { Criteria, Paginate, Message } from "@/rapida/clients/protos/common_pb";
 import { TalkServiceClient } from "@/rapida/clients/protos/talk-api_pb_service";
+import { InitiateBulkAssistantTalkResponse } from "./protos/talk-api_pb";
 import {
   CreateConversationMetricResponse,
   CreateConversationMetricRequest,
@@ -55,51 +60,8 @@ import {
   CreateMessageMetricResponse,
   CreateMessageMetricRequest,
 } from "./protos/talk-api_pb";
-import {
-  fromStageStr,
-  UndefinedStage,
-  AuthenticationStage,
-  TranscriptionStage,
-  AssistantIdentificationStage,
-  QueryFormulationStage,
-  InformationRetrievalStage,
-  DocumentRetrievalStage,
-  ContextAugmentationStage,
-  TextGenerationStage,
-  OutputEvaluationStage,
-} from "@/rapida/utils/rapida_stages";
-
-/**
- *
- * @param stage
- * @returns
- */
-export function GetStageMessage(stage: string): string {
-  switch (fromStageStr(stage)) {
-    case UndefinedStage:
-      return "is undefined. Please wait...";
-    case AuthenticationStage:
-      return "is authenticating...";
-    case TranscriptionStage:
-      return "is transcribing the audio...";
-    case AssistantIdentificationStage:
-      return "is identifying the assistant...";
-    case QueryFormulationStage:
-      return "is formulating the query...";
-    case InformationRetrievalStage:
-      return "is retrieving information...";
-    case DocumentRetrievalStage:
-      return "is retrieving documents...";
-    case ContextAugmentationStage:
-      return "is augmenting the context...";
-    case TextGenerationStage:
-      return "is generating the text...";
-    case OutputEvaluationStage:
-      return "is evaluating the output...";
-    default:
-      return "Unknown stage. Please wait...";
-  }
-}
+import * as google_protobuf_any_pb from "google-protobuf/google/protobuf/any_pb";
+import { ConnectionConfig } from "@/rapida/connections/connection-config";
 
 /**
  *
@@ -110,14 +72,13 @@ export function GetStageMessage(stage: string): string {
  * @param cb
  */
 export function AssistantMessaging(
-  conversationClient: TalkServiceClient,
+  clientCfg: ConnectionConfig,
   assistantId: string,
   assistantProviderModelId: string,
   conversation: {
     message: Message;
     assistantConversationId?: string | null;
-  },
-  authHeader: ClientAuthInfo | UserAuthInfo
+  }
 ): ResponseStream<AssistantMessagingResponse> {
   const req = new AssistantMessagingRequest();
   const ad = new AssistantDefinition();
@@ -129,8 +90,8 @@ export function AssistantMessaging(
     req.setAssistantconversationid(conversation.assistantConversationId);
   }
   req.setMessage(conversation.message);
-  const ctx = WithAuthContext(authHeader);
-  return conversationClient.assistantMessaging(req, ctx);
+  const ctx = WithAuthContext(clientCfg.auth);
+  return clientCfg.conversationClient.assistantMessaging(req, ctx);
 }
 /**
  *
@@ -142,7 +103,7 @@ export function AssistantMessaging(
  * @param authHeader
  */
 export function GetAllAssistantConversation(
-  conversationClient: TalkServiceClient,
+  clientCfg: ConnectionConfig,
   assistantId: string,
   page: number,
   pageSize: number,
@@ -150,8 +111,7 @@ export function GetAllAssistantConversation(
   cb: (
     err: ServiceError | null,
     uvcr: GetAllAssistantConversationResponse | null
-  ) => void,
-  authHeader: ClientAuthInfo | UserAuthInfo
+  ) => void
 ) {
   const req = new GetAllAssistantConversationRequest();
   req.setAssistantid(assistantId);
@@ -165,9 +125,9 @@ export function GetAllAssistantConversation(
   paginate.setPage(page);
   paginate.setPagesize(pageSize);
   req.setPaginate(paginate);
-  conversationClient.getAllAssistantConversation(
+  clientCfg.conversationClient.getAllAssistantConversation(
     req,
-    WithAuthContext(authHeader),
+    WithAuthContext(clientCfg.auth),
     cb
   );
 }
@@ -183,13 +143,12 @@ export function GetAllAssistantConversation(
  * @param authHeader
  */
 export function GetAllAssistantConversationMessage(
-  conversationClient: TalkServiceClient,
+  clientCfg: ConnectionConfig,
   assistantId: string,
   assistantConversationId: string,
   page: number,
   pageSize: number,
   criteria: { key: string; value: string }[],
-  authHeader: ClientAuthInfo | UserAuthInfo,
   cb: (
     err: ServiceError | null,
     uvcr: GetAllConversationMessageResponse | null
@@ -208,9 +167,9 @@ export function GetAllAssistantConversationMessage(
   paginate.setPage(page);
   paginate.setPagesize(pageSize);
   req.setPaginate(paginate);
-  conversationClient.getAllConversationMessage(
+  clientCfg.conversationClient.getAllConversationMessage(
     req,
-    WithAuthContext(authHeader),
+    WithAuthContext(clientCfg.auth),
     cb
   );
 }
@@ -221,15 +180,16 @@ export function GetAllAssistantConversationMessage(
  * @returns
  */
 export function AssistantTalk(
-  conversationStreamClient: TalkServiceClient,
-  authHeader: UserAuthInfo | ClientAuthInfo
+  clientCfg: ConnectionConfig
 ): BidirectionalStream<AssistantMessagingRequest, AssistantMessagingResponse> {
-  return conversationStreamClient.assistantTalk(WithAuthContext(authHeader));
+  return clientCfg.conversationClient.assistantTalk(
+    WithAuthContext(clientCfg.auth)
+  );
 }
 
 /**
  *
- * @param conversationClient
+ * @param clientCfg.conversationClient
  * @param assistantId
  * @param assistantConversationId
  * @param assistantConversationMessageId
@@ -237,7 +197,7 @@ export function AssistantTalk(
  * @param authHeader
  */
 export function CreateMessageMetric(
-  conversationClient: TalkServiceClient,
+  clientCfg: ConnectionConfig,
   assistantId: string,
   assistantConversationId: string,
   messageId: string,
@@ -245,8 +205,7 @@ export function CreateMessageMetric(
   cb: (
     err: ServiceError | null,
     uvcr: CreateMessageMetricResponse | null
-  ) => void,
-  authHeader: ClientAuthInfo | UserAuthInfo
+  ) => void
 ) {
   const req = new CreateMessageMetricRequest();
   req.setAssistantid(assistantId);
@@ -259,12 +218,16 @@ export function CreateMessageMetric(
     _m.setDescription(mtr.description);
     req.addMetrics(_m);
   }
-  conversationClient.createMessageMetric(req, WithAuthContext(authHeader), cb);
+  clientCfg.conversationClient.createMessageMetric(
+    req,
+    WithAuthContext(clientCfg.auth),
+    cb
+  );
 }
 
 /**
  *
- * @param conversationClient
+ * @param clientCfg.conversationClient
  * @param assistantId
  * @param assistantConversationId
  * @param metrics
@@ -272,15 +235,14 @@ export function CreateMessageMetric(
  * @param authHeader
  */
 export function CreateConversationMetric(
-  conversationClient: TalkServiceClient,
+  clientCfg: ConnectionConfig,
   assistantId: string,
   assistantConversationId: string,
   metrics: { name: string; value: string; description: string }[],
   cb: (
     err: ServiceError | null,
     uvcr: CreateConversationMetricResponse | null
-  ) => void,
-  authHeader: ClientAuthInfo | UserAuthInfo
+  ) => void
 ) {
   const req = new CreateConversationMetricRequest();
   req.setAssistantid(assistantId);
@@ -292,9 +254,133 @@ export function CreateConversationMetric(
     _m.setDescription(mtr.description);
     req.addMetrics(_m);
   }
-  conversationClient.createConversationMetric(
+  clientCfg.conversationClient.createConversationMetric(
     req,
-    WithAuthContext(authHeader),
+    WithAuthContext(clientCfg.auth),
+    cb
+  );
+}
+
+/**
+ *
+ * @param clientCfg.conversationClient
+ * @param assistantId
+ * @param assistantVersion
+ * @param params
+ * @param cb
+ * @param authHeader
+ * @param args
+ * @param options
+ * @param metadata
+ */
+export function InitiateAssistantTalk(
+  clientCfg: ConnectionConfig,
+  assistantId: string,
+  assistantVersion: string = "latest",
+  params: Map<string, google_protobuf_any_pb.Any>,
+  cb: (
+    err: ServiceError | null,
+    uvcr: InitiateAssistantTalkResponse | null
+  ) => void,
+  args?: Map<string, google_protobuf_any_pb.Any>,
+  options?: Map<string, google_protobuf_any_pb.Any>,
+  metadata?: Map<string, google_protobuf_any_pb.Any>
+) {
+  const request = new InitiateAssistantTalkRequest();
+  const assistant = new AssistantDefinition();
+  assistant.setAssistantid(assistantId);
+  assistant.setVersion(assistantVersion);
+  request.setAssistant(assistant);
+
+  const tk = new InitiateAssistantTalkParameter();
+  params.forEach((value, key) => {
+    tk.getItemsMap().set(key, value);
+  });
+  request.setParams(tk);
+
+  if (args) {
+    args.forEach((value, key) => {
+      request.getArgsMap().set(key, value);
+    });
+  }
+
+  if (options) {
+    options.forEach((value, key) => {
+      request.getOptionsMap().set(key, value);
+    });
+  }
+
+  if (metadata) {
+    metadata.forEach((value, key) => {
+      request.getMetadataMap().set(key, value);
+    });
+  }
+
+  clientCfg.conversationClient.initiateAssistantTalk(
+    request,
+    WithAuthContext(clientCfg.auth),
+    cb
+  );
+}
+
+/**
+ *
+ * @param clientCfg.conversationClient
+ * @param assistantId
+ * @param assistantVersion
+ * @param params
+ * @param cb
+ * @param authHeader
+ * @param args
+ * @param options
+ * @param metadata
+ */
+export function InitiateBulkAssistantTalk(
+  clientCfg: ConnectionConfig,
+  assistantId: string,
+  assistantVersion: string = "latest",
+  params: Array<Map<string, google_protobuf_any_pb.Any>>,
+  cb: (
+    err: ServiceError | null,
+    uvcr: InitiateBulkAssistantTalkResponse | null
+  ) => void,
+  args?: Map<string, google_protobuf_any_pb.Any>,
+  options?: Map<string, google_protobuf_any_pb.Any>,
+  metadata?: Map<string, google_protobuf_any_pb.Any>
+) {
+  const request = new InitiateBulkAssistantTalkRequest();
+  const assistant = new AssistantDefinition();
+  assistant.setAssistantid(assistantId);
+  assistant.setVersion(assistantVersion);
+  request.setAssistant(assistant);
+
+  params.map((param) => {
+    const tk = new InitiateAssistantTalkParameter();
+    param.forEach((v, k) => {
+      tk.getItemsMap().set(k, v);
+    });
+    request.addParams(tk);
+  });
+  if (args) {
+    args?.forEach((v, k) => {
+      request.getArgsMap().set(k, v);
+    });
+  }
+
+  if (options) {
+    options?.forEach((v, k) => {
+      request.getOptionsMap().set(k, v);
+    });
+  }
+  if (metadata) {
+    metadata?.forEach((v, k) => {
+      request.getMetadataMap().set(k, v);
+    });
+  }
+
+  clientCfg.conversationClient.initiateBulkAssistantTalk(
+    request,
+    WithAuthContext(clientCfg.auth),
     cb
   );
 }
