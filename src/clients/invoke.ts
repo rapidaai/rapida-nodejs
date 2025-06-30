@@ -30,10 +30,12 @@ import {
   CallerResponse,
   EndpointDefinition,
   InvokeRequest,
+  InvokeResponse,
 } from "@/rapida/clients/protos/invoker-api_pb";
 import p from "google-protobuf/google/protobuf/any_pb";
 import { StringToAny } from "@/rapida/utils/rapida_value";
 import { ConnectionConfig } from "@/rapida/connections/connection-config";
+import grpc from "@grpc/grpc-js";
 
 /**
  * Invoke an endpoint with specified parameters.
@@ -72,7 +74,7 @@ export function Invoke(
     connectionCfg.endpointClient.invoke(
       req,
       WithAuthContext(connectionCfg.auth),
-      (err, response) => {
+      (err: grpc.ServiceError, response: InvokeResponse) => {
         if (err) reject(err);
         else {
           try {

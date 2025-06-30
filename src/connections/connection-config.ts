@@ -22,7 +22,6 @@
  *  Author: Prashant <prashant@rapida.ai>
  *
  */
-import { TalkServiceClient } from "@/rapida/clients/protos/talk-api_pb_service";
 import {
   ASSISTANT_API,
   ENDPOINT_API,
@@ -30,15 +29,17 @@ import {
   LOCAL_ENDPOINT_API,
 } from "@/rapida/configs";
 import { ClientAuthInfo, getClientInfo, UserAuthInfo } from "@/rapida/clients";
-import { AssistantServiceClient } from "@/rapida/clients/protos/assistant-api_pb_service";
-import { DEBUGGER_SOURCE, NODESDK_SOURCE } from "@/rapida/utils/rapida_source";
+import { RapidaSource } from "@/rapida/utils/rapida_source";
 import {
   HEADER_API_KEY,
   HEADER_AUTH_ID,
   HEADER_PROJECT_ID,
   HEADER_SOURCE_KEY,
 } from "@/rapida/utils/rapida_header";
-import { DeploymentClient } from "@/rapida/clients/protos/invoker-api_pb_service";
+import { TalkServiceClient } from "@/rapida/clients/protos/talk-api_grpc_pb";
+import { AssistantServiceClient } from "@/rapida/clients/protos/assistant-api_grpc_pb";
+import { DeploymentClient } from "@/rapida/clients/protos/invoker-api_grpc_pb";
+import { credentials } from "@grpc/grpc-js";
 
 /**
  * Represents a connection to the TalkService, providing both a conversation client
@@ -84,7 +85,7 @@ export class ConnectionConfig {
       [HEADER_AUTH_ID]: userId,
       [HEADER_PROJECT_ID]: projectId,
       Client: {
-        [HEADER_SOURCE_KEY]: DEBUGGER_SOURCE,
+        [HEADER_SOURCE_KEY]: RapidaSource.DEBUGGER,
       },
     };
   }
@@ -105,7 +106,7 @@ export class ConnectionConfig {
       [HEADER_API_KEY]: apiKey,
       [HEADER_AUTH_ID]: userId,
       Client: {
-        [HEADER_SOURCE_KEY]: NODESDK_SOURCE,
+        [HEADER_SOURCE_KEY]: RapidaSource.NODE_SDK,
       },
     };
   }
@@ -127,23 +128,17 @@ export class ConnectionConfig {
     this.auth.Client = getClientInfo(this.auth.Client);
     this.conversationClient = new TalkServiceClient(
       assistantEndpoint ? assistantEndpoint : ASSISTANT_API,
-      {
-        debug: debug ? debug : false,
-      }
+      debug ? credentials.createInsecure() : credentials.createSsl()
     );
 
     this.assistantClient = new AssistantServiceClient(
       assistantEndpoint ? assistantEndpoint : ASSISTANT_API,
-      {
-        debug: debug ? debug : false,
-      }
+      debug ? credentials.createInsecure() : credentials.createSsl()
     );
 
     this.endpointClient = new DeploymentClient(
       deploymentEndpoint ? deploymentEndpoint : ENDPOINT_API,
-      {
-        debug: debug ? debug : false,
-      }
+      debug ? credentials.createInsecure() : credentials.createSsl()
     );
   }
 
@@ -152,7 +147,11 @@ export class ConnectionConfig {
    * @returns
    */
   withLocal(): this {
-    return this.withCustomEndpoint(LOCAL_ASSISTANT_API, LOCAL_ENDPOINT_API);
+    return this.withCustomEndpoint(
+      LOCAL_ASSISTANT_API,
+      LOCAL_ENDPOINT_API,
+      true
+    );
   }
 
   /**
@@ -165,17 +164,38 @@ export class ConnectionConfig {
     deploymentEndpoint: string,
     debug?: boolean
   ): this {
-    this.conversationClient = new TalkServiceClient(assistantEndpoint, {
-      debug: debug ? debug : false,
-    });
+    console.log(
+      `Debug: Initializing TalkServiceClient with endpoint: ${assistantEndpoint}`
+    );
+    this.conversationClient = new TalkServiceClient(
+      assistantEndpoint,
+      debug ? credentials.createInsecure() : credentials.createSsl()
+    );
+    console.log(
+      `Debug: TalkServiceClient initialized: ${this.conversationClient}`
+    );
 
-    this.assistantClient = new AssistantServiceClient(assistantEndpoint, {
-      debug: debug ? debug : false,
-    });
+    console.log(
+      `Debug: Initializing AssistantServiceClient with endpoint: ${assistantEndpoint}`
+    );
+    this.assistantClient = new AssistantServiceClient(
+      assistantEndpoint,
+      debug ? credentials.createInsecure() : credentials.createSsl()
+    );
+    console.log(
+      `Debug: AssistantServiceClient initialized: ${this.assistantClient}`
+    );
 
-    this.endpointClient = new DeploymentClient(deploymentEndpoint, {
-      debug: debug ? debug : false,
-    });
+    console.log(
+      `Debug: Initializing DeploymentClient with endpoint: ${deploymentEndpoint}`
+    );
+    this.endpointClient = new DeploymentClient(
+      deploymentEndpoint,
+      debug ? credentials.createInsecure() : credentials.createSsl()
+    );
+    console.log(`Debug: DeploymentClient initialized: ${this.endpointClient}`);
+
+    console.log("Debug: All clients initialized");
     return this;
   }
 }

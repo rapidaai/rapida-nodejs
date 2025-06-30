@@ -26,8 +26,12 @@ import { handleSingleResponse, WithAuthContext } from "@/rapida/clients";
 import {
   Assistant,
   GetAssistantRequest,
+  GetAssistantResponse,
 } from "@/rapida/clients/protos/assistant-api_pb";
 import { ConnectionConfig } from "@/rapida/connections/connection-config";
+import grpc from "@grpc/grpc-js";
+import { AssistantDefinition } from "./protos/talk-api_pb";
+
 /**
  * Retrieve details of a specific assistant.
  *
@@ -39,19 +43,16 @@ import { ConnectionConfig } from "@/rapida/connections/connection-config";
  */
 export function GetAssistant(
   connectionCfg: ConnectionConfig,
-  assistantId: string,
-  assistantProviderModelId: string | null
+  assistant: AssistantDefinition
 ): Promise<Assistant> {
   return new Promise((resolve, reject) => {
     const req = new GetAssistantRequest();
-    req.setId(assistantId);
-    if (assistantProviderModelId) {
-      req.setAssistantprovidermodelid(assistantProviderModelId);
-    }
+    req.setId(assistant.getAssistantid());
+    req.setAssistantprovidermodelid(assistant.getVersion());
     return connectionCfg.assistantClient.getAssistant(
       req,
       WithAuthContext(connectionCfg.auth),
-      (err, response) => {
+      (err: grpc.ServiceError, response: GetAssistantResponse) => {
         if (err) reject(err);
         else {
           try {

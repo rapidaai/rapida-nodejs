@@ -25,7 +25,7 @@
  */
 
 export const ASSISTANT_API = "workflow-01.rapida.ai";
-export const LOCAL_ASSISTANT_API = "assistant.rapida.local";
+export const LOCAL_ASSISTANT_API = "localhost:9007";
 
 export const ENDPOINT_API = "endpoint-01.rapida.ai";
-export const LOCAL_ENDPOINT_API = "endpoint.rapida.local";
+export const LOCAL_ENDPOINT_API = "localhost:9005";

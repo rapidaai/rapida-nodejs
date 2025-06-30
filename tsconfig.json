@@ -1,17 +1,18 @@
 {
     "compilerOptions": {
-        "target": "es2019",
-        "module": "commonjs",
+        "target": "es2020",
+        "module": "esnext",
+        "allowSyntheticDefaultImports": true,
+        "moduleResolution": "node",
         "strict": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
         "resolveJsonModule": true,
-        "outDir": "dist",
-        "baseUrl": ".", // Important for paths
+        "baseUrl": ".",
         "paths": {
             "@/rapida/*": [
                 "src/*"
-            ] // Alias @/rapida/* to src/*
+            ]
         }
     },
     "include": [

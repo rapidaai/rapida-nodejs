@@ -112,23 +112,23 @@ export interface ClientAuthInfo {
 
 interface ClientInfo {
   [HEADER_SOURCE_KEY]?: RapidaSource;
-  [HEADER_USER_AGENT]: string;
-  [HEADER_LANGUAGE]: string;
-  [HEADER_PLATFORM]: string;
-  [HEADER_SCREEN_WIDTH]: number;
-  [HEADER_SCREEN_HEIGHT]: number;
-  [HEADER_WINDOW_WIDTH]: number;
-  [HEADER_WINDOW_HEIGHT]: number;
-  [HEADER_TIMEZONE]: string;
-  [HEADER_COLOR_DEPTH]: number;
+  [HEADER_USER_AGENT]?: string;
+  [HEADER_LANGUAGE]?: string;
+  [HEADER_PLATFORM]?: string;
+  [HEADER_SCREEN_WIDTH]?: number;
+  [HEADER_SCREEN_HEIGHT]?: number;
+  [HEADER_WINDOW_WIDTH]?: number;
+  [HEADER_WINDOW_HEIGHT]?: number;
+  [HEADER_TIMEZONE]?: string;
+  [HEADER_COLOR_DEPTH]?: number;
   [HEADER_DEVICE_MEMORY]?: number;
   [HEADER_HARDWARE_CONCURRENCY]?: number;
   [HEADER_CONNECTION_TYPE]?: string;
   [HEADER_CONNECTION_EFFECTIVE_TYPE]?: string;
-  [HEADER_COOKIES_ENABLED]: boolean;
+  [HEADER_COOKIES_ENABLED]?: boolean;
   [HEADER_DO_NOT_TRACK]?: string | null;
-  [HEADER_REFERRER]: string;
-  [HEADER_REMOTE_URL]: string;
+  [HEADER_REFERRER]?: string;
+  [HEADER_REMOTE_URL]?: string;
   [HEADER_LATITUDE]?: number;
   [HEADER_LONGITUDE]?: number;
 }
@@ -144,29 +144,14 @@ interface ClientInfo {
 export const getClientInfo = (
   additionalInfo: Partial<ClientInfo> = {}
 ): ClientInfo => {
-  const screen_width = window.screen.width;
-  const screen_height = window.screen.height;
-
   const baseInfo: ClientInfo = {
-    [HEADER_USER_AGENT]: navigator.userAgent,
-    [HEADER_LANGUAGE]: navigator.language,
-    [HEADER_PLATFORM]:
-      (navigator as any)?.userAgentData?.platform || navigator?.platform,
-    [HEADER_SCREEN_WIDTH]: screen_width,
-    [HEADER_SCREEN_HEIGHT]: screen_height,
-    [HEADER_WINDOW_WIDTH]: window.innerWidth,
-    [HEADER_WINDOW_HEIGHT]: window.innerHeight,
+    [HEADER_USER_AGENT]: `Node.js/${process.version}`,
+    [HEADER_LANGUAGE]: process.env.LANG || "unknown",
+    [HEADER_PLATFORM]: process.platform,
     [HEADER_TIMEZONE]: Intl.DateTimeFormat().resolvedOptions().timeZone,
-    [HEADER_COLOR_DEPTH]: window.screen.colorDepth,
-    [HEADER_DEVICE_MEMORY]: (navigator as any).deviceMemory,
-    [HEADER_HARDWARE_CONCURRENCY]: navigator.hardwareConcurrency,
-    [HEADER_CONNECTION_TYPE]: (navigator as any).connection?.type,
-    [HEADER_CONNECTION_EFFECTIVE_TYPE]: (navigator as any).connection
-      ?.effectiveType,
-    [HEADER_COOKIES_ENABLED]: navigator.cookieEnabled,
-    [HEADER_DO_NOT_TRACK]: navigator.doNotTrack,
-    [HEADER_REFERRER]: document.referrer,
-    [HEADER_REMOTE_URL]: window.location.href,
+    [HEADER_CONNECTION_TYPE]: undefined,
+    [HEADER_CONNECTION_EFFECTIVE_TYPE]: undefined,
+    [HEADER_DO_NOT_TRACK]: undefined,
     ...additionalInfo,
   };
 

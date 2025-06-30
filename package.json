@@ -1,15 +1,21 @@
 {
     "name": "rapida-nodejs",
-    "version": "1.0.1-alpha",
+    "version": "1.0.4-alpha",
     "description": "Enable to interact with rapida platform",
-    "main": "dist/index.js",
+    "main": "dist/index.cjs",
+    "module": "dist/index.js",
     "types": "dist/index.d.ts",
+    "exports": {
+        "import": "./dist/index.js",
+        "require": "./dist/index.cjs"
+    },
     "files": [
-        "dist",
-        "README.md"
+        "dist"
     ],
     "scripts": {
-        "build": "tsc"
+        "build": "tsup",
+        "clean": "rimraf dist",
+        "prepare": "npm run build"
     },
     "license": "MIT",
     "repository": {
@@ -28,6 +34,7 @@
         "@types/node": "^24.0.7",
         "grpc-tools": "^1.13.0",
         "ts-proto": "^2.7.5",
+        "tsup": "^8.5.0",
         "typescript": "^5.8.3"
     },
     "dependencies": {

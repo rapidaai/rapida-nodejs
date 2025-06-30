@@ -32,6 +32,9 @@ import {
   InitiateBulkAssistantTalkRequest,
   CreateConversationMetricRequest,
   CreateMessageMetricRequest,
+  CreateMessageMetricResponse,
+  CreateConversationMetricResponse,
+  InitiateAssistantTalkResponse,
 } from "@/rapida/clients/protos/talk-api_pb";
 import {
   GetAllConversationMessageRequest,
@@ -39,16 +42,22 @@ import {
   Metric,
   AssistantConversation,
   AssistantConversationMessage,
+  GetAllAssistantConversationResponse,
+  GetAllConversationMessageResponse,
+  SourceMap,
 } from "@/rapida/clients/protos/common_pb";
 import {
   handleListResponse,
   handleSingleResponse,
   WithAuthContext,
 } from "@/rapida/clients";
-import { BidirectionalStream } from "@/rapida/clients/protos/talk-api_pb_service";
 import { Criteria, Paginate } from "@/rapida/clients/protos/common_pb";
 import * as google_protobuf_any_pb from "google-protobuf/google/protobuf/any_pb";
 import { ConnectionConfig } from "@/rapida/connections/connection-config";
+import { ClientDuplexStream } from "@grpc/grpc-js";
+import grpc from "@grpc/grpc-js";
+import { InitiateBulkAssistantTalkResponse } from "./protos/talk-api_pb";
+import { GetProtoSource, RapidaSource } from "@/rapida/utils/rapida_source";
 
 /**
  *
@@ -82,7 +91,10 @@ export function GetAllAssistantConversation(
     clientCfg.conversationClient.getAllAssistantConversation(
       req,
       WithAuthContext(clientCfg.auth),
-      (err, response) => {
+      (
+        err: grpc.ServiceError,
+        response: GetAllAssistantConversationResponse
+      ) => {
         if (err) reject(err);
         else {
           try {
@@ -131,7 +143,7 @@ export function GetAllAssistantConversationMessage(
     clientCfg.conversationClient.getAllConversationMessage(
       req,
       WithAuthContext(clientCfg.auth),
-      (err, response) => {
+      (err: grpc.ServiceError, response: GetAllConversationMessageResponse) => {
         if (err) reject(err);
         else {
           try {
@@ -152,7 +164,7 @@ export function GetAllAssistantConversationMessage(
  */
 export function AssistantTalk(
   clientCfg: ConnectionConfig
-): BidirectionalStream<AssistantMessagingRequest, AssistantMessagingResponse> {
+): ClientDuplexStream<AssistantMessagingRequest, AssistantMessagingResponse> {
   return clientCfg.conversationClient.assistantTalk(
     WithAuthContext(clientCfg.auth)
   );
@@ -189,7 +201,7 @@ export function CreateMessageMetric(
     clientCfg.conversationClient.createMessageMetric(
       req,
       WithAuthContext(clientCfg.auth),
-      (err, response) => {
+      (err: grpc.ServiceError, response: CreateMessageMetricResponse) => {
         if (err) reject(err);
         else {
           try {
@@ -231,7 +243,7 @@ export function CreateConversationMetric(
     clientCfg.conversationClient.createConversationMetric(
       req,
       WithAuthContext(clientCfg.auth),
-      (err, response) => {
+      (err: grpc.ServiceError, response: CreateConversationMetricResponse) => {
         if (err) reject(err);
         else {
           try {
@@ -258,8 +270,8 @@ export function CreateConversationMetric(
  */
 export function InitiateAssistantTalk(
   clientCfg: ConnectionConfig,
-  assistantId: string,
-  assistantVersion: string = "latest",
+  assistant: AssistantDefinition,
+  source: RapidaSource,
   params: Map<string, google_protobuf_any_pb.Any>,
   args?: Map<string, google_protobuf_any_pb.Any>,
   options?: Map<string, google_protobuf_any_pb.Any>,
@@ -267,10 +279,8 @@ export function InitiateAssistantTalk(
 ): Promise<InitiateAssistantTalkParameter> {
   return new Promise((resolve, reject) => {
     const request = new InitiateAssistantTalkRequest();
-    const assistant = new AssistantDefinition();
-    assistant.setAssistantid(assistantId);
-    assistant.setVersion(assistantVersion);
     request.setAssistant(assistant);
+    request.setSource(GetProtoSource(source));
 
     const tk = new InitiateAssistantTalkParameter();
     params.forEach((value, key) => {
@@ -298,12 +308,27 @@ export function InitiateAssistantTalk(
     clientCfg.conversationClient.initiateAssistantTalk(
       request,
       WithAuthContext(clientCfg.auth),
-      (err, response) => {
-        if (err) reject(err);
-        else {
+      (
+        err: grpc.ServiceError | null,
+        response: InitiateAssistantTalkResponse
+      ) => {
+        if (err) {
+          console.error("Error in initiateAssistantTalk:", err);
+          reject(err);
+        } else if (!response) {
+          reject(new Error("No response received from initiateAssistantTalk"));
+        } else {
           try {
-            resolve(handleSingleResponse(response!)!);
+            const result = handleSingleResponse(response);
+            if (result) {
+              resolve(result);
+            } else {
+              reject(
+                new Error("handleSingleResponse returned null or undefined")
+              );
+            }
           } catch (error) {
+            console.error("Error in handleSingleResponse:", error);
             reject(error);
           }
         }
@@ -325,8 +350,7 @@ export function InitiateAssistantTalk(
  */
 export function InitiateBulkAssistantTalk(
   clientCfg: ConnectionConfig,
-  assistantId: string,
-  assistantVersion: string = "latest",
+  assistant: AssistantDefinition,
   params: Array<Map<string, google_protobuf_any_pb.Any>>,
   args?: Map<string, google_protobuf_any_pb.Any>,
   options?: Map<string, google_protobuf_any_pb.Any>,
@@ -334,11 +358,7 @@ export function InitiateBulkAssistantTalk(
 ): Promise<Array<InitiateAssistantTalkParameter>> {
   return new Promise((resolve, reject) => {
     const request = new InitiateBulkAssistantTalkRequest();
-    const assistant = new AssistantDefinition();
-    assistant.setAssistantid(assistantId);
-    assistant.setVersion(assistantVersion);
     request.setAssistant(assistant);
-
     params.map((param) => {
       const tk = new InitiateAssistantTalkParameter();
       param.forEach((v, k) => {
@@ -366,7 +386,7 @@ export function InitiateBulkAssistantTalk(
     clientCfg.conversationClient.initiateBulkAssistantTalk(
       request,
       WithAuthContext(clientCfg.auth),
-      (err, response) => {
+      (err: grpc.ServiceError, response: InitiateBulkAssistantTalkResponse) => {
         if (err) reject(err);
         else {
           try {
