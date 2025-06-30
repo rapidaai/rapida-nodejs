@@ -22,17 +22,11 @@
  *  Author: Prashant <prashant@rapida.ai>
  *
  */
+import { handleSingleResponse, WithAuthContext } from "@/rapida/clients";
 import {
-  ClientAuthInfo,
-  UserAuthInfo,
-  WithAuthContext,
-} from "@/rapida/clients";
-import {
+  Assistant,
   GetAssistantRequest,
-  GetAssistantResponse,
 } from "@/rapida/clients/protos/assistant-api_pb";
-import { ServiceError } from "@/rapida/clients/protos/assistant-api_pb_service";
-import { UnaryResponse } from "@/rapida/clients/protos/talk-api_pb_service";
 import { ConnectionConfig } from "@/rapida/connections/connection-config";
 /**
  * Retrieve details of a specific assistant.
@@ -46,17 +40,27 @@ import { ConnectionConfig } from "@/rapida/connections/connection-config";
 export function GetAssistant(
   connectionCfg: ConnectionConfig,
   assistantId: string,
-  assistantProviderModelId: string | null,
-  cb: (err: ServiceError | null, response: GetAssistantResponse | null) => void
-): UnaryResponse {
-  const req = new GetAssistantRequest();
-  req.setId(assistantId);
-  if (assistantProviderModelId) {
-    req.setAssistantprovidermodelid(assistantProviderModelId);
-  }
-  return connectionCfg.assistantClient.getAssistant(
-    req,
-    WithAuthContext(connectionCfg.auth),
-    cb
-  );
+  assistantProviderModelId: string | null
+): Promise<Assistant> {
+  return new Promise((resolve, reject) => {
+    const req = new GetAssistantRequest();
+    req.setId(assistantId);
+    if (assistantProviderModelId) {
+      req.setAssistantprovidermodelid(assistantProviderModelId);
+    }
+    return connectionCfg.assistantClient.getAssistant(
+      req,
+      WithAuthContext(connectionCfg.auth),
+      (err, response) => {
+        if (err) reject(err);
+        else {
+          try {
+            resolve(handleSingleResponse(response!)!);
+          } catch (error) {
+            reject(error);
+          }
+        }
+      }
+    );
+  });
 }

@@ -54,6 +54,8 @@ import {
 import { ALL_REGION } from "@/rapida/utils/rapida_region";
 import { RapidaSource } from "@/rapida/utils/rapida_source";
 import { Metadata } from "@grpc/grpc-js";
+import { Error as APIError } from "@/rapida/clients/protos/common_pb";
+
 /**
  * Configures gRPC metadata with platform-specific and environment-specific headers.
  *
@@ -194,3 +196,42 @@ export const WithClientContext = (
   }
   return metadata;
 };
+
+/**
+ *
+ * @param response
+ * @returns
+ */
+export function handleListResponse<T, U>(
+  response: T & {
+    getSuccess(): boolean;
+    getError(): APIError | undefined;
+    getDataList(): U[];
+  }
+): U[] {
+  if (!response.getSuccess()) {
+    const error = response.getError();
+    throw new Error(error ? error.getHumanmessage() : "Unknown error occurred");
+  }
+  return response.getDataList();
+}
+
+/**
+ *
+ * @param response
+ * @returns
+ */
+export function handleSingleResponse<T, U>(
+  response: T & {
+    getSuccess(): boolean;
+    getError(): APIError | undefined;
+    getData(): U;
+  }
+): U {
+  if (!response.getSuccess()) {
+    const error = response.getError();
+    throw new Error(error ? error.getHumanmessage() : "Unknown error occurred");
+  }
+  if (response.getData()) return response.getData();
+  throw new Error("Empty data returned");
+}
