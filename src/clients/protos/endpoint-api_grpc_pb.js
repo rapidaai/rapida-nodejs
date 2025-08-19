@@ -4,7 +4,6 @@
 var grpc = require('@grpc/grpc-js');
 var endpoint$api_pb = require('./endpoint-api_pb.js');
 var google_protobuf_timestamp_pb = require('google-protobuf/google/protobuf/timestamp_pb.js');
-var google_protobuf_struct_pb = require('google-protobuf/google/protobuf/struct_pb.js');
 var common_pb = require('./common_pb.js');
 
 function serialize_BaseResponse(arg) {
@@ -128,26 +127,26 @@ function deserialize_endpoint_api_ForkEndpointRequest(buffer_arg) {
   return endpoint$api_pb.ForkEndpointRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_endpoint_api_GetAllDeploymentRequest(arg) {
-  if (!(arg instanceof endpoint$api_pb.GetAllDeploymentRequest)) {
-    throw new Error('Expected argument of type endpoint_api.GetAllDeploymentRequest');
+function serialize_endpoint_api_GetAllEndpointLogRequest(arg) {
+  if (!(arg instanceof endpoint$api_pb.GetAllEndpointLogRequest)) {
+    throw new Error('Expected argument of type endpoint_api.GetAllEndpointLogRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_endpoint_api_GetAllDeploymentRequest(buffer_arg) {
-  return endpoint$api_pb.GetAllDeploymentRequest.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_endpoint_api_GetAllEndpointLogRequest(buffer_arg) {
+  return endpoint$api_pb.GetAllEndpointLogRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_endpoint_api_GetAllDeploymentResponse(arg) {
-  if (!(arg instanceof endpoint$api_pb.GetAllDeploymentResponse)) {
-    throw new Error('Expected argument of type endpoint_api.GetAllDeploymentResponse');
+function serialize_endpoint_api_GetAllEndpointLogResponse(arg) {
+  if (!(arg instanceof endpoint$api_pb.GetAllEndpointLogResponse)) {
+    throw new Error('Expected argument of type endpoint_api.GetAllEndpointLogResponse');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_endpoint_api_GetAllDeploymentResponse(buffer_arg) {
-  return endpoint$api_pb.GetAllDeploymentResponse.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_endpoint_api_GetAllEndpointLogResponse(buffer_arg) {
+  return endpoint$api_pb.GetAllEndpointLogResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_endpoint_api_GetAllEndpointProviderModelRequest(arg) {
@@ -192,6 +191,28 @@ function serialize_endpoint_api_GetAllEndpointResponse(arg) {
 
 function deserialize_endpoint_api_GetAllEndpointResponse(buffer_arg) {
   return endpoint$api_pb.GetAllEndpointResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_endpoint_api_GetEndpointLogRequest(arg) {
+  if (!(arg instanceof endpoint$api_pb.GetEndpointLogRequest)) {
+    throw new Error('Expected argument of type endpoint_api.GetEndpointLogRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_endpoint_api_GetEndpointLogRequest(buffer_arg) {
+  return endpoint$api_pb.GetEndpointLogRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_endpoint_api_GetEndpointLogResponse(arg) {
+  if (!(arg instanceof endpoint$api_pb.GetEndpointLogResponse)) {
+    throw new Error('Expected argument of type endpoint_api.GetEndpointLogResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_endpoint_api_GetEndpointLogResponse(buffer_arg) {
+  return endpoint$api_pb.GetEndpointLogResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_endpoint_api_GetEndpointRequest(arg) {
@@ -272,19 +293,6 @@ var EndpointServiceService = exports.EndpointServiceService = {
     requestDeserialize: deserialize_endpoint_api_GetAllEndpointRequest,
     responseSerialize: serialize_endpoint_api_GetAllEndpointResponse,
     responseDeserialize: deserialize_endpoint_api_GetAllEndpointResponse,
-  },
-  //
-// get all public deployments
-getAllDeployment: {
-    path: '/endpoint_api.EndpointService/GetAllDeployment',
-    requestStream: false,
-    responseStream: false,
-    requestType: endpoint$api_pb.GetAllDeploymentRequest,
-    responseType: endpoint$api_pb.GetAllDeploymentResponse,
-    requestSerialize: serialize_endpoint_api_GetAllDeploymentRequest,
-    requestDeserialize: deserialize_endpoint_api_GetAllDeploymentRequest,
-    responseSerialize: serialize_endpoint_api_GetAllDeploymentResponse,
-    responseDeserialize: deserialize_endpoint_api_GetAllDeploymentResponse,
   },
   getAllEndpointProviderModel: {
     path: '/endpoint_api.EndpointService/GetAllEndpointProviderModel',
@@ -386,6 +394,28 @@ createEndpointCacheConfiguration: {
     requestDeserialize: deserialize_endpoint_api_UpdateEndpointDetailRequest,
     responseSerialize: serialize_endpoint_api_GetEndpointResponse,
     responseDeserialize: deserialize_endpoint_api_GetEndpointResponse,
+  },
+  getAllEndpointLog: {
+    path: '/endpoint_api.EndpointService/GetAllEndpointLog',
+    requestStream: false,
+    responseStream: false,
+    requestType: endpoint$api_pb.GetAllEndpointLogRequest,
+    responseType: endpoint$api_pb.GetAllEndpointLogResponse,
+    requestSerialize: serialize_endpoint_api_GetAllEndpointLogRequest,
+    requestDeserialize: deserialize_endpoint_api_GetAllEndpointLogRequest,
+    responseSerialize: serialize_endpoint_api_GetAllEndpointLogResponse,
+    responseDeserialize: deserialize_endpoint_api_GetAllEndpointLogResponse,
+  },
+  getEndpointLog: {
+    path: '/endpoint_api.EndpointService/GetEndpointLog',
+    requestStream: false,
+    responseStream: false,
+    requestType: endpoint$api_pb.GetEndpointLogRequest,
+    responseType: endpoint$api_pb.GetEndpointLogResponse,
+    requestSerialize: serialize_endpoint_api_GetEndpointLogRequest,
+    requestDeserialize: deserialize_endpoint_api_GetEndpointLogRequest,
+    responseSerialize: serialize_endpoint_api_GetEndpointLogResponse,
+    responseDeserialize: deserialize_endpoint_api_GetEndpointLogResponse,
   },
 };
 

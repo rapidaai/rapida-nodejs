@@ -6,34 +6,6 @@ import * as google_protobuf_struct_pb from "google-protobuf/google/protobuf/stru
 import * as google_protobuf_any_pb from "google-protobuf/google/protobuf/any_pb";
 import * as common_pb from "./common_pb";
 
-export class InvokerError extends jspb.Message {
-  getErrorcode(): string;
-  setErrorcode(value: string): void;
-
-  getErrormessage(): string;
-  setErrormessage(value: string): void;
-
-  getHumanmessage(): string;
-  setHumanmessage(value: string): void;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): InvokerError.AsObject;
-  static toObject(includeInstance: boolean, msg: InvokerError): InvokerError.AsObject;
-  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: InvokerError, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): InvokerError;
-  static deserializeBinaryFromReader(message: InvokerError, reader: jspb.BinaryReader): InvokerError;
-}
-
-export namespace InvokerError {
-  export type AsObject = {
-    errorcode: string,
-    errormessage: string,
-    humanmessage: string,
-  }
-}
-
 export class EndpointDefinition extends jspb.Message {
   getEndpointid(): string;
   setEndpointid(value: string): void;
@@ -64,21 +36,12 @@ export class InvokeRequest extends jspb.Message {
   getEndpoint(): EndpointDefinition | undefined;
   setEndpoint(value?: EndpointDefinition): void;
 
-  getArgsv1Map(): jspb.Map<string, string>;
-  clearArgsv1Map(): void;
-  getMetadatav1Map(): jspb.Map<string, string>;
-  clearMetadatav1Map(): void;
-  getOptionsv1Map(): jspb.Map<string, string>;
-  clearOptionsv1Map(): void;
   getArgsMap(): jspb.Map<string, google_protobuf_any_pb.Any>;
   clearArgsMap(): void;
   getMetadataMap(): jspb.Map<string, google_protobuf_any_pb.Any>;
   clearMetadataMap(): void;
   getOptionsMap(): jspb.Map<string, google_protobuf_any_pb.Any>;
   clearOptionsMap(): void;
-  getSource(): common_pb.SourceMap[keyof common_pb.SourceMap];
-  setSource(value: common_pb.SourceMap[keyof common_pb.SourceMap]): void;
-
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): InvokeRequest.AsObject;
   static toObject(includeInstance: boolean, msg: InvokeRequest): InvokeRequest.AsObject;
@@ -92,65 +55,9 @@ export class InvokeRequest extends jspb.Message {
 export namespace InvokeRequest {
   export type AsObject = {
     endpoint?: EndpointDefinition.AsObject,
-    argsv1Map: Array<[string, string]>,
-    metadatav1Map: Array<[string, string]>,
-    optionsv1Map: Array<[string, string]>,
     argsMap: Array<[string, google_protobuf_any_pb.Any.AsObject]>,
     metadataMap: Array<[string, google_protobuf_any_pb.Any.AsObject]>,
     optionsMap: Array<[string, google_protobuf_any_pb.Any.AsObject]>,
-    source: common_pb.SourceMap[keyof common_pb.SourceMap],
-  }
-}
-
-export class CallerResponse extends jspb.Message {
-  getRequestid(): number;
-  setRequestid(value: number): void;
-
-  getResponse(): string;
-  setResponse(value: string): void;
-
-  getTimetaken(): number;
-  setTimetaken(value: number): void;
-
-  clearResponsesList(): void;
-  getResponsesList(): Array<common_pb.Content>;
-  setResponsesList(value: Array<common_pb.Content>): void;
-  addResponses(value?: common_pb.Content, index?: number): common_pb.Content;
-
-  hasError(): boolean;
-  clearError(): void;
-  getError(): InvokerError | undefined;
-  setError(value?: InvokerError): void;
-
-  clearMetricsList(): void;
-  getMetricsList(): Array<common_pb.Metric>;
-  setMetricsList(value: Array<common_pb.Metric>): void;
-  addMetrics(value?: common_pb.Metric, index?: number): common_pb.Metric;
-
-  hasMeta(): boolean;
-  clearMeta(): void;
-  getMeta(): google_protobuf_struct_pb.Struct | undefined;
-  setMeta(value?: google_protobuf_struct_pb.Struct): void;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): CallerResponse.AsObject;
-  static toObject(includeInstance: boolean, msg: CallerResponse): CallerResponse.AsObject;
-  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: CallerResponse, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): CallerResponse;
-  static deserializeBinaryFromReader(message: CallerResponse, reader: jspb.BinaryReader): CallerResponse;
-}
-
-export namespace CallerResponse {
-  export type AsObject = {
-    requestid: number,
-    response: string,
-    timetaken: number,
-    responsesList: Array<common_pb.Content.AsObject>,
-    error?: InvokerError.AsObject,
-    metricsList: Array<common_pb.Metric.AsObject>,
-    meta?: google_protobuf_struct_pb.Struct.AsObject,
   }
 }
 
@@ -161,15 +68,31 @@ export class InvokeResponse extends jspb.Message {
   getSuccess(): boolean;
   setSuccess(value: boolean): void;
 
-  hasData(): boolean;
-  clearData(): void;
-  getData(): CallerResponse | undefined;
-  setData(value?: CallerResponse): void;
+  clearDataList(): void;
+  getDataList(): Array<common_pb.Content>;
+  setDataList(value: Array<common_pb.Content>): void;
+  addData(value?: common_pb.Content, index?: number): common_pb.Content;
 
   hasError(): boolean;
   clearError(): void;
-  getError(): InvokerError | undefined;
-  setError(value?: InvokerError): void;
+  getError(): common_pb.Error | undefined;
+  setError(value?: common_pb.Error): void;
+
+  getRequestid(): number;
+  setRequestid(value: number): void;
+
+  getTimetaken(): number;
+  setTimetaken(value: number): void;
+
+  clearMetricsList(): void;
+  getMetricsList(): Array<common_pb.Metric>;
+  setMetricsList(value: Array<common_pb.Metric>): void;
+  addMetrics(value?: common_pb.Metric, index?: number): common_pb.Metric;
+
+  hasMeta(): boolean;
+  clearMeta(): void;
+  getMeta(): google_protobuf_struct_pb.Struct | undefined;
+  setMeta(value?: google_protobuf_struct_pb.Struct): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): InvokeResponse.AsObject;
@@ -185,8 +108,12 @@ export namespace InvokeResponse {
   export type AsObject = {
     code: number,
     success: boolean,
-    data?: CallerResponse.AsObject,
-    error?: InvokerError.AsObject,
+    dataList: Array<common_pb.Content.AsObject>,
+    error?: common_pb.Error.AsObject,
+    requestid: number,
+    timetaken: number,
+    metricsList: Array<common_pb.Metric.AsObject>,
+    meta?: google_protobuf_struct_pb.Struct.AsObject,
   }
 }
 
@@ -225,8 +152,8 @@ export class UpdateResponse extends jspb.Message {
 
   hasError(): boolean;
   clearError(): void;
-  getError(): InvokerError | undefined;
-  setError(value?: InvokerError): void;
+  getError(): common_pb.Error | undefined;
+  setError(value?: common_pb.Error): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): UpdateResponse.AsObject;
@@ -242,7 +169,7 @@ export namespace UpdateResponse {
   export type AsObject = {
     code: number,
     success: boolean,
-    error?: InvokerError.AsObject,
+    error?: common_pb.Error.AsObject,
   }
 }
 
@@ -280,8 +207,8 @@ export class ProbeResponse extends jspb.Message {
 
   hasError(): boolean;
   clearError(): void;
-  getError(): InvokerError | undefined;
-  setError(value?: InvokerError): void;
+  getError(): common_pb.Error | undefined;
+  setError(value?: common_pb.Error): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ProbeResponse.AsObject;
@@ -298,7 +225,7 @@ export namespace ProbeResponse {
     code: number,
     success: boolean,
     data?: google_protobuf_struct_pb.Struct.AsObject,
-    error?: InvokerError.AsObject,
+    error?: common_pb.Error.AsObject,
   }
 }
 

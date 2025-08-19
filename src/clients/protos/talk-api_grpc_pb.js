@@ -4,6 +4,7 @@
 var grpc = require('@grpc/grpc-js');
 var talk$api_pb = require('./talk-api_pb.js');
 var google_protobuf_any_pb = require('google-protobuf/google/protobuf/any_pb.js');
+var google_protobuf_timestamp_pb = require('google-protobuf/google/protobuf/timestamp_pb.js');
 var common_pb = require('./common_pb.js');
 
 function serialize_GetAllAssistantConversationRequest(arg) {
@@ -72,6 +73,28 @@ function deserialize_talk_api_AssistantMessagingResponse(buffer_arg) {
   return talk$api_pb.AssistantMessagingResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_talk_api_CreateBulkPhoneCallRequest(arg) {
+  if (!(arg instanceof talk$api_pb.CreateBulkPhoneCallRequest)) {
+    throw new Error('Expected argument of type talk_api.CreateBulkPhoneCallRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_talk_api_CreateBulkPhoneCallRequest(buffer_arg) {
+  return talk$api_pb.CreateBulkPhoneCallRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_talk_api_CreateBulkPhoneCallResponse(arg) {
+  if (!(arg instanceof talk$api_pb.CreateBulkPhoneCallResponse)) {
+    throw new Error('Expected argument of type talk_api.CreateBulkPhoneCallResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_talk_api_CreateBulkPhoneCallResponse(buffer_arg) {
+  return talk$api_pb.CreateBulkPhoneCallResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_talk_api_CreateConversationMetricRequest(arg) {
   if (!(arg instanceof talk$api_pb.CreateConversationMetricRequest)) {
     throw new Error('Expected argument of type talk_api.CreateConversationMetricRequest');
@@ -116,48 +139,26 @@ function deserialize_talk_api_CreateMessageMetricResponse(buffer_arg) {
   return talk$api_pb.CreateMessageMetricResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_talk_api_InitiateAssistantTalkRequest(arg) {
-  if (!(arg instanceof talk$api_pb.InitiateAssistantTalkRequest)) {
-    throw new Error('Expected argument of type talk_api.InitiateAssistantTalkRequest');
+function serialize_talk_api_CreatePhoneCallRequest(arg) {
+  if (!(arg instanceof talk$api_pb.CreatePhoneCallRequest)) {
+    throw new Error('Expected argument of type talk_api.CreatePhoneCallRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_talk_api_InitiateAssistantTalkRequest(buffer_arg) {
-  return talk$api_pb.InitiateAssistantTalkRequest.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_talk_api_CreatePhoneCallRequest(buffer_arg) {
+  return talk$api_pb.CreatePhoneCallRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_talk_api_InitiateAssistantTalkResponse(arg) {
-  if (!(arg instanceof talk$api_pb.InitiateAssistantTalkResponse)) {
-    throw new Error('Expected argument of type talk_api.InitiateAssistantTalkResponse');
+function serialize_talk_api_CreatePhoneCallResponse(arg) {
+  if (!(arg instanceof talk$api_pb.CreatePhoneCallResponse)) {
+    throw new Error('Expected argument of type talk_api.CreatePhoneCallResponse');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_talk_api_InitiateAssistantTalkResponse(buffer_arg) {
-  return talk$api_pb.InitiateAssistantTalkResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_talk_api_InitiateBulkAssistantTalkRequest(arg) {
-  if (!(arg instanceof talk$api_pb.InitiateBulkAssistantTalkRequest)) {
-    throw new Error('Expected argument of type talk_api.InitiateBulkAssistantTalkRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_talk_api_InitiateBulkAssistantTalkRequest(buffer_arg) {
-  return talk$api_pb.InitiateBulkAssistantTalkRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_talk_api_InitiateBulkAssistantTalkResponse(arg) {
-  if (!(arg instanceof talk$api_pb.InitiateBulkAssistantTalkResponse)) {
-    throw new Error('Expected argument of type talk_api.InitiateBulkAssistantTalkResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_talk_api_InitiateBulkAssistantTalkResponse(buffer_arg) {
-  return talk$api_pb.InitiateBulkAssistantTalkResponse.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_talk_api_CreatePhoneCallResponse(buffer_arg) {
+  return talk$api_pb.CreatePhoneCallResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 
@@ -228,27 +229,28 @@ var TalkServiceService = exports.TalkServiceService = {
     responseSerialize: serialize_talk_api_CreateConversationMetricResponse,
     responseDeserialize: deserialize_talk_api_CreateConversationMetricResponse,
   },
-  initiateAssistantTalk: {
-    path: '/talk_api.TalkService/InitiateAssistantTalk',
+  //
+createPhoneCall: {
+    path: '/talk_api.TalkService/CreatePhoneCall',
     requestStream: false,
     responseStream: false,
-    requestType: talk$api_pb.InitiateAssistantTalkRequest,
-    responseType: talk$api_pb.InitiateAssistantTalkResponse,
-    requestSerialize: serialize_talk_api_InitiateAssistantTalkRequest,
-    requestDeserialize: deserialize_talk_api_InitiateAssistantTalkRequest,
-    responseSerialize: serialize_talk_api_InitiateAssistantTalkResponse,
-    responseDeserialize: deserialize_talk_api_InitiateAssistantTalkResponse,
+    requestType: talk$api_pb.CreatePhoneCallRequest,
+    responseType: talk$api_pb.CreatePhoneCallResponse,
+    requestSerialize: serialize_talk_api_CreatePhoneCallRequest,
+    requestDeserialize: deserialize_talk_api_CreatePhoneCallRequest,
+    responseSerialize: serialize_talk_api_CreatePhoneCallResponse,
+    responseDeserialize: deserialize_talk_api_CreatePhoneCallResponse,
   },
-  initiateBulkAssistantTalk: {
-    path: '/talk_api.TalkService/InitiateBulkAssistantTalk',
+  createBulkPhoneCall: {
+    path: '/talk_api.TalkService/CreateBulkPhoneCall',
     requestStream: false,
     responseStream: false,
-    requestType: talk$api_pb.InitiateBulkAssistantTalkRequest,
-    responseType: talk$api_pb.InitiateBulkAssistantTalkResponse,
-    requestSerialize: serialize_talk_api_InitiateBulkAssistantTalkRequest,
-    requestDeserialize: deserialize_talk_api_InitiateBulkAssistantTalkRequest,
-    responseSerialize: serialize_talk_api_InitiateBulkAssistantTalkResponse,
-    responseDeserialize: deserialize_talk_api_InitiateBulkAssistantTalkResponse,
+    requestType: talk$api_pb.CreateBulkPhoneCallRequest,
+    responseType: talk$api_pb.CreateBulkPhoneCallResponse,
+    requestSerialize: serialize_talk_api_CreateBulkPhoneCallRequest,
+    requestDeserialize: deserialize_talk_api_CreateBulkPhoneCallRequest,
+    responseSerialize: serialize_talk_api_CreateBulkPhoneCallResponse,
+    responseDeserialize: deserialize_talk_api_CreateBulkPhoneCallResponse,
   },
 };
 

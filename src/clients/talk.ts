@@ -24,57 +24,137 @@
  *  This module provides functions for managing projects through the ProjectService.
  */
 import {
-  AssistantMessagingRequest,
-  AssistantDefinition,
-  AssistantMessagingResponse,
-  InitiateAssistantTalkRequest,
-  InitiateAssistantTalkParameter,
-  InitiateBulkAssistantTalkRequest,
-  CreateConversationMetricRequest,
-  CreateMessageMetricRequest,
-  CreateMessageMetricResponse,
-  CreateConversationMetricResponse,
-  InitiateAssistantTalkResponse,
-} from "@/rapida/clients/protos/talk-api_pb";
-import {
   GetAllConversationMessageRequest,
+  GetAllConversationMessageResponse,
+  GetAllAssistantConversationResponse,
   GetAllAssistantConversationRequest,
   Metric,
-  AssistantConversation,
-  AssistantConversationMessage,
-  GetAllAssistantConversationResponse,
-  GetAllConversationMessageResponse,
-  SourceMap,
 } from "@/rapida/clients/protos/common_pb";
 import {
-  handleListResponse,
-  handleSingleResponse,
+  ClientAuthInfo,
+  UserAuthInfo,
   WithAuthContext,
 } from "@/rapida/clients";
-import { Criteria, Paginate } from "@/rapida/clients/protos/common_pb";
-import * as google_protobuf_any_pb from "google-protobuf/google/protobuf/any_pb";
+import { Criteria, Paginate, Message } from "@/rapida/clients/protos/common_pb";
+import {
+  CreateConversationMetricResponse,
+  CreateConversationMetricRequest,
+} from "./protos/talk-api_pb";
+import {
+  CreateMessageMetricResponse,
+  CreateMessageMetricRequest,
+} from "./protos/talk-api_pb";
 import { ConnectionConfig } from "@/rapida/connections/connection-config";
-import { ClientDuplexStream } from "@grpc/grpc-js";
-import grpc from "@grpc/grpc-js";
-import { InitiateBulkAssistantTalkResponse } from "./protos/talk-api_pb";
-import { GetProtoSource, RapidaSource } from "@/rapida/utils/rapida_source";
+import { TalkServiceClient } from "@/rapida/clients/protos/talk-api_grpc_pb";
+import { ServiceError } from "@grpc/grpc-js";
 
 /**
  *
- * @param clientCfg
+ * @param authHeader
+ * @returns
+ */
+export function AssistantTalk(
+  conversationStreamClient: TalkServiceClient,
+  authHeader: UserAuthInfo | ClientAuthInfo
+) {
+  return conversationStreamClient.assistantTalk(WithAuthContext(authHeader));
+}
+
+/**
+ *
+ * @param conversationClient
+ * @param assistantId
+ * @param assistantConversationId
+ * @param assistantConversationMessageId
+ * @param cb
+ * @param authHeader
+ */
+export function CreateMessageMetric(
+  connectionConfig: ConnectionConfig,
+  assistantId: string,
+  assistantConversationId: string,
+  messageId: string,
+  metrics: { name: string; value: string; description: string }[]
+): Promise<CreateMessageMetricResponse> {
+  return new Promise((resolve, reject) => {
+    const req = new CreateMessageMetricRequest();
+    req.setAssistantid(assistantId);
+    req.setAssistantconversationid(assistantConversationId);
+    req.setMessageid(messageId);
+    for (var mtr of metrics) {
+      const _m = new Metric();
+      _m.setName(mtr.name);
+      _m.setValue(mtr.value);
+      _m.setDescription(mtr.description);
+      req.addMetrics(_m);
+    }
+    connectionConfig.conversationClient.createMessageMetric(
+      req,
+      WithAuthContext(connectionConfig.auth),
+      (err: ServiceError | null, uvcr: CreateMessageMetricResponse) => {
+        if (err) reject(err);
+        else resolve(uvcr!);
+      }
+    );
+  });
+}
+
+/**
+ *
+ * @param conversationClient
+ * @param assistantId
+ * @param assistantConversationId
+ * @param metrics
+ * @param cb
+ * @param authHeader
+ */
+export function CreateConversationMetric(
+  connectionConfig: ConnectionConfig,
+  assistantId: string,
+  assistantConversationId: string,
+  metrics: { name: string; value: string; description: string }[]
+): Promise<CreateMessageMetricResponse> {
+  return new Promise((resolve, reject) => {
+    const req = new CreateConversationMetricRequest();
+    req.setAssistantid(assistantId);
+    req.setAssistantconversationid(assistantConversationId);
+    for (var mtr of metrics) {
+      const _m = new Metric();
+      _m.setName(mtr.name);
+      _m.setValue(mtr.value);
+      _m.setDescription(mtr.description);
+      req.addMetrics(_m);
+    }
+    connectionConfig.conversationClient.createConversationMetric(
+      req,
+      WithAuthContext(connectionConfig.auth),
+      (
+        err: ServiceError | null,
+        uvcr: CreateConversationMetricResponse | null
+      ) => {
+        if (err) reject(err);
+        else resolve(uvcr!);
+      }
+    );
+  });
+}
+
+/**
+ *
  * @param assistantId
  * @param page
  * @param pageSize
  * @param criteria
- * @returns
+ * @param cb
+ * @param authHeader
  */
 export function GetAllAssistantConversation(
-  clientCfg: ConnectionConfig,
+  connectionConfig: ConnectionConfig,
   assistantId: string,
   page: number,
   pageSize: number,
   criteria: { key: string; value: string }[]
-): Promise<Array<AssistantConversation>> {
+): Promise<GetAllAssistantConversationResponse> {
   return new Promise((resolve, reject) => {
     const req = new GetAllAssistantConversationRequest();
     req.setAssistantid(assistantId);
@@ -88,21 +168,15 @@ export function GetAllAssistantConversation(
     paginate.setPage(page);
     paginate.setPagesize(pageSize);
     req.setPaginate(paginate);
-    clientCfg.conversationClient.getAllAssistantConversation(
+    connectionConfig.conversationClient.getAllAssistantConversation(
       req,
-      WithAuthContext(clientCfg.auth),
+      WithAuthContext(connectionConfig.auth),
       (
-        err: grpc.ServiceError,
-        response: GetAllAssistantConversationResponse
+        err: ServiceError | null,
+        uvcr: GetAllAssistantConversationResponse | null
       ) => {
         if (err) reject(err);
-        else {
-          try {
-            resolve(handleListResponse(response!));
-          } catch (error) {
-            reject(error);
-          }
-        }
+        else resolve(uvcr!);
       }
     );
   });
@@ -110,22 +184,22 @@ export function GetAllAssistantConversation(
 
 /**
  *
- * @param clientCfg
  * @param assistantId
  * @param assistantConversationId
  * @param page
  * @param pageSize
  * @param criteria
- * @returns
+ * @param cb
+ * @param authHeader
  */
 export function GetAllAssistantConversationMessage(
-  clientCfg: ConnectionConfig,
+  connectionConfig: ConnectionConfig,
   assistantId: string,
   assistantConversationId: string,
   page: number,
   pageSize: number,
   criteria: { key: string; value: string }[]
-): Promise<Array<AssistantConversationMessage>> {
+): Promise<GetAllConversationMessageResponse> {
   return new Promise((resolve, reject) => {
     const req = new GetAllConversationMessageRequest();
     req.setAssistantid(assistantId);
@@ -140,261 +214,15 @@ export function GetAllAssistantConversationMessage(
     paginate.setPage(page);
     paginate.setPagesize(pageSize);
     req.setPaginate(paginate);
-    clientCfg.conversationClient.getAllConversationMessage(
+    connectionConfig.conversationClient.getAllConversationMessage(
       req,
-      WithAuthContext(clientCfg.auth),
-      (err: grpc.ServiceError, response: GetAllConversationMessageResponse) => {
-        if (err) reject(err);
-        else {
-          try {
-            resolve(handleListResponse(response!));
-          } catch (error) {
-            reject(error);
-          }
-        }
-      }
-    );
-  });
-}
-
-/**
- *
- * @param clientCfg
- * @returns
- */
-export function AssistantTalk(
-  clientCfg: ConnectionConfig
-): ClientDuplexStream<AssistantMessagingRequest, AssistantMessagingResponse> {
-  return clientCfg.conversationClient.assistantTalk(
-    WithAuthContext(clientCfg.auth)
-  );
-}
-
-/**
- *
- * @param clientCfg
- * @param assistantId
- * @param assistantConversationId
- * @param messageId
- * @param metrics
- * @returns
- */
-export function CreateMessageMetric(
-  clientCfg: ConnectionConfig,
-  assistantId: string,
-  assistantConversationId: string,
-  messageId: string,
-  metrics: { name: string; value: string; description: string }[]
-): Promise<Array<Metric>> {
-  return new Promise((resolve, reject) => {
-    const req = new CreateMessageMetricRequest();
-    req.setAssistantid(assistantId);
-    req.setAssistantconversationid(assistantConversationId);
-    req.setMessageid(messageId);
-    for (var mtr of metrics) {
-      const _m = new Metric();
-      _m.setName(mtr.name);
-      _m.setValue(mtr.value);
-      _m.setDescription(mtr.description);
-      req.addMetrics(_m);
-    }
-    clientCfg.conversationClient.createMessageMetric(
-      req,
-      WithAuthContext(clientCfg.auth),
-      (err: grpc.ServiceError, response: CreateMessageMetricResponse) => {
-        if (err) reject(err);
-        else {
-          try {
-            resolve(handleListResponse(response!));
-          } catch (error) {
-            reject(error);
-          }
-        }
-      }
-    );
-  });
-}
-
-/**
- *
- * @param clientCfg
- * @param assistantId
- * @param assistantConversationId
- * @param metrics
- * @returns
- */
-export function CreateConversationMetric(
-  clientCfg: ConnectionConfig,
-  assistantId: string,
-  assistantConversationId: string,
-  metrics: { name: string; value: string; description: string }[]
-): Promise<Array<Metric>> {
-  return new Promise((resolve, reject) => {
-    const req = new CreateConversationMetricRequest();
-    req.setAssistantid(assistantId);
-    req.setAssistantconversationid(assistantConversationId);
-    for (var mtr of metrics) {
-      const _m = new Metric();
-      _m.setName(mtr.name);
-      _m.setValue(mtr.value);
-      _m.setDescription(mtr.description);
-      req.addMetrics(_m);
-    }
-    clientCfg.conversationClient.createConversationMetric(
-      req,
-      WithAuthContext(clientCfg.auth),
-      (err: grpc.ServiceError, response: CreateConversationMetricResponse) => {
-        if (err) reject(err);
-        else {
-          try {
-            resolve(handleListResponse(response!));
-          } catch (error) {
-            reject(error);
-          }
-        }
-      }
-    );
-  });
-}
-
-/**
- *
- * @param clientCfg
- * @param assistantId
- * @param assistantVersion
- * @param params
- * @param args
- * @param options
- * @param metadata
- * @returns
- */
-export function InitiateAssistantTalk(
-  clientCfg: ConnectionConfig,
-  assistant: AssistantDefinition,
-  source: RapidaSource,
-  params: Map<string, google_protobuf_any_pb.Any>,
-  args?: Map<string, google_protobuf_any_pb.Any>,
-  options?: Map<string, google_protobuf_any_pb.Any>,
-  metadata?: Map<string, google_protobuf_any_pb.Any>
-): Promise<InitiateAssistantTalkParameter> {
-  return new Promise((resolve, reject) => {
-    const request = new InitiateAssistantTalkRequest();
-    request.setAssistant(assistant);
-    request.setSource(GetProtoSource(source));
-
-    const tk = new InitiateAssistantTalkParameter();
-    params.forEach((value, key) => {
-      tk.getItemsMap().set(key, value);
-    });
-    request.setParams(tk);
-
-    if (args) {
-      args.forEach((value, key) => {
-        request.getArgsMap().set(key, value);
-      });
-    }
-
-    if (options) {
-      options.forEach((value, key) => {
-        request.getOptionsMap().set(key, value);
-      });
-    }
-
-    if (metadata) {
-      metadata.forEach((value, key) => {
-        request.getMetadataMap().set(key, value);
-      });
-    }
-    clientCfg.conversationClient.initiateAssistantTalk(
-      request,
-      WithAuthContext(clientCfg.auth),
+      WithAuthContext(connectionConfig.auth),
       (
-        err: grpc.ServiceError | null,
-        response: InitiateAssistantTalkResponse
+        err: ServiceError | null,
+        uvcr: GetAllConversationMessageResponse | null
       ) => {
-        if (err) {
-          console.error("Error in initiateAssistantTalk:", err);
-          reject(err);
-        } else if (!response) {
-          reject(new Error("No response received from initiateAssistantTalk"));
-        } else {
-          try {
-            const result = handleSingleResponse(response);
-            if (result) {
-              resolve(result);
-            } else {
-              reject(
-                new Error("handleSingleResponse returned null or undefined")
-              );
-            }
-          } catch (error) {
-            console.error("Error in handleSingleResponse:", error);
-            reject(error);
-          }
-        }
-      }
-    );
-  });
-}
-
-/**
- *
- * @param clientCfg
- * @param assistantId
- * @param assistantVersion
- * @param params
- * @param args
- * @param options
- * @param metadata
- * @returns
- */
-export function InitiateBulkAssistantTalk(
-  clientCfg: ConnectionConfig,
-  assistant: AssistantDefinition,
-  params: Array<Map<string, google_protobuf_any_pb.Any>>,
-  args?: Map<string, google_protobuf_any_pb.Any>,
-  options?: Map<string, google_protobuf_any_pb.Any>,
-  metadata?: Map<string, google_protobuf_any_pb.Any>
-): Promise<Array<InitiateAssistantTalkParameter>> {
-  return new Promise((resolve, reject) => {
-    const request = new InitiateBulkAssistantTalkRequest();
-    request.setAssistant(assistant);
-    params.map((param) => {
-      const tk = new InitiateAssistantTalkParameter();
-      param.forEach((v, k) => {
-        tk.getItemsMap().set(k, v);
-      });
-      request.addParams(tk);
-    });
-    if (args) {
-      args?.forEach((v, k) => {
-        request.getArgsMap().set(k, v);
-      });
-    }
-
-    if (options) {
-      options?.forEach((v, k) => {
-        request.getOptionsMap().set(k, v);
-      });
-    }
-    if (metadata) {
-      metadata?.forEach((v, k) => {
-        request.getMetadataMap().set(k, v);
-      });
-    }
-
-    clientCfg.conversationClient.initiateBulkAssistantTalk(
-      request,
-      WithAuthContext(clientCfg.auth),
-      (err: grpc.ServiceError, response: InitiateBulkAssistantTalkResponse) => {
         if (err) reject(err);
-        else {
-          try {
-            resolve(handleListResponse(response!));
-          } catch (error) {
-            reject(error);
-          }
-        }
+        else resolve(uvcr!);
       }
     );
   });

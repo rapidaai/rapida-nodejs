@@ -475,7 +475,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.knowledge_api.CreateKnowledgeRequest.repeatedFields_ = [4];
+proto.knowledge_api.CreateKnowledgeRequest.repeatedFields_ = [4,8];
 
 
 
@@ -510,10 +510,12 @@ proto.knowledge_api.CreateKnowledgeRequest.toObject = function(includeInstance, 
   var f, obj = {
     name: jspb.Message.getFieldWithDefault(msg, 1, ""),
     description: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    embeddingprovidermodelid: jspb.Message.getFieldWithDefault(msg, 3, "0"),
     tagsList: (f = jspb.Message.getRepeatedField(msg, 4)) == null ? undefined : f,
     visibility: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    embeddingproviderid: jspb.Message.getFieldWithDefault(msg, 6, "0")
+    embeddingmodelproviderid: jspb.Message.getFieldWithDefault(msg, 6, "0"),
+    embeddingmodelprovidername: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    knowledgeembeddingmodeloptionsList: jspb.Message.toObjectList(msg.getKnowledgeembeddingmodeloptionsList(),
+    common_pb.Metadata.toObject, includeInstance)
   };
 
   if (includeInstance) {
@@ -558,10 +560,6 @@ proto.knowledge_api.CreateKnowledgeRequest.deserializeBinaryFromReader = functio
       var value = /** @type {string} */ (reader.readString());
       msg.setDescription(value);
       break;
-    case 3:
-      var value = /** @type {string} */ (reader.readUint64String());
-      msg.setEmbeddingprovidermodelid(value);
-      break;
     case 4:
       var value = /** @type {string} */ (reader.readString());
       msg.addTags(value);
@@ -572,7 +570,16 @@ proto.knowledge_api.CreateKnowledgeRequest.deserializeBinaryFromReader = functio
       break;
     case 6:
       var value = /** @type {string} */ (reader.readUint64String());
-      msg.setEmbeddingproviderid(value);
+      msg.setEmbeddingmodelproviderid(value);
+      break;
+    case 7:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setEmbeddingmodelprovidername(value);
+      break;
+    case 8:
+      var value = new common_pb.Metadata;
+      reader.readMessage(value,common_pb.Metadata.deserializeBinaryFromReader);
+      msg.addKnowledgeembeddingmodeloptions(value);
       break;
     default:
       reader.skipField();
@@ -617,13 +624,6 @@ proto.knowledge_api.CreateKnowledgeRequest.serializeBinaryToWriter = function(me
       f
     );
   }
-  f = message.getEmbeddingprovidermodelid();
-  if (parseInt(f, 10) !== 0) {
-    writer.writeUint64String(
-      3,
-      f
-    );
-  }
   f = message.getTagsList();
   if (f.length > 0) {
     writer.writeRepeatedString(
@@ -638,11 +638,26 @@ proto.knowledge_api.CreateKnowledgeRequest.serializeBinaryToWriter = function(me
       f
     );
   }
-  f = message.getEmbeddingproviderid();
+  f = message.getEmbeddingmodelproviderid();
   if (parseInt(f, 10) !== 0) {
     writer.writeUint64String(
       6,
       f
+    );
+  }
+  f = message.getEmbeddingmodelprovidername();
+  if (f.length > 0) {
+    writer.writeString(
+      7,
+      f
+    );
+  }
+  f = message.getKnowledgeembeddingmodeloptionsList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      8,
+      f,
+      common_pb.Metadata.serializeBinaryToWriter
     );
   }
 };
@@ -681,24 +696,6 @@ proto.knowledge_api.CreateKnowledgeRequest.prototype.getDescription = function()
  */
 proto.knowledge_api.CreateKnowledgeRequest.prototype.setDescription = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
-};
-
-
-/**
- * optional uint64 embeddingProviderModelId = 3;
- * @return {string}
- */
-proto.knowledge_api.CreateKnowledgeRequest.prototype.getEmbeddingprovidermodelid = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, "0"));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.knowledge_api.CreateKnowledgeRequest} returns this
- */
-proto.knowledge_api.CreateKnowledgeRequest.prototype.setEmbeddingprovidermodelid = function(value) {
-  return jspb.Message.setProto3StringIntField(this, 3, value);
 };
 
 
@@ -758,10 +755,10 @@ proto.knowledge_api.CreateKnowledgeRequest.prototype.setVisibility = function(va
 
 
 /**
- * optional uint64 embeddingProviderId = 6;
+ * optional uint64 embeddingModelProviderId = 6;
  * @return {string}
  */
-proto.knowledge_api.CreateKnowledgeRequest.prototype.getEmbeddingproviderid = function() {
+proto.knowledge_api.CreateKnowledgeRequest.prototype.getEmbeddingmodelproviderid = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, "0"));
 };
 
@@ -770,8 +767,64 @@ proto.knowledge_api.CreateKnowledgeRequest.prototype.getEmbeddingproviderid = fu
  * @param {string} value
  * @return {!proto.knowledge_api.CreateKnowledgeRequest} returns this
  */
-proto.knowledge_api.CreateKnowledgeRequest.prototype.setEmbeddingproviderid = function(value) {
+proto.knowledge_api.CreateKnowledgeRequest.prototype.setEmbeddingmodelproviderid = function(value) {
   return jspb.Message.setProto3StringIntField(this, 6, value);
+};
+
+
+/**
+ * optional string embeddingModelProviderName = 7;
+ * @return {string}
+ */
+proto.knowledge_api.CreateKnowledgeRequest.prototype.getEmbeddingmodelprovidername = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.knowledge_api.CreateKnowledgeRequest} returns this
+ */
+proto.knowledge_api.CreateKnowledgeRequest.prototype.setEmbeddingmodelprovidername = function(value) {
+  return jspb.Message.setProto3StringField(this, 7, value);
+};
+
+
+/**
+ * repeated Metadata knowledgeEmbeddingModelOptions = 8;
+ * @return {!Array<!proto.Metadata>}
+ */
+proto.knowledge_api.CreateKnowledgeRequest.prototype.getKnowledgeembeddingmodeloptionsList = function() {
+  return /** @type{!Array<!proto.Metadata>} */ (
+    jspb.Message.getRepeatedWrapperField(this, common_pb.Metadata, 8));
+};
+
+
+/**
+ * @param {!Array<!proto.Metadata>} value
+ * @return {!proto.knowledge_api.CreateKnowledgeRequest} returns this
+*/
+proto.knowledge_api.CreateKnowledgeRequest.prototype.setKnowledgeembeddingmodeloptionsList = function(value) {
+  return jspb.Message.setRepeatedWrapperField(this, 8, value);
+};
+
+
+/**
+ * @param {!proto.Metadata=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.Metadata}
+ */
+proto.knowledge_api.CreateKnowledgeRequest.prototype.addKnowledgeembeddingmodeloptions = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 8, opt_value, proto.Metadata, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.knowledge_api.CreateKnowledgeRequest} returns this
+ */
+proto.knowledge_api.CreateKnowledgeRequest.prototype.clearKnowledgeembeddingmodeloptionsList = function() {
+  return this.setKnowledgeembeddingmodeloptionsList([]);
 };
 
 

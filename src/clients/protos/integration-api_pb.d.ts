@@ -153,40 +153,6 @@ export namespace FunctionParameterProperty {
   }
 }
 
-export class ModelParameter extends jspb.Message {
-  getKey(): string;
-  setKey(value: string): void;
-
-  hasValue(): boolean;
-  clearValue(): void;
-  getValue(): google_protobuf_any_pb.Any | undefined;
-  setValue(value?: google_protobuf_any_pb.Any): void;
-
-  getType(): string;
-  setType(value: string): void;
-
-  getPlace(): string;
-  setPlace(value: string): void;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): ModelParameter.AsObject;
-  static toObject(includeInstance: boolean, msg: ModelParameter): ModelParameter.AsObject;
-  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: ModelParameter, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): ModelParameter;
-  static deserializeBinaryFromReader(message: ModelParameter, reader: jspb.BinaryReader): ModelParameter;
-}
-
-export namespace ModelParameter {
-  export type AsObject = {
-    key: string,
-    value?: google_protobuf_any_pb.Any.AsObject,
-    type: string,
-    place: string,
-  }
-}
-
 export class Embedding extends jspb.Message {
   getIndex(): number;
   setIndex(value: number): void;
@@ -223,19 +189,10 @@ export class EmbeddingRequest extends jspb.Message {
   getCredential(): Credential | undefined;
   setCredential(value?: Credential): void;
 
-  getModel(): string;
-  setModel(value: string): void;
-
-  getVersion(): string;
-  setVersion(value: string): void;
-
   getContentMap(): jspb.Map<number, string>;
   clearContentMap(): void;
-  clearModelparametersList(): void;
-  getModelparametersList(): Array<ModelParameter>;
-  setModelparametersList(value: Array<ModelParameter>): void;
-  addModelparameters(value?: ModelParameter, index?: number): ModelParameter;
-
+  getModelparametersMap(): jspb.Map<string, google_protobuf_any_pb.Any>;
+  clearModelparametersMap(): void;
   getAdditionaldataMap(): jspb.Map<string, string>;
   clearAdditionaldataMap(): void;
   serializeBinary(): Uint8Array;
@@ -251,10 +208,8 @@ export class EmbeddingRequest extends jspb.Message {
 export namespace EmbeddingRequest {
   export type AsObject = {
     credential?: Credential.AsObject,
-    model: string,
-    version: string,
     contentMap: Array<[number, string]>,
-    modelparametersList: Array<ModelParameter.AsObject>,
+    modelparametersMap: Array<[string, google_protobuf_any_pb.Any.AsObject]>,
     additionaldataMap: Array<[string, string]>,
   }
 }
@@ -341,22 +296,13 @@ export class RerankingRequest extends jspb.Message {
   getCredential(): Credential | undefined;
   setCredential(value?: Credential): void;
 
-  getModel(): string;
-  setModel(value: string): void;
-
-  getVersion(): string;
-  setVersion(value: string): void;
-
   getQuery(): string;
   setQuery(value: string): void;
 
   getContentMap(): jspb.Map<number, common_pb.Content>;
   clearContentMap(): void;
-  clearModelparametersList(): void;
-  getModelparametersList(): Array<ModelParameter>;
-  setModelparametersList(value: Array<ModelParameter>): void;
-  addModelparameters(value?: ModelParameter, index?: number): ModelParameter;
-
+  getModelparametersMap(): jspb.Map<string, google_protobuf_any_pb.Any>;
+  clearModelparametersMap(): void;
   getAdditionaldataMap(): jspb.Map<string, string>;
   clearAdditionaldataMap(): void;
   serializeBinary(): Uint8Array;
@@ -372,11 +318,9 @@ export class RerankingRequest extends jspb.Message {
 export namespace RerankingRequest {
   export type AsObject = {
     credential?: Credential.AsObject,
-    model: string,
-    version: string,
     query: string,
     contentMap: Array<[number, common_pb.Content.AsObject]>,
-    modelparametersList: Array<ModelParameter.AsObject>,
+    modelparametersMap: Array<[string, google_protobuf_any_pb.Any.AsObject]>,
     additionaldataMap: Array<[string, string]>,
   }
 }
@@ -424,57 +368,6 @@ export namespace RerankingResponse {
     dataList: Array<Reranking.AsObject>,
     error?: common_pb.Error.AsObject,
     metricsList: Array<common_pb.Metric.AsObject>,
-  }
-}
-
-export class ChatRequest extends jspb.Message {
-  hasCredential(): boolean;
-  clearCredential(): void;
-  getCredential(): Credential | undefined;
-  setCredential(value?: Credential): void;
-
-  getModel(): string;
-  setModel(value: string): void;
-
-  getVersion(): string;
-  setVersion(value: string): void;
-
-  clearConversationsList(): void;
-  getConversationsList(): Array<common_pb.Message>;
-  setConversationsList(value: Array<common_pb.Message>): void;
-  addConversations(value?: common_pb.Message, index?: number): common_pb.Message;
-
-  getAdditionaldataMap(): jspb.Map<string, string>;
-  clearAdditionaldataMap(): void;
-  clearModelparametersList(): void;
-  getModelparametersList(): Array<ModelParameter>;
-  setModelparametersList(value: Array<ModelParameter>): void;
-  addModelparameters(value?: ModelParameter, index?: number): ModelParameter;
-
-  clearTooldefinitionsList(): void;
-  getTooldefinitionsList(): Array<ToolDefinition>;
-  setTooldefinitionsList(value: Array<ToolDefinition>): void;
-  addTooldefinitions(value?: ToolDefinition, index?: number): ToolDefinition;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): ChatRequest.AsObject;
-  static toObject(includeInstance: boolean, msg: ChatRequest): ChatRequest.AsObject;
-  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: ChatRequest, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): ChatRequest;
-  static deserializeBinaryFromReader(message: ChatRequest, reader: jspb.BinaryReader): ChatRequest;
-}
-
-export namespace ChatRequest {
-  export type AsObject = {
-    credential?: Credential.AsObject,
-    model: string,
-    version: string,
-    conversationsList: Array<common_pb.Message.AsObject>,
-    additionaldataMap: Array<[string, string]>,
-    modelparametersList: Array<ModelParameter.AsObject>,
-    tooldefinitionsList: Array<ToolDefinition.AsObject>,
   }
 }
 
@@ -528,377 +421,43 @@ export namespace ChatResponse {
   }
 }
 
-export class GenerateRequest extends jspb.Message {
+export class ChatRequest extends jspb.Message {
   hasCredential(): boolean;
   clearCredential(): void;
   getCredential(): Credential | undefined;
   setCredential(value?: Credential): void;
 
-  getModel(): string;
-  setModel(value: string): void;
-
-  getVersion(): string;
-  setVersion(value: string): void;
-
-  getPrompt(): string;
-  setPrompt(value: string): void;
+  clearConversationsList(): void;
+  getConversationsList(): Array<common_pb.Message>;
+  setConversationsList(value: Array<common_pb.Message>): void;
+  addConversations(value?: common_pb.Message, index?: number): common_pb.Message;
 
   getAdditionaldataMap(): jspb.Map<string, string>;
   clearAdditionaldataMap(): void;
-  clearModelparametersList(): void;
-  getModelparametersList(): Array<ModelParameter>;
-  setModelparametersList(value: Array<ModelParameter>): void;
-  addModelparameters(value?: ModelParameter, index?: number): ModelParameter;
-
-  hasSystemprompt(): boolean;
-  clearSystemprompt(): void;
-  getSystemprompt(): string;
-  setSystemprompt(value: string): void;
+  getModelparametersMap(): jspb.Map<string, google_protobuf_any_pb.Any>;
+  clearModelparametersMap(): void;
+  clearTooldefinitionsList(): void;
+  getTooldefinitionsList(): Array<ToolDefinition>;
+  setTooldefinitionsList(value: Array<ToolDefinition>): void;
+  addTooldefinitions(value?: ToolDefinition, index?: number): ToolDefinition;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): GenerateRequest.AsObject;
-  static toObject(includeInstance: boolean, msg: GenerateRequest): GenerateRequest.AsObject;
+  toObject(includeInstance?: boolean): ChatRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: ChatRequest): ChatRequest.AsObject;
   static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
   static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: GenerateRequest, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): GenerateRequest;
-  static deserializeBinaryFromReader(message: GenerateRequest, reader: jspb.BinaryReader): GenerateRequest;
+  static serializeBinaryToWriter(message: ChatRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): ChatRequest;
+  static deserializeBinaryFromReader(message: ChatRequest, reader: jspb.BinaryReader): ChatRequest;
 }
 
-export namespace GenerateRequest {
+export namespace ChatRequest {
   export type AsObject = {
     credential?: Credential.AsObject,
-    model: string,
-    version: string,
-    prompt: string,
+    conversationsList: Array<common_pb.Message.AsObject>,
     additionaldataMap: Array<[string, string]>,
-    modelparametersList: Array<ModelParameter.AsObject>,
-    systemprompt: string,
-  }
-}
-
-export class GenerateResponse extends jspb.Message {
-  getCode(): number;
-  setCode(value: number): void;
-
-  getSuccess(): boolean;
-  setSuccess(value: boolean): void;
-
-  getRequestid(): number;
-  setRequestid(value: number): void;
-
-  clearDataList(): void;
-  getDataList(): Array<common_pb.Content>;
-  setDataList(value: Array<common_pb.Content>): void;
-  addData(value?: common_pb.Content, index?: number): common_pb.Content;
-
-  hasError(): boolean;
-  clearError(): void;
-  getError(): common_pb.Error | undefined;
-  setError(value?: common_pb.Error): void;
-
-  clearMetricsList(): void;
-  getMetricsList(): Array<common_pb.Metric>;
-  setMetricsList(value: Array<common_pb.Metric>): void;
-  addMetrics(value?: common_pb.Metric, index?: number): common_pb.Metric;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): GenerateResponse.AsObject;
-  static toObject(includeInstance: boolean, msg: GenerateResponse): GenerateResponse.AsObject;
-  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: GenerateResponse, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): GenerateResponse;
-  static deserializeBinaryFromReader(message: GenerateResponse, reader: jspb.BinaryReader): GenerateResponse;
-}
-
-export namespace GenerateResponse {
-  export type AsObject = {
-    code: number,
-    success: boolean,
-    requestid: number,
-    dataList: Array<common_pb.Content.AsObject>,
-    error?: common_pb.Error.AsObject,
-    metricsList: Array<common_pb.Metric.AsObject>,
-  }
-}
-
-export class GenerateTextToImageRequest extends jspb.Message {
-  hasCredential(): boolean;
-  clearCredential(): void;
-  getCredential(): Credential | undefined;
-  setCredential(value?: Credential): void;
-
-  getModel(): string;
-  setModel(value: string): void;
-
-  getVersion(): string;
-  setVersion(value: string): void;
-
-  getPrompt(): string;
-  setPrompt(value: string): void;
-
-  getAdditionaldataMap(): jspb.Map<string, string>;
-  clearAdditionaldataMap(): void;
-  clearModelparametersList(): void;
-  getModelparametersList(): Array<ModelParameter>;
-  setModelparametersList(value: Array<ModelParameter>): void;
-  addModelparameters(value?: ModelParameter, index?: number): ModelParameter;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): GenerateTextToImageRequest.AsObject;
-  static toObject(includeInstance: boolean, msg: GenerateTextToImageRequest): GenerateTextToImageRequest.AsObject;
-  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: GenerateTextToImageRequest, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): GenerateTextToImageRequest;
-  static deserializeBinaryFromReader(message: GenerateTextToImageRequest, reader: jspb.BinaryReader): GenerateTextToImageRequest;
-}
-
-export namespace GenerateTextToImageRequest {
-  export type AsObject = {
-    credential?: Credential.AsObject,
-    model: string,
-    version: string,
-    prompt: string,
-    additionaldataMap: Array<[string, string]>,
-    modelparametersList: Array<ModelParameter.AsObject>,
-  }
-}
-
-export class GenerateTextToImageResponse extends jspb.Message {
-  getCode(): number;
-  setCode(value: number): void;
-
-  getSuccess(): boolean;
-  setSuccess(value: boolean): void;
-
-  getRequestid(): number;
-  setRequestid(value: number): void;
-
-  clearDataList(): void;
-  getDataList(): Array<common_pb.Content>;
-  setDataList(value: Array<common_pb.Content>): void;
-  addData(value?: common_pb.Content, index?: number): common_pb.Content;
-
-  hasError(): boolean;
-  clearError(): void;
-  getError(): common_pb.Error | undefined;
-  setError(value?: common_pb.Error): void;
-
-  clearMetricsList(): void;
-  getMetricsList(): Array<common_pb.Metric>;
-  setMetricsList(value: Array<common_pb.Metric>): void;
-  addMetrics(value?: common_pb.Metric, index?: number): common_pb.Metric;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): GenerateTextToImageResponse.AsObject;
-  static toObject(includeInstance: boolean, msg: GenerateTextToImageResponse): GenerateTextToImageResponse.AsObject;
-  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: GenerateTextToImageResponse, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): GenerateTextToImageResponse;
-  static deserializeBinaryFromReader(message: GenerateTextToImageResponse, reader: jspb.BinaryReader): GenerateTextToImageResponse;
-}
-
-export namespace GenerateTextToImageResponse {
-  export type AsObject = {
-    code: number,
-    success: boolean,
-    requestid: number,
-    dataList: Array<common_pb.Content.AsObject>,
-    error?: common_pb.Error.AsObject,
-    metricsList: Array<common_pb.Metric.AsObject>,
-  }
-}
-
-export class GenerateTextToSpeechRequest extends jspb.Message {
-  hasCredential(): boolean;
-  clearCredential(): void;
-  getCredential(): Credential | undefined;
-  setCredential(value?: Credential): void;
-
-  getModel(): string;
-  setModel(value: string): void;
-
-  getVersion(): string;
-  setVersion(value: string): void;
-
-  getPrompt(): string;
-  setPrompt(value: string): void;
-
-  getAdditionaldataMap(): jspb.Map<string, string>;
-  clearAdditionaldataMap(): void;
-  clearModelparametersList(): void;
-  getModelparametersList(): Array<ModelParameter>;
-  setModelparametersList(value: Array<ModelParameter>): void;
-  addModelparameters(value?: ModelParameter, index?: number): ModelParameter;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): GenerateTextToSpeechRequest.AsObject;
-  static toObject(includeInstance: boolean, msg: GenerateTextToSpeechRequest): GenerateTextToSpeechRequest.AsObject;
-  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: GenerateTextToSpeechRequest, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): GenerateTextToSpeechRequest;
-  static deserializeBinaryFromReader(message: GenerateTextToSpeechRequest, reader: jspb.BinaryReader): GenerateTextToSpeechRequest;
-}
-
-export namespace GenerateTextToSpeechRequest {
-  export type AsObject = {
-    credential?: Credential.AsObject,
-    model: string,
-    version: string,
-    prompt: string,
-    additionaldataMap: Array<[string, string]>,
-    modelparametersList: Array<ModelParameter.AsObject>,
-  }
-}
-
-export class GenerateTextToSpeechResponse extends jspb.Message {
-  getCode(): number;
-  setCode(value: number): void;
-
-  getSuccess(): boolean;
-  setSuccess(value: boolean): void;
-
-  getRequestid(): number;
-  setRequestid(value: number): void;
-
-  clearDataList(): void;
-  getDataList(): Array<common_pb.Content>;
-  setDataList(value: Array<common_pb.Content>): void;
-  addData(value?: common_pb.Content, index?: number): common_pb.Content;
-
-  hasError(): boolean;
-  clearError(): void;
-  getError(): common_pb.Error | undefined;
-  setError(value?: common_pb.Error): void;
-
-  clearMetricsList(): void;
-  getMetricsList(): Array<common_pb.Metric>;
-  setMetricsList(value: Array<common_pb.Metric>): void;
-  addMetrics(value?: common_pb.Metric, index?: number): common_pb.Metric;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): GenerateTextToSpeechResponse.AsObject;
-  static toObject(includeInstance: boolean, msg: GenerateTextToSpeechResponse): GenerateTextToSpeechResponse.AsObject;
-  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: GenerateTextToSpeechResponse, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): GenerateTextToSpeechResponse;
-  static deserializeBinaryFromReader(message: GenerateTextToSpeechResponse, reader: jspb.BinaryReader): GenerateTextToSpeechResponse;
-}
-
-export namespace GenerateTextToSpeechResponse {
-  export type AsObject = {
-    code: number,
-    success: boolean,
-    requestid: number,
-    dataList: Array<common_pb.Content.AsObject>,
-    error?: common_pb.Error.AsObject,
-    metricsList: Array<common_pb.Metric.AsObject>,
-  }
-}
-
-export class GenerateSpeechToTextRequest extends jspb.Message {
-  hasCredential(): boolean;
-  clearCredential(): void;
-  getCredential(): Credential | undefined;
-  setCredential(value?: Credential): void;
-
-  getModel(): string;
-  setModel(value: string): void;
-
-  getVersion(): string;
-  setVersion(value: string): void;
-
-  getPrompt(): string;
-  setPrompt(value: string): void;
-
-  hasSpeech(): boolean;
-  clearSpeech(): void;
-  getSpeech(): common_pb.Content | undefined;
-  setSpeech(value?: common_pb.Content): void;
-
-  getAdditionaldataMap(): jspb.Map<string, string>;
-  clearAdditionaldataMap(): void;
-  clearModelparametersList(): void;
-  getModelparametersList(): Array<ModelParameter>;
-  setModelparametersList(value: Array<ModelParameter>): void;
-  addModelparameters(value?: ModelParameter, index?: number): ModelParameter;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): GenerateSpeechToTextRequest.AsObject;
-  static toObject(includeInstance: boolean, msg: GenerateSpeechToTextRequest): GenerateSpeechToTextRequest.AsObject;
-  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: GenerateSpeechToTextRequest, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): GenerateSpeechToTextRequest;
-  static deserializeBinaryFromReader(message: GenerateSpeechToTextRequest, reader: jspb.BinaryReader): GenerateSpeechToTextRequest;
-}
-
-export namespace GenerateSpeechToTextRequest {
-  export type AsObject = {
-    credential?: Credential.AsObject,
-    model: string,
-    version: string,
-    prompt: string,
-    speech?: common_pb.Content.AsObject,
-    additionaldataMap: Array<[string, string]>,
-    modelparametersList: Array<ModelParameter.AsObject>,
-  }
-}
-
-export class GenerateSpeechToTextResponse extends jspb.Message {
-  getCode(): number;
-  setCode(value: number): void;
-
-  getSuccess(): boolean;
-  setSuccess(value: boolean): void;
-
-  getRequestid(): number;
-  setRequestid(value: number): void;
-
-  clearDataList(): void;
-  getDataList(): Array<common_pb.Content>;
-  setDataList(value: Array<common_pb.Content>): void;
-  addData(value?: common_pb.Content, index?: number): common_pb.Content;
-
-  hasError(): boolean;
-  clearError(): void;
-  getError(): common_pb.Error | undefined;
-  setError(value?: common_pb.Error): void;
-
-  clearMetricsList(): void;
-  getMetricsList(): Array<common_pb.Metric>;
-  setMetricsList(value: Array<common_pb.Metric>): void;
-  addMetrics(value?: common_pb.Metric, index?: number): common_pb.Metric;
-
-  hasMeta(): boolean;
-  clearMeta(): void;
-  getMeta(): google_protobuf_struct_pb.Struct | undefined;
-  setMeta(value?: google_protobuf_struct_pb.Struct): void;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): GenerateSpeechToTextResponse.AsObject;
-  static toObject(includeInstance: boolean, msg: GenerateSpeechToTextResponse): GenerateSpeechToTextResponse.AsObject;
-  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: GenerateSpeechToTextResponse, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): GenerateSpeechToTextResponse;
-  static deserializeBinaryFromReader(message: GenerateSpeechToTextResponse, reader: jspb.BinaryReader): GenerateSpeechToTextResponse;
-}
-
-export namespace GenerateSpeechToTextResponse {
-  export type AsObject = {
-    code: number,
-    success: boolean,
-    requestid: number,
-    dataList: Array<common_pb.Content.AsObject>,
-    error?: common_pb.Error.AsObject,
-    metricsList: Array<common_pb.Metric.AsObject>,
-    meta?: google_protobuf_struct_pb.Struct.AsObject,
+    modelparametersMap: Array<[string, google_protobuf_any_pb.Any.AsObject]>,
+    tooldefinitionsList: Array<ToolDefinition.AsObject>,
   }
 }
 
@@ -1005,11 +564,8 @@ export class GetModerationRequest extends jspb.Message {
 
   getAdditionaldataMap(): jspb.Map<string, string>;
   clearAdditionaldataMap(): void;
-  clearModelparametersList(): void;
-  getModelparametersList(): Array<ModelParameter>;
-  setModelparametersList(value: Array<ModelParameter>): void;
-  addModelparameters(value?: ModelParameter, index?: number): ModelParameter;
-
+  getModelparametersMap(): jspb.Map<string, google_protobuf_any_pb.Any>;
+  clearModelparametersMap(): void;
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetModerationRequest.AsObject;
   static toObject(includeInstance: boolean, msg: GetModerationRequest): GetModerationRequest.AsObject;
@@ -1027,7 +583,7 @@ export namespace GetModerationRequest {
     version: string,
     content?: common_pb.Content.AsObject,
     additionaldataMap: Array<[string, string]>,
-    modelparametersList: Array<ModelParameter.AsObject>,
+    modelparametersMap: Array<[string, google_protobuf_any_pb.Any.AsObject]>,
   }
 }
 

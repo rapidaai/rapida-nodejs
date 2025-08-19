@@ -3,56 +3,189 @@
 
 import * as jspb from "google-protobuf";
 import * as google_protobuf_timestamp_pb from "google-protobuf/google/protobuf/timestamp_pb";
-import * as google_protobuf_struct_pb from "google-protobuf/google/protobuf/struct_pb";
 import * as common_pb from "./common_pb";
 
-export class EndpointProviderModel extends jspb.Message {
-  getId(): string;
-  setId(value: string): void;
+export class EndpointAttribute extends jspb.Message {
+  getSource(): string;
+  setSource(value: string): void;
 
-  getModeltype(): string;
-  setModeltype(value: string): void;
+  getSourceidentifier(): string;
+  setSourceidentifier(value: string): void;
 
-  getModelmodetype(): string;
-  setModelmodetype(value: string): void;
+  getVisibility(): string;
+  setVisibility(value: string): void;
+
+  getLanguage(): string;
+  setLanguage(value: string): void;
+
+  getName(): string;
+  setName(value: string): void;
+
+  getDescription(): string;
+  setDescription(value: string): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): EndpointAttribute.AsObject;
+  static toObject(includeInstance: boolean, msg: EndpointAttribute): EndpointAttribute.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: EndpointAttribute, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): EndpointAttribute;
+  static deserializeBinaryFromReader(message: EndpointAttribute, reader: jspb.BinaryReader): EndpointAttribute;
+}
+
+export namespace EndpointAttribute {
+  export type AsObject = {
+    source: string,
+    sourceidentifier: string,
+    visibility: string,
+    language: string,
+    name: string,
+    description: string,
+  }
+}
+
+export class EndpointProviderModelAttribute extends jspb.Message {
+  getDescription(): string;
+  setDescription(value: string): void;
 
   hasChatcompleteprompt(): boolean;
   clearChatcompleteprompt(): void;
   getChatcompleteprompt(): common_pb.TextChatCompletePrompt | undefined;
   setChatcompleteprompt(value?: common_pb.TextChatCompletePrompt): void;
 
-  hasCompleteprompt(): boolean;
-  clearCompleteprompt(): void;
-  getCompleteprompt(): common_pb.TextCompletePrompt | undefined;
-  setCompleteprompt(value?: common_pb.TextCompletePrompt): void;
+  getModelproviderid(): string;
+  setModelproviderid(value: string): void;
 
-  hasTexttoimageprompt(): boolean;
-  clearTexttoimageprompt(): void;
-  getTexttoimageprompt(): common_pb.TextToImagePrompt | undefined;
-  setTexttoimageprompt(value?: common_pb.TextToImagePrompt): void;
+  getModelprovidername(): string;
+  setModelprovidername(value: string): void;
 
-  hasTexttospeechprompt(): boolean;
-  clearTexttospeechprompt(): void;
-  getTexttospeechprompt(): common_pb.TextToSpeechPrompt | undefined;
-  setTexttospeechprompt(value?: common_pb.TextToSpeechPrompt): void;
+  clearEndpointmodeloptionsList(): void;
+  getEndpointmodeloptionsList(): Array<common_pb.Metadata>;
+  setEndpointmodeloptionsList(value: Array<common_pb.Metadata>): void;
+  addEndpointmodeloptions(value?: common_pb.Metadata, index?: number): common_pb.Metadata;
 
-  hasSpeechtotextprompt(): boolean;
-  clearSpeechtotextprompt(): void;
-  getSpeechtotextprompt(): common_pb.SpeechToTextPrompt | undefined;
-  setSpeechtotextprompt(value?: common_pb.SpeechToTextPrompt): void;
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): EndpointProviderModelAttribute.AsObject;
+  static toObject(includeInstance: boolean, msg: EndpointProviderModelAttribute): EndpointProviderModelAttribute.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: EndpointProviderModelAttribute, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): EndpointProviderModelAttribute;
+  static deserializeBinaryFromReader(message: EndpointProviderModelAttribute, reader: jspb.BinaryReader): EndpointProviderModelAttribute;
+}
 
-  getProvidermodelid(): string;
-  setProvidermodelid(value: string): void;
+export namespace EndpointProviderModelAttribute {
+  export type AsObject = {
+    description: string,
+    chatcompleteprompt?: common_pb.TextChatCompletePrompt.AsObject,
+    modelproviderid: string,
+    modelprovidername: string,
+    endpointmodeloptionsList: Array<common_pb.Metadata.AsObject>,
+  }
+}
 
-  hasProvidermodel(): boolean;
-  clearProvidermodel(): void;
-  getProvidermodel(): common_pb.ProviderModel | undefined;
-  setProvidermodel(value?: common_pb.ProviderModel): void;
+export class CreateEndpointRequest extends jspb.Message {
+  hasEndpointprovidermodelattribute(): boolean;
+  clearEndpointprovidermodelattribute(): void;
+  getEndpointprovidermodelattribute(): EndpointProviderModelAttribute | undefined;
+  setEndpointprovidermodelattribute(value?: EndpointProviderModelAttribute): void;
 
-  clearEndpointprovidermodelparametersList(): void;
-  getEndpointprovidermodelparametersList(): Array<common_pb.ProviderModelParameter>;
-  setEndpointprovidermodelparametersList(value: Array<common_pb.ProviderModelParameter>): void;
-  addEndpointprovidermodelparameters(value?: common_pb.ProviderModelParameter, index?: number): common_pb.ProviderModelParameter;
+  hasEndpointattribute(): boolean;
+  clearEndpointattribute(): void;
+  getEndpointattribute(): EndpointAttribute | undefined;
+  setEndpointattribute(value?: EndpointAttribute): void;
+
+  hasRetryconfiguration(): boolean;
+  clearRetryconfiguration(): void;
+  getRetryconfiguration(): EndpointRetryConfiguration | undefined;
+  setRetryconfiguration(value?: EndpointRetryConfiguration): void;
+
+  hasCacheconfiguration(): boolean;
+  clearCacheconfiguration(): void;
+  getCacheconfiguration(): EndpointCacheConfiguration | undefined;
+  setCacheconfiguration(value?: EndpointCacheConfiguration): void;
+
+  clearTagsList(): void;
+  getTagsList(): Array<string>;
+  setTagsList(value: Array<string>): void;
+  addTags(value: string, index?: number): string;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): CreateEndpointRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: CreateEndpointRequest): CreateEndpointRequest.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: CreateEndpointRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): CreateEndpointRequest;
+  static deserializeBinaryFromReader(message: CreateEndpointRequest, reader: jspb.BinaryReader): CreateEndpointRequest;
+}
+
+export namespace CreateEndpointRequest {
+  export type AsObject = {
+    endpointprovidermodelattribute?: EndpointProviderModelAttribute.AsObject,
+    endpointattribute?: EndpointAttribute.AsObject,
+    retryconfiguration?: EndpointRetryConfiguration.AsObject,
+    cacheconfiguration?: EndpointCacheConfiguration.AsObject,
+    tagsList: Array<string>,
+  }
+}
+
+export class CreateEndpointResponse extends jspb.Message {
+  getCode(): number;
+  setCode(value: number): void;
+
+  getSuccess(): boolean;
+  setSuccess(value: boolean): void;
+
+  hasData(): boolean;
+  clearData(): void;
+  getData(): Endpoint | undefined;
+  setData(value?: Endpoint): void;
+
+  hasError(): boolean;
+  clearError(): void;
+  getError(): common_pb.Error | undefined;
+  setError(value?: common_pb.Error): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): CreateEndpointResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: CreateEndpointResponse): CreateEndpointResponse.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: CreateEndpointResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): CreateEndpointResponse;
+  static deserializeBinaryFromReader(message: CreateEndpointResponse, reader: jspb.BinaryReader): CreateEndpointResponse;
+}
+
+export namespace CreateEndpointResponse {
+  export type AsObject = {
+    code: number,
+    success: boolean,
+    data?: Endpoint.AsObject,
+    error?: common_pb.Error.AsObject,
+  }
+}
+
+export class EndpointProviderModel extends jspb.Message {
+  getId(): string;
+  setId(value: string): void;
+
+  hasChatcompleteprompt(): boolean;
+  clearChatcompleteprompt(): void;
+  getChatcompleteprompt(): common_pb.TextChatCompletePrompt | undefined;
+  setChatcompleteprompt(value?: common_pb.TextChatCompletePrompt): void;
+
+  getModelproviderid(): string;
+  setModelproviderid(value: string): void;
+
+  getModelprovidername(): string;
+  setModelprovidername(value: string): void;
+
+  clearEndpointmodeloptionsList(): void;
+  getEndpointmodeloptionsList(): Array<common_pb.Metadata>;
+  setEndpointmodeloptionsList(value: Array<common_pb.Metadata>): void;
+  addEndpointmodeloptions(value?: common_pb.Metadata, index?: number): common_pb.Metadata;
 
   getStatus(): string;
   setStatus(value: string): void;
@@ -102,16 +235,10 @@ export class EndpointProviderModel extends jspb.Message {
 export namespace EndpointProviderModel {
   export type AsObject = {
     id: string,
-    modeltype: string,
-    modelmodetype: string,
     chatcompleteprompt?: common_pb.TextChatCompletePrompt.AsObject,
-    completeprompt?: common_pb.TextCompletePrompt.AsObject,
-    texttoimageprompt?: common_pb.TextToImagePrompt.AsObject,
-    texttospeechprompt?: common_pb.TextToSpeechPrompt.AsObject,
-    speechtotextprompt?: common_pb.SpeechToTextPrompt.AsObject,
-    providermodelid: string,
-    providermodel?: common_pb.ProviderModel.AsObject,
-    endpointprovidermodelparametersList: Array<common_pb.ProviderModelParameter.AsObject>,
+    modelproviderid: string,
+    modelprovidername: string,
+    endpointmodeloptionsList: Array<common_pb.Metadata.AsObject>,
     status: string,
     createdby: string,
     createduser?: common_pb.User.AsObject,
@@ -193,9 +320,6 @@ export class Endpoint extends jspb.Message {
 
   getSourceidentifier(): string;
   setSourceidentifier(value: string): void;
-
-  getType(): string;
-  setType(value: string): void;
 
   getProjectid(): string;
   setProjectid(value: string): void;
@@ -288,7 +412,6 @@ export namespace Endpoint {
     visibility: string,
     source: string,
     sourceidentifier: string,
-    type: string,
     projectid: string,
     organizationid: string,
     endpointprovidermodelid: string,
@@ -307,204 +430,6 @@ export namespace Endpoint {
     createduser?: common_pb.User.AsObject,
     updatedby: string,
     updateduser?: common_pb.User.AsObject,
-  }
-}
-
-export class EndpointProviderModelAttribute extends jspb.Message {
-  getModeltype(): string;
-  setModeltype(value: string): void;
-
-  getModelmodetype(): string;
-  setModelmodetype(value: string): void;
-
-  hasChatcompleteprompt(): boolean;
-  clearChatcompleteprompt(): void;
-  getChatcompleteprompt(): common_pb.TextChatCompletePrompt | undefined;
-  setChatcompleteprompt(value?: common_pb.TextChatCompletePrompt): void;
-
-  hasCompleteprompt(): boolean;
-  clearCompleteprompt(): void;
-  getCompleteprompt(): common_pb.TextCompletePrompt | undefined;
-  setCompleteprompt(value?: common_pb.TextCompletePrompt): void;
-
-  getProvidermodelid(): string;
-  setProvidermodelid(value: string): void;
-
-  getProviderid(): string;
-  setProviderid(value: string): void;
-
-  clearEndpointprovidermodelparametersList(): void;
-  getEndpointprovidermodelparametersList(): Array<common_pb.ProviderModelParameter>;
-  setEndpointprovidermodelparametersList(value: Array<common_pb.ProviderModelParameter>): void;
-  addEndpointprovidermodelparameters(value?: common_pb.ProviderModelParameter, index?: number): common_pb.ProviderModelParameter;
-
-  hasTexttoimageprompt(): boolean;
-  clearTexttoimageprompt(): void;
-  getTexttoimageprompt(): common_pb.TextToImagePrompt | undefined;
-  setTexttoimageprompt(value?: common_pb.TextToImagePrompt): void;
-
-  hasTexttospeechprompt(): boolean;
-  clearTexttospeechprompt(): void;
-  getTexttospeechprompt(): common_pb.TextToSpeechPrompt | undefined;
-  setTexttospeechprompt(value?: common_pb.TextToSpeechPrompt): void;
-
-  hasSpeechtotextprompt(): boolean;
-  clearSpeechtotextprompt(): void;
-  getSpeechtotextprompt(): common_pb.SpeechToTextPrompt | undefined;
-  setSpeechtotextprompt(value?: common_pb.SpeechToTextPrompt): void;
-
-  getDescription(): string;
-  setDescription(value: string): void;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): EndpointProviderModelAttribute.AsObject;
-  static toObject(includeInstance: boolean, msg: EndpointProviderModelAttribute): EndpointProviderModelAttribute.AsObject;
-  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: EndpointProviderModelAttribute, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): EndpointProviderModelAttribute;
-  static deserializeBinaryFromReader(message: EndpointProviderModelAttribute, reader: jspb.BinaryReader): EndpointProviderModelAttribute;
-}
-
-export namespace EndpointProviderModelAttribute {
-  export type AsObject = {
-    modeltype: string,
-    modelmodetype: string,
-    chatcompleteprompt?: common_pb.TextChatCompletePrompt.AsObject,
-    completeprompt?: common_pb.TextCompletePrompt.AsObject,
-    providermodelid: string,
-    providerid: string,
-    endpointprovidermodelparametersList: Array<common_pb.ProviderModelParameter.AsObject>,
-    texttoimageprompt?: common_pb.TextToImagePrompt.AsObject,
-    texttospeechprompt?: common_pb.TextToSpeechPrompt.AsObject,
-    speechtotextprompt?: common_pb.SpeechToTextPrompt.AsObject,
-    description: string,
-  }
-}
-
-export class EndpointAttribute extends jspb.Message {
-  getSource(): string;
-  setSource(value: string): void;
-
-  getSourceidentifier(): string;
-  setSourceidentifier(value: string): void;
-
-  getType(): string;
-  setType(value: string): void;
-
-  getVisibility(): string;
-  setVisibility(value: string): void;
-
-  getLanguage(): string;
-  setLanguage(value: string): void;
-
-  getName(): string;
-  setName(value: string): void;
-
-  getDescription(): string;
-  setDescription(value: string): void;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): EndpointAttribute.AsObject;
-  static toObject(includeInstance: boolean, msg: EndpointAttribute): EndpointAttribute.AsObject;
-  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: EndpointAttribute, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): EndpointAttribute;
-  static deserializeBinaryFromReader(message: EndpointAttribute, reader: jspb.BinaryReader): EndpointAttribute;
-}
-
-export namespace EndpointAttribute {
-  export type AsObject = {
-    source: string,
-    sourceidentifier: string,
-    type: string,
-    visibility: string,
-    language: string,
-    name: string,
-    description: string,
-  }
-}
-
-export class CreateEndpointRequest extends jspb.Message {
-  hasEndpointprovidermodelattribute(): boolean;
-  clearEndpointprovidermodelattribute(): void;
-  getEndpointprovidermodelattribute(): EndpointProviderModelAttribute | undefined;
-  setEndpointprovidermodelattribute(value?: EndpointProviderModelAttribute): void;
-
-  hasEndpointattribute(): boolean;
-  clearEndpointattribute(): void;
-  getEndpointattribute(): EndpointAttribute | undefined;
-  setEndpointattribute(value?: EndpointAttribute): void;
-
-  hasRetryconfiguration(): boolean;
-  clearRetryconfiguration(): void;
-  getRetryconfiguration(): EndpointRetryConfiguration | undefined;
-  setRetryconfiguration(value?: EndpointRetryConfiguration): void;
-
-  hasCacheconfiguration(): boolean;
-  clearCacheconfiguration(): void;
-  getCacheconfiguration(): EndpointCacheConfiguration | undefined;
-  setCacheconfiguration(value?: EndpointCacheConfiguration): void;
-
-  clearTagsList(): void;
-  getTagsList(): Array<string>;
-  setTagsList(value: Array<string>): void;
-  addTags(value: string, index?: number): string;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): CreateEndpointRequest.AsObject;
-  static toObject(includeInstance: boolean, msg: CreateEndpointRequest): CreateEndpointRequest.AsObject;
-  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: CreateEndpointRequest, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): CreateEndpointRequest;
-  static deserializeBinaryFromReader(message: CreateEndpointRequest, reader: jspb.BinaryReader): CreateEndpointRequest;
-}
-
-export namespace CreateEndpointRequest {
-  export type AsObject = {
-    endpointprovidermodelattribute?: EndpointProviderModelAttribute.AsObject,
-    endpointattribute?: EndpointAttribute.AsObject,
-    retryconfiguration?: EndpointRetryConfiguration.AsObject,
-    cacheconfiguration?: EndpointCacheConfiguration.AsObject,
-    tagsList: Array<string>,
-  }
-}
-
-export class CreateEndpointResponse extends jspb.Message {
-  getCode(): number;
-  setCode(value: number): void;
-
-  getSuccess(): boolean;
-  setSuccess(value: boolean): void;
-
-  hasData(): boolean;
-  clearData(): void;
-  getData(): Endpoint | undefined;
-  setData(value?: Endpoint): void;
-
-  hasError(): boolean;
-  clearError(): void;
-  getError(): common_pb.Error | undefined;
-  setError(value?: common_pb.Error): void;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): CreateEndpointResponse.AsObject;
-  static toObject(includeInstance: boolean, msg: CreateEndpointResponse): CreateEndpointResponse.AsObject;
-  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: CreateEndpointResponse, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): CreateEndpointResponse;
-  static deserializeBinaryFromReader(message: CreateEndpointResponse, reader: jspb.BinaryReader): CreateEndpointResponse;
-}
-
-export namespace CreateEndpointResponse {
-  export type AsObject = {
-    code: number,
-    success: boolean,
-    data?: Endpoint.AsObject,
-    error?: common_pb.Error.AsObject,
   }
 }
 
@@ -1092,172 +1017,6 @@ export namespace ForkEndpointRequest {
   }
 }
 
-export class GetAllDeploymentRequest extends jspb.Message {
-  hasPaginate(): boolean;
-  clearPaginate(): void;
-  getPaginate(): common_pb.Paginate | undefined;
-  setPaginate(value?: common_pb.Paginate): void;
-
-  clearCriteriasList(): void;
-  getCriteriasList(): Array<common_pb.Criteria>;
-  setCriteriasList(value: Array<common_pb.Criteria>): void;
-  addCriterias(value?: common_pb.Criteria, index?: number): common_pb.Criteria;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): GetAllDeploymentRequest.AsObject;
-  static toObject(includeInstance: boolean, msg: GetAllDeploymentRequest): GetAllDeploymentRequest.AsObject;
-  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: GetAllDeploymentRequest, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): GetAllDeploymentRequest;
-  static deserializeBinaryFromReader(message: GetAllDeploymentRequest, reader: jspb.BinaryReader): GetAllDeploymentRequest;
-}
-
-export namespace GetAllDeploymentRequest {
-  export type AsObject = {
-    paginate?: common_pb.Paginate.AsObject,
-    criteriasList: Array<common_pb.Criteria.AsObject>,
-  }
-}
-
-export class SearchableDeployment extends jspb.Message {
-  getId(): string;
-  setId(value: string): void;
-
-  getStatus(): string;
-  setStatus(value: string): void;
-
-  getVisibility(): string;
-  setVisibility(value: string): void;
-
-  getType(): string;
-  setType(value: string): void;
-
-  getProjectid(): string;
-  setProjectid(value: string): void;
-
-  getOrganizationid(): string;
-  setOrganizationid(value: string): void;
-
-  clearTagList(): void;
-  getTagList(): Array<string>;
-  setTagList(value: Array<string>): void;
-  addTag(value: string, index?: number): string;
-
-  getLanguage(): string;
-  setLanguage(value: string): void;
-
-  hasOrganization(): boolean;
-  clearOrganization(): void;
-  getOrganization(): common_pb.Organization | undefined;
-  setOrganization(value?: common_pb.Organization): void;
-
-  getName(): string;
-  setName(value: string): void;
-
-  getDescription(): string;
-  setDescription(value: string): void;
-
-  hasCreateddate(): boolean;
-  clearCreateddate(): void;
-  getCreateddate(): google_protobuf_timestamp_pb.Timestamp | undefined;
-  setCreateddate(value?: google_protobuf_timestamp_pb.Timestamp): void;
-
-  hasUpdateddate(): boolean;
-  clearUpdateddate(): void;
-  getUpdateddate(): google_protobuf_timestamp_pb.Timestamp | undefined;
-  setUpdateddate(value?: google_protobuf_timestamp_pb.Timestamp): void;
-
-  getProvidermodelid(): string;
-  setProvidermodelid(value: string): void;
-
-  getProviderid(): string;
-  setProviderid(value: string): void;
-
-  hasAppappearance(): boolean;
-  clearAppappearance(): void;
-  getAppappearance(): google_protobuf_struct_pb.Struct | undefined;
-  setAppappearance(value?: google_protobuf_struct_pb.Struct): void;
-
-  hasWebappearance(): boolean;
-  clearWebappearance(): void;
-  getWebappearance(): google_protobuf_struct_pb.Struct | undefined;
-  setWebappearance(value?: google_protobuf_struct_pb.Struct): void;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): SearchableDeployment.AsObject;
-  static toObject(includeInstance: boolean, msg: SearchableDeployment): SearchableDeployment.AsObject;
-  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: SearchableDeployment, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): SearchableDeployment;
-  static deserializeBinaryFromReader(message: SearchableDeployment, reader: jspb.BinaryReader): SearchableDeployment;
-}
-
-export namespace SearchableDeployment {
-  export type AsObject = {
-    id: string,
-    status: string,
-    visibility: string,
-    type: string,
-    projectid: string,
-    organizationid: string,
-    tagList: Array<string>,
-    language: string,
-    organization?: common_pb.Organization.AsObject,
-    name: string,
-    description: string,
-    createddate?: google_protobuf_timestamp_pb.Timestamp.AsObject,
-    updateddate?: google_protobuf_timestamp_pb.Timestamp.AsObject,
-    providermodelid: string,
-    providerid: string,
-    appappearance?: google_protobuf_struct_pb.Struct.AsObject,
-    webappearance?: google_protobuf_struct_pb.Struct.AsObject,
-  }
-}
-
-export class GetAllDeploymentResponse extends jspb.Message {
-  getCode(): number;
-  setCode(value: number): void;
-
-  getSuccess(): boolean;
-  setSuccess(value: boolean): void;
-
-  clearDataList(): void;
-  getDataList(): Array<SearchableDeployment>;
-  setDataList(value: Array<SearchableDeployment>): void;
-  addData(value?: SearchableDeployment, index?: number): SearchableDeployment;
-
-  hasError(): boolean;
-  clearError(): void;
-  getError(): common_pb.Error | undefined;
-  setError(value?: common_pb.Error): void;
-
-  hasPaginated(): boolean;
-  clearPaginated(): void;
-  getPaginated(): common_pb.Paginated | undefined;
-  setPaginated(value?: common_pb.Paginated): void;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): GetAllDeploymentResponse.AsObject;
-  static toObject(includeInstance: boolean, msg: GetAllDeploymentResponse): GetAllDeploymentResponse.AsObject;
-  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: GetAllDeploymentResponse, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): GetAllDeploymentResponse;
-  static deserializeBinaryFromReader(message: GetAllDeploymentResponse, reader: jspb.BinaryReader): GetAllDeploymentResponse;
-}
-
-export namespace GetAllDeploymentResponse {
-  export type AsObject = {
-    code: number,
-    success: boolean,
-    dataList: Array<SearchableDeployment.AsObject>,
-    error?: common_pb.Error.AsObject,
-    paginated?: common_pb.Paginated.AsObject,
-  }
-}
-
 export class UpdateEndpointDetailRequest extends jspb.Message {
   getEndpointid(): string;
   setEndpointid(value: string): void;
@@ -1283,6 +1042,224 @@ export namespace UpdateEndpointDetailRequest {
     endpointid: string,
     name: string,
     description: string,
+  }
+}
+
+export class EndpointLog extends jspb.Message {
+  getId(): string;
+  setId(value: string): void;
+
+  getEndpointid(): string;
+  setEndpointid(value: string): void;
+
+  getSource(): string;
+  setSource(value: string): void;
+
+  getStatus(): string;
+  setStatus(value: string): void;
+
+  getProjectid(): string;
+  setProjectid(value: string): void;
+
+  getOrganizationid(): string;
+  setOrganizationid(value: string): void;
+
+  getEndpointprovidermodelid(): string;
+  setEndpointprovidermodelid(value: string): void;
+
+  getTimetaken(): string;
+  setTimetaken(value: string): void;
+
+  hasCreateddate(): boolean;
+  clearCreateddate(): void;
+  getCreateddate(): google_protobuf_timestamp_pb.Timestamp | undefined;
+  setCreateddate(value?: google_protobuf_timestamp_pb.Timestamp): void;
+
+  hasUpdateddate(): boolean;
+  clearUpdateddate(): void;
+  getUpdateddate(): google_protobuf_timestamp_pb.Timestamp | undefined;
+  setUpdateddate(value?: google_protobuf_timestamp_pb.Timestamp): void;
+
+  clearMetricsList(): void;
+  getMetricsList(): Array<common_pb.Metric>;
+  setMetricsList(value: Array<common_pb.Metric>): void;
+  addMetrics(value?: common_pb.Metric, index?: number): common_pb.Metric;
+
+  clearMetadataList(): void;
+  getMetadataList(): Array<common_pb.Metadata>;
+  setMetadataList(value: Array<common_pb.Metadata>): void;
+  addMetadata(value?: common_pb.Metadata, index?: number): common_pb.Metadata;
+
+  clearArgumentsList(): void;
+  getArgumentsList(): Array<common_pb.Argument>;
+  setArgumentsList(value: Array<common_pb.Argument>): void;
+  addArguments(value?: common_pb.Argument, index?: number): common_pb.Argument;
+
+  clearOptionsList(): void;
+  getOptionsList(): Array<common_pb.Metadata>;
+  setOptionsList(value: Array<common_pb.Metadata>): void;
+  addOptions(value?: common_pb.Metadata, index?: number): common_pb.Metadata;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): EndpointLog.AsObject;
+  static toObject(includeInstance: boolean, msg: EndpointLog): EndpointLog.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: EndpointLog, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): EndpointLog;
+  static deserializeBinaryFromReader(message: EndpointLog, reader: jspb.BinaryReader): EndpointLog;
+}
+
+export namespace EndpointLog {
+  export type AsObject = {
+    id: string,
+    endpointid: string,
+    source: string,
+    status: string,
+    projectid: string,
+    organizationid: string,
+    endpointprovidermodelid: string,
+    timetaken: string,
+    createddate?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+    updateddate?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+    metricsList: Array<common_pb.Metric.AsObject>,
+    metadataList: Array<common_pb.Metadata.AsObject>,
+    argumentsList: Array<common_pb.Argument.AsObject>,
+    optionsList: Array<common_pb.Metadata.AsObject>,
+  }
+}
+
+export class GetAllEndpointLogRequest extends jspb.Message {
+  hasPaginate(): boolean;
+  clearPaginate(): void;
+  getPaginate(): common_pb.Paginate | undefined;
+  setPaginate(value?: common_pb.Paginate): void;
+
+  clearCriteriasList(): void;
+  getCriteriasList(): Array<common_pb.Criteria>;
+  setCriteriasList(value: Array<common_pb.Criteria>): void;
+  addCriterias(value?: common_pb.Criteria, index?: number): common_pb.Criteria;
+
+  getEndpointid(): string;
+  setEndpointid(value: string): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetAllEndpointLogRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: GetAllEndpointLogRequest): GetAllEndpointLogRequest.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: GetAllEndpointLogRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetAllEndpointLogRequest;
+  static deserializeBinaryFromReader(message: GetAllEndpointLogRequest, reader: jspb.BinaryReader): GetAllEndpointLogRequest;
+}
+
+export namespace GetAllEndpointLogRequest {
+  export type AsObject = {
+    paginate?: common_pb.Paginate.AsObject,
+    criteriasList: Array<common_pb.Criteria.AsObject>,
+    endpointid: string,
+  }
+}
+
+export class GetAllEndpointLogResponse extends jspb.Message {
+  getCode(): number;
+  setCode(value: number): void;
+
+  getSuccess(): boolean;
+  setSuccess(value: boolean): void;
+
+  clearDataList(): void;
+  getDataList(): Array<EndpointLog>;
+  setDataList(value: Array<EndpointLog>): void;
+  addData(value?: EndpointLog, index?: number): EndpointLog;
+
+  hasError(): boolean;
+  clearError(): void;
+  getError(): common_pb.Error | undefined;
+  setError(value?: common_pb.Error): void;
+
+  hasPaginated(): boolean;
+  clearPaginated(): void;
+  getPaginated(): common_pb.Paginated | undefined;
+  setPaginated(value?: common_pb.Paginated): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetAllEndpointLogResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: GetAllEndpointLogResponse): GetAllEndpointLogResponse.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: GetAllEndpointLogResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetAllEndpointLogResponse;
+  static deserializeBinaryFromReader(message: GetAllEndpointLogResponse, reader: jspb.BinaryReader): GetAllEndpointLogResponse;
+}
+
+export namespace GetAllEndpointLogResponse {
+  export type AsObject = {
+    code: number,
+    success: boolean,
+    dataList: Array<EndpointLog.AsObject>,
+    error?: common_pb.Error.AsObject,
+    paginated?: common_pb.Paginated.AsObject,
+  }
+}
+
+export class GetEndpointLogRequest extends jspb.Message {
+  getEndpointid(): string;
+  setEndpointid(value: string): void;
+
+  getId(): string;
+  setId(value: string): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetEndpointLogRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: GetEndpointLogRequest): GetEndpointLogRequest.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: GetEndpointLogRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetEndpointLogRequest;
+  static deserializeBinaryFromReader(message: GetEndpointLogRequest, reader: jspb.BinaryReader): GetEndpointLogRequest;
+}
+
+export namespace GetEndpointLogRequest {
+  export type AsObject = {
+    endpointid: string,
+    id: string,
+  }
+}
+
+export class GetEndpointLogResponse extends jspb.Message {
+  getCode(): number;
+  setCode(value: number): void;
+
+  getSuccess(): boolean;
+  setSuccess(value: boolean): void;
+
+  hasData(): boolean;
+  clearData(): void;
+  getData(): EndpointLog | undefined;
+  setData(value?: EndpointLog): void;
+
+  hasError(): boolean;
+  clearError(): void;
+  getError(): common_pb.Error | undefined;
+  setError(value?: common_pb.Error): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetEndpointLogResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: GetEndpointLogResponse): GetEndpointLogResponse.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: GetEndpointLogResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetEndpointLogResponse;
+  static deserializeBinaryFromReader(message: GetEndpointLogResponse, reader: jspb.BinaryReader): GetEndpointLogResponse;
+}
+
+export namespace GetEndpointLogResponse {
+  export type AsObject = {
+    code: number,
+    success: boolean,
+    data?: EndpointLog.AsObject,
+    error?: common_pb.Error.AsObject,
   }
 }
 

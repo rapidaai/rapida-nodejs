@@ -25,9 +25,12 @@
  *  It includes methods for invoking requests with specified parameters.
  */
 
-import { WithAuthContext, handleSingleResponse } from "@/rapida/clients";
 import {
-  CallerResponse,
+  ClientAuthInfo,
+  UserAuthInfo,
+  WithAuthContext,
+} from "@/rapida/clients";
+import {
   EndpointDefinition,
   InvokeRequest,
   InvokeResponse,
@@ -35,7 +38,7 @@ import {
 import p from "google-protobuf/google/protobuf/any_pb";
 import { StringToAny } from "@/rapida/utils/rapida_value";
 import { ConnectionConfig } from "@/rapida/connections/connection-config";
-import grpc from "@grpc/grpc-js";
+import grpc, { ServiceError } from "@grpc/grpc-js";
 
 /**
  * Invoke an endpoint with specified parameters.
@@ -48,22 +51,29 @@ import grpc from "@grpc/grpc-js";
  * @returns Promise<InvokeResponse> - A promise that resolves with the InvokeResponse.
  */
 export function Invoke(
-  connectionCfg: ConnectionConfig,
+  config: ConnectionConfig,
   endpointId: string,
-  endpointProviderModelId: string,
   parameters: Map<string, p.Any>,
+  version?: string,
   metadata?: Map<string, string>
-): Promise<CallerResponse> {
+): Promise<InvokeResponse> {
   return new Promise((resolve, reject) => {
     const req = new InvokeRequest();
     const endpoint = new EndpointDefinition();
     endpoint.setEndpointid(endpointId);
-    endpoint.setVersion(`vrsn_${endpointProviderModelId}`);
+    if (version) {
+      endpoint.setVersion(version);
+    } else {
+      endpoint.setVersion("latest");
+    }
+
     req.setEndpoint(endpoint);
+
     // Set the parameters for the request
     parameters.forEach((value, key) => {
       req.getArgsMap().set(key, value);
     });
+
     // Set the optional metadata for the request
     if (metadata) {
       metadata.forEach((value, key) => {
@@ -71,18 +81,12 @@ export function Invoke(
       });
     }
 
-    connectionCfg.endpointClient.invoke(
+    return config.deploymentClient.invoke(
       req,
-      WithAuthContext(connectionCfg.auth),
-      (err: grpc.ServiceError, response: InvokeResponse) => {
+      WithAuthContext(config.auth),
+      (err: ServiceError, response: InvokeResponse) => {
         if (err) reject(err);
-        else {
-          try {
-            resolve(handleSingleResponse(response!)!);
-          } catch (error) {
-            reject(error);
-          }
-        }
+        else resolve(response);
       }
     );
   });

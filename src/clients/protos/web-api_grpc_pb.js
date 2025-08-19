@@ -336,17 +336,6 @@ function deserialize_web_api_GetUserResponse(buffer_arg) {
   return web$api_pb.GetUserResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_web_api_LeadCreationRequest(arg) {
-  if (!(arg instanceof web$api_pb.LeadCreationRequest)) {
-    throw new Error('Expected argument of type web_api.LeadCreationRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_web_api_LeadCreationRequest(buffer_arg) {
-  return web$api_pb.LeadCreationRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_web_api_RegisterUserRequest(arg) {
   if (!(arg instanceof web$api_pb.RegisterUserRequest)) {
     throw new Error('Expected argument of type web_api.RegisterUserRequest');
@@ -780,18 +769,3 @@ var ProjectServiceService = exports.ProjectServiceService = {
 };
 
 exports.ProjectServiceClient = grpc.makeGenericClientConstructor(ProjectServiceService, 'ProjectService');
-var LeadServiceService = exports.LeadServiceService = {
-  createLead: {
-    path: '/web_api.LeadService/CreateLead',
-    requestStream: false,
-    responseStream: false,
-    requestType: web$api_pb.LeadCreationRequest,
-    responseType: common_pb.BaseResponse,
-    requestSerialize: serialize_web_api_LeadCreationRequest,
-    requestDeserialize: deserialize_web_api_LeadCreationRequest,
-    responseSerialize: serialize_BaseResponse,
-    responseDeserialize: deserialize_BaseResponse,
-  },
-};
-
-exports.LeadServiceClient = grpc.makeGenericClientConstructor(LeadServiceService, 'LeadService');

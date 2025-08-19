@@ -6,7 +6,10 @@ var assistant$api_pb = require('./assistant-api_pb.js');
 var google_protobuf_timestamp_pb = require('google-protobuf/google/protobuf/timestamp_pb.js');
 var common_pb = require('./common_pb.js');
 var assistant$deployment_pb = require('./assistant-deployment_pb.js');
-var google_protobuf_struct_pb = require('google-protobuf/google/protobuf/struct_pb.js');
+var assistant$tool_pb = require('./assistant-tool_pb.js');
+var assistant$analysis_pb = require('./assistant-analysis_pb.js');
+var assistant$webhook_pb = require('./assistant-webhook_pb.js');
+var assistant$knowledge_pb = require('./assistant-knowledge_pb.js');
 
 function serialize_GetAllAssistantConversationRequest(arg) {
   if (!(arg instanceof common_pb.GetAllAssistantConversationRequest)) {
@@ -52,15 +55,26 @@ function deserialize_GetAllConversationMessageResponse(buffer_arg) {
   return common_pb.GetAllConversationMessageResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_assistant_api_CreateAssistantKnowledgeConfigurationRequest(arg) {
-  if (!(arg instanceof assistant$api_pb.CreateAssistantKnowledgeConfigurationRequest)) {
-    throw new Error('Expected argument of type assistant_api.CreateAssistantKnowledgeConfigurationRequest');
+function serialize_assistant_api_CreateAssistantAnalysisRequest(arg) {
+  if (!(arg instanceof assistant$analysis_pb.CreateAssistantAnalysisRequest)) {
+    throw new Error('Expected argument of type assistant_api.CreateAssistantAnalysisRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_assistant_api_CreateAssistantKnowledgeConfigurationRequest(buffer_arg) {
-  return assistant$api_pb.CreateAssistantKnowledgeConfigurationRequest.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_assistant_api_CreateAssistantAnalysisRequest(buffer_arg) {
+  return assistant$analysis_pb.CreateAssistantAnalysisRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_CreateAssistantKnowledgeRequest(arg) {
+  if (!(arg instanceof assistant$knowledge_pb.CreateAssistantKnowledgeRequest)) {
+    throw new Error('Expected argument of type assistant_api.CreateAssistantKnowledgeRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_CreateAssistantKnowledgeRequest(buffer_arg) {
+  return assistant$knowledge_pb.CreateAssistantKnowledgeRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_assistant_api_CreateAssistantProviderModelRequest(arg) {
@@ -74,17 +88,6 @@ function deserialize_assistant_api_CreateAssistantProviderModelRequest(buffer_ar
   return assistant$api_pb.CreateAssistantProviderModelRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_assistant_api_CreateAssistantProviderModelResponse(arg) {
-  if (!(arg instanceof assistant$api_pb.CreateAssistantProviderModelResponse)) {
-    throw new Error('Expected argument of type assistant_api.CreateAssistantProviderModelResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_assistant_api_CreateAssistantProviderModelResponse(buffer_arg) {
-  return assistant$api_pb.CreateAssistantProviderModelResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_assistant_api_CreateAssistantRequest(arg) {
   if (!(arg instanceof assistant$api_pb.CreateAssistantRequest)) {
     throw new Error('Expected argument of type assistant_api.CreateAssistantRequest');
@@ -94,17 +97,6 @@ function serialize_assistant_api_CreateAssistantRequest(arg) {
 
 function deserialize_assistant_api_CreateAssistantRequest(buffer_arg) {
   return assistant$api_pb.CreateAssistantRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_assistant_api_CreateAssistantResponse(arg) {
-  if (!(arg instanceof assistant$api_pb.CreateAssistantResponse)) {
-    throw new Error('Expected argument of type assistant_api.CreateAssistantResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_assistant_api_CreateAssistantResponse(buffer_arg) {
-  return assistant$api_pb.CreateAssistantResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_assistant_api_CreateAssistantTagRequest(arg) {
@@ -118,15 +110,125 @@ function deserialize_assistant_api_CreateAssistantTagRequest(buffer_arg) {
   return assistant$api_pb.CreateAssistantTagRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_assistant_api_CreateAssistantToolConfigurationRequest(arg) {
-  if (!(arg instanceof assistant$api_pb.CreateAssistantToolConfigurationRequest)) {
-    throw new Error('Expected argument of type assistant_api.CreateAssistantToolConfigurationRequest');
+function serialize_assistant_api_CreateAssistantToolRequest(arg) {
+  if (!(arg instanceof assistant$tool_pb.CreateAssistantToolRequest)) {
+    throw new Error('Expected argument of type assistant_api.CreateAssistantToolRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_assistant_api_CreateAssistantToolConfigurationRequest(buffer_arg) {
-  return assistant$api_pb.CreateAssistantToolConfigurationRequest.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_assistant_api_CreateAssistantToolRequest(buffer_arg) {
+  return assistant$tool_pb.CreateAssistantToolRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_CreateAssistantWebhookRequest(arg) {
+  if (!(arg instanceof assistant$webhook_pb.CreateAssistantWebhookRequest)) {
+    throw new Error('Expected argument of type assistant_api.CreateAssistantWebhookRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_CreateAssistantWebhookRequest(buffer_arg) {
+  return assistant$webhook_pb.CreateAssistantWebhookRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_DeleteAssistantAnalysisRequest(arg) {
+  if (!(arg instanceof assistant$analysis_pb.DeleteAssistantAnalysisRequest)) {
+    throw new Error('Expected argument of type assistant_api.DeleteAssistantAnalysisRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_DeleteAssistantAnalysisRequest(buffer_arg) {
+  return assistant$analysis_pb.DeleteAssistantAnalysisRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_DeleteAssistantKnowledgeRequest(arg) {
+  if (!(arg instanceof assistant$knowledge_pb.DeleteAssistantKnowledgeRequest)) {
+    throw new Error('Expected argument of type assistant_api.DeleteAssistantKnowledgeRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_DeleteAssistantKnowledgeRequest(buffer_arg) {
+  return assistant$knowledge_pb.DeleteAssistantKnowledgeRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_DeleteAssistantRequest(arg) {
+  if (!(arg instanceof assistant$api_pb.DeleteAssistantRequest)) {
+    throw new Error('Expected argument of type assistant_api.DeleteAssistantRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_DeleteAssistantRequest(buffer_arg) {
+  return assistant$api_pb.DeleteAssistantRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_DeleteAssistantToolRequest(arg) {
+  if (!(arg instanceof assistant$tool_pb.DeleteAssistantToolRequest)) {
+    throw new Error('Expected argument of type assistant_api.DeleteAssistantToolRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_DeleteAssistantToolRequest(buffer_arg) {
+  return assistant$tool_pb.DeleteAssistantToolRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_DeleteAssistantWebhookRequest(arg) {
+  if (!(arg instanceof assistant$webhook_pb.DeleteAssistantWebhookRequest)) {
+    throw new Error('Expected argument of type assistant_api.DeleteAssistantWebhookRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_DeleteAssistantWebhookRequest(buffer_arg) {
+  return assistant$webhook_pb.DeleteAssistantWebhookRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_GetAllAssistantAnalysisRequest(arg) {
+  if (!(arg instanceof assistant$analysis_pb.GetAllAssistantAnalysisRequest)) {
+    throw new Error('Expected argument of type assistant_api.GetAllAssistantAnalysisRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAllAssistantAnalysisRequest(buffer_arg) {
+  return assistant$analysis_pb.GetAllAssistantAnalysisRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_GetAllAssistantAnalysisResponse(arg) {
+  if (!(arg instanceof assistant$analysis_pb.GetAllAssistantAnalysisResponse)) {
+    throw new Error('Expected argument of type assistant_api.GetAllAssistantAnalysisResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAllAssistantAnalysisResponse(buffer_arg) {
+  return assistant$analysis_pb.GetAllAssistantAnalysisResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_GetAllAssistantKnowledgeRequest(arg) {
+  if (!(arg instanceof assistant$knowledge_pb.GetAllAssistantKnowledgeRequest)) {
+    throw new Error('Expected argument of type assistant_api.GetAllAssistantKnowledgeRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAllAssistantKnowledgeRequest(buffer_arg) {
+  return assistant$knowledge_pb.GetAllAssistantKnowledgeRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_GetAllAssistantKnowledgeResponse(arg) {
+  if (!(arg instanceof assistant$knowledge_pb.GetAllAssistantKnowledgeResponse)) {
+    throw new Error('Expected argument of type assistant_api.GetAllAssistantKnowledgeResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAllAssistantKnowledgeResponse(buffer_arg) {
+  return assistant$knowledge_pb.GetAllAssistantKnowledgeResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_assistant_api_GetAllAssistantMessageRequest(arg) {
@@ -196,47 +298,168 @@ function deserialize_assistant_api_GetAllAssistantResponse(buffer_arg) {
 }
 
 function serialize_assistant_api_GetAllAssistantToolRequest(arg) {
-  if (!(arg instanceof assistant$api_pb.GetAllAssistantToolRequest)) {
+  if (!(arg instanceof assistant$tool_pb.GetAllAssistantToolRequest)) {
     throw new Error('Expected argument of type assistant_api.GetAllAssistantToolRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_assistant_api_GetAllAssistantToolRequest(buffer_arg) {
-  return assistant$api_pb.GetAllAssistantToolRequest.deserializeBinary(new Uint8Array(buffer_arg));
+  return assistant$tool_pb.GetAllAssistantToolRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_assistant_api_GetAllAssistantToolResponse(arg) {
-  if (!(arg instanceof assistant$api_pb.GetAllAssistantToolResponse)) {
+  if (!(arg instanceof assistant$tool_pb.GetAllAssistantToolResponse)) {
     throw new Error('Expected argument of type assistant_api.GetAllAssistantToolResponse');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_assistant_api_GetAllAssistantToolResponse(buffer_arg) {
-  return assistant$api_pb.GetAllAssistantToolResponse.deserializeBinary(new Uint8Array(buffer_arg));
+  return assistant$tool_pb.GetAllAssistantToolResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_assistant_api_GetAllToolRequest(arg) {
-  if (!(arg instanceof assistant$api_pb.GetAllToolRequest)) {
-    throw new Error('Expected argument of type assistant_api.GetAllToolRequest');
+function serialize_assistant_api_GetAllAssistantWebhookLogRequest(arg) {
+  if (!(arg instanceof assistant$webhook_pb.GetAllAssistantWebhookLogRequest)) {
+    throw new Error('Expected argument of type assistant_api.GetAllAssistantWebhookLogRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_assistant_api_GetAllToolRequest(buffer_arg) {
-  return assistant$api_pb.GetAllToolRequest.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_assistant_api_GetAllAssistantWebhookLogRequest(buffer_arg) {
+  return assistant$webhook_pb.GetAllAssistantWebhookLogRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_assistant_api_GetAllToolResponse(arg) {
-  if (!(arg instanceof assistant$api_pb.GetAllToolResponse)) {
-    throw new Error('Expected argument of type assistant_api.GetAllToolResponse');
+function serialize_assistant_api_GetAllAssistantWebhookLogResponse(arg) {
+  if (!(arg instanceof assistant$webhook_pb.GetAllAssistantWebhookLogResponse)) {
+    throw new Error('Expected argument of type assistant_api.GetAllAssistantWebhookLogResponse');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_assistant_api_GetAllToolResponse(buffer_arg) {
-  return assistant$api_pb.GetAllToolResponse.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_assistant_api_GetAllAssistantWebhookLogResponse(buffer_arg) {
+  return assistant$webhook_pb.GetAllAssistantWebhookLogResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_GetAllAssistantWebhookRequest(arg) {
+  if (!(arg instanceof assistant$webhook_pb.GetAllAssistantWebhookRequest)) {
+    throw new Error('Expected argument of type assistant_api.GetAllAssistantWebhookRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAllAssistantWebhookRequest(buffer_arg) {
+  return assistant$webhook_pb.GetAllAssistantWebhookRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_GetAllAssistantWebhookResponse(arg) {
+  if (!(arg instanceof assistant$webhook_pb.GetAllAssistantWebhookResponse)) {
+    throw new Error('Expected argument of type assistant_api.GetAllAssistantWebhookResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAllAssistantWebhookResponse(buffer_arg) {
+  return assistant$webhook_pb.GetAllAssistantWebhookResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_GetAllMessageRequest(arg) {
+  if (!(arg instanceof assistant$api_pb.GetAllMessageRequest)) {
+    throw new Error('Expected argument of type assistant_api.GetAllMessageRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAllMessageRequest(buffer_arg) {
+  return assistant$api_pb.GetAllMessageRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_GetAllMessageResponse(arg) {
+  if (!(arg instanceof assistant$api_pb.GetAllMessageResponse)) {
+    throw new Error('Expected argument of type assistant_api.GetAllMessageResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAllMessageResponse(buffer_arg) {
+  return assistant$api_pb.GetAllMessageResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_GetAssistantAnalysisRequest(arg) {
+  if (!(arg instanceof assistant$analysis_pb.GetAssistantAnalysisRequest)) {
+    throw new Error('Expected argument of type assistant_api.GetAssistantAnalysisRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAssistantAnalysisRequest(buffer_arg) {
+  return assistant$analysis_pb.GetAssistantAnalysisRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_GetAssistantAnalysisResponse(arg) {
+  if (!(arg instanceof assistant$analysis_pb.GetAssistantAnalysisResponse)) {
+    throw new Error('Expected argument of type assistant_api.GetAssistantAnalysisResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAssistantAnalysisResponse(buffer_arg) {
+  return assistant$analysis_pb.GetAssistantAnalysisResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_GetAssistantConversationRequest(arg) {
+  if (!(arg instanceof assistant$api_pb.GetAssistantConversationRequest)) {
+    throw new Error('Expected argument of type assistant_api.GetAssistantConversationRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAssistantConversationRequest(buffer_arg) {
+  return assistant$api_pb.GetAssistantConversationRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_GetAssistantConversationResponse(arg) {
+  if (!(arg instanceof assistant$api_pb.GetAssistantConversationResponse)) {
+    throw new Error('Expected argument of type assistant_api.GetAssistantConversationResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAssistantConversationResponse(buffer_arg) {
+  return assistant$api_pb.GetAssistantConversationResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_GetAssistantKnowledgeRequest(arg) {
+  if (!(arg instanceof assistant$knowledge_pb.GetAssistantKnowledgeRequest)) {
+    throw new Error('Expected argument of type assistant_api.GetAssistantKnowledgeRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAssistantKnowledgeRequest(buffer_arg) {
+  return assistant$knowledge_pb.GetAssistantKnowledgeRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_GetAssistantKnowledgeResponse(arg) {
+  if (!(arg instanceof assistant$knowledge_pb.GetAssistantKnowledgeResponse)) {
+    throw new Error('Expected argument of type assistant_api.GetAssistantKnowledgeResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAssistantKnowledgeResponse(buffer_arg) {
+  return assistant$knowledge_pb.GetAssistantKnowledgeResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_GetAssistantProviderModelResponse(arg) {
+  if (!(arg instanceof assistant$api_pb.GetAssistantProviderModelResponse)) {
+    throw new Error('Expected argument of type assistant_api.GetAssistantProviderModelResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAssistantProviderModelResponse(buffer_arg) {
+  return assistant$api_pb.GetAssistantProviderModelResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_assistant_api_GetAssistantRequest(arg) {
@@ -261,26 +484,81 @@ function deserialize_assistant_api_GetAssistantResponse(buffer_arg) {
   return assistant$api_pb.GetAssistantResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_assistant_api_GetToolRequest(arg) {
-  if (!(arg instanceof assistant$api_pb.GetToolRequest)) {
-    throw new Error('Expected argument of type assistant_api.GetToolRequest');
+function serialize_assistant_api_GetAssistantToolRequest(arg) {
+  if (!(arg instanceof assistant$tool_pb.GetAssistantToolRequest)) {
+    throw new Error('Expected argument of type assistant_api.GetAssistantToolRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_assistant_api_GetToolRequest(buffer_arg) {
-  return assistant$api_pb.GetToolRequest.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_assistant_api_GetAssistantToolRequest(buffer_arg) {
+  return assistant$tool_pb.GetAssistantToolRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_assistant_api_GetToolResponse(arg) {
-  if (!(arg instanceof assistant$api_pb.GetToolResponse)) {
-    throw new Error('Expected argument of type assistant_api.GetToolResponse');
+function serialize_assistant_api_GetAssistantToolResponse(arg) {
+  if (!(arg instanceof assistant$tool_pb.GetAssistantToolResponse)) {
+    throw new Error('Expected argument of type assistant_api.GetAssistantToolResponse');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_assistant_api_GetToolResponse(buffer_arg) {
-  return assistant$api_pb.GetToolResponse.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_assistant_api_GetAssistantToolResponse(buffer_arg) {
+  return assistant$tool_pb.GetAssistantToolResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_GetAssistantWebhookLogRequest(arg) {
+  if (!(arg instanceof assistant$webhook_pb.GetAssistantWebhookLogRequest)) {
+    throw new Error('Expected argument of type assistant_api.GetAssistantWebhookLogRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAssistantWebhookLogRequest(buffer_arg) {
+  return assistant$webhook_pb.GetAssistantWebhookLogRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_GetAssistantWebhookLogResponse(arg) {
+  if (!(arg instanceof assistant$webhook_pb.GetAssistantWebhookLogResponse)) {
+    throw new Error('Expected argument of type assistant_api.GetAssistantWebhookLogResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAssistantWebhookLogResponse(buffer_arg) {
+  return assistant$webhook_pb.GetAssistantWebhookLogResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_GetAssistantWebhookRequest(arg) {
+  if (!(arg instanceof assistant$webhook_pb.GetAssistantWebhookRequest)) {
+    throw new Error('Expected argument of type assistant_api.GetAssistantWebhookRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAssistantWebhookRequest(buffer_arg) {
+  return assistant$webhook_pb.GetAssistantWebhookRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_GetAssistantWebhookResponse(arg) {
+  if (!(arg instanceof assistant$webhook_pb.GetAssistantWebhookResponse)) {
+    throw new Error('Expected argument of type assistant_api.GetAssistantWebhookResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAssistantWebhookResponse(buffer_arg) {
+  return assistant$webhook_pb.GetAssistantWebhookResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_UpdateAssistantAnalysisRequest(arg) {
+  if (!(arg instanceof assistant$analysis_pb.UpdateAssistantAnalysisRequest)) {
+    throw new Error('Expected argument of type assistant_api.UpdateAssistantAnalysisRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_UpdateAssistantAnalysisRequest(buffer_arg) {
+  return assistant$analysis_pb.UpdateAssistantAnalysisRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_assistant_api_UpdateAssistantDetailRequest(arg) {
@@ -294,6 +572,28 @@ function deserialize_assistant_api_UpdateAssistantDetailRequest(buffer_arg) {
   return assistant$api_pb.UpdateAssistantDetailRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_assistant_api_UpdateAssistantKnowledgeRequest(arg) {
+  if (!(arg instanceof assistant$knowledge_pb.UpdateAssistantKnowledgeRequest)) {
+    throw new Error('Expected argument of type assistant_api.UpdateAssistantKnowledgeRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_UpdateAssistantKnowledgeRequest(buffer_arg) {
+  return assistant$knowledge_pb.UpdateAssistantKnowledgeRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_UpdateAssistantToolRequest(arg) {
+  if (!(arg instanceof assistant$tool_pb.UpdateAssistantToolRequest)) {
+    throw new Error('Expected argument of type assistant_api.UpdateAssistantToolRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_UpdateAssistantToolRequest(buffer_arg) {
+  return assistant$tool_pb.UpdateAssistantToolRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_assistant_api_UpdateAssistantVersionRequest(arg) {
   if (!(arg instanceof assistant$api_pb.UpdateAssistantVersionRequest)) {
     throw new Error('Expected argument of type assistant_api.UpdateAssistantVersionRequest');
@@ -305,15 +605,15 @@ function deserialize_assistant_api_UpdateAssistantVersionRequest(buffer_arg) {
   return assistant$api_pb.UpdateAssistantVersionRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_assistant_api_UpdateAssistantVersionResponse(arg) {
-  if (!(arg instanceof assistant$api_pb.UpdateAssistantVersionResponse)) {
-    throw new Error('Expected argument of type assistant_api.UpdateAssistantVersionResponse');
+function serialize_assistant_api_UpdateAssistantWebhookRequest(arg) {
+  if (!(arg instanceof assistant$webhook_pb.UpdateAssistantWebhookRequest)) {
+    throw new Error('Expected argument of type assistant_api.UpdateAssistantWebhookRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_assistant_api_UpdateAssistantVersionResponse(buffer_arg) {
-  return assistant$api_pb.UpdateAssistantVersionResponse.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_assistant_api_UpdateAssistantWebhookRequest(buffer_arg) {
+  return assistant$webhook_pb.UpdateAssistantWebhookRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 
@@ -340,6 +640,28 @@ var AssistantServiceService = exports.AssistantServiceService = {
     responseSerialize: serialize_assistant_api_GetAllAssistantResponse,
     responseDeserialize: deserialize_assistant_api_GetAllAssistantResponse,
   },
+  createAssistant: {
+    path: '/assistant_api.AssistantService/CreateAssistant',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$api_pb.CreateAssistantRequest,
+    responseType: assistant$api_pb.GetAssistantResponse,
+    requestSerialize: serialize_assistant_api_CreateAssistantRequest,
+    requestDeserialize: deserialize_assistant_api_CreateAssistantRequest,
+    responseSerialize: serialize_assistant_api_GetAssistantResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantResponse,
+  },
+  deleteAssistant: {
+    path: '/assistant_api.AssistantService/DeleteAssistant',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$api_pb.DeleteAssistantRequest,
+    responseType: assistant$api_pb.GetAssistantResponse,
+    requestSerialize: serialize_assistant_api_DeleteAssistantRequest,
+    requestDeserialize: deserialize_assistant_api_DeleteAssistantRequest,
+    responseSerialize: serialize_assistant_api_GetAssistantResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantResponse,
+  },
   getAllAssistantProviderModel: {
     path: '/assistant_api.AssistantService/GetAllAssistantProviderModel',
     requestStream: false,
@@ -351,39 +673,16 @@ var AssistantServiceService = exports.AssistantServiceService = {
     responseSerialize: serialize_assistant_api_GetAllAssistantProviderModelResponse,
     responseDeserialize: deserialize_assistant_api_GetAllAssistantProviderModelResponse,
   },
-  createAssistant: {
-    path: '/assistant_api.AssistantService/CreateAssistant',
-    requestStream: false,
-    responseStream: false,
-    requestType: assistant$api_pb.CreateAssistantRequest,
-    responseType: assistant$api_pb.CreateAssistantResponse,
-    requestSerialize: serialize_assistant_api_CreateAssistantRequest,
-    requestDeserialize: deserialize_assistant_api_CreateAssistantRequest,
-    responseSerialize: serialize_assistant_api_CreateAssistantResponse,
-    responseDeserialize: deserialize_assistant_api_CreateAssistantResponse,
-  },
   createAssistantProviderModel: {
     path: '/assistant_api.AssistantService/CreateAssistantProviderModel',
     requestStream: false,
     responseStream: false,
     requestType: assistant$api_pb.CreateAssistantProviderModelRequest,
-    responseType: assistant$api_pb.CreateAssistantProviderModelResponse,
+    responseType: assistant$api_pb.GetAssistantProviderModelResponse,
     requestSerialize: serialize_assistant_api_CreateAssistantProviderModelRequest,
     requestDeserialize: deserialize_assistant_api_CreateAssistantProviderModelRequest,
-    responseSerialize: serialize_assistant_api_CreateAssistantProviderModelResponse,
-    responseDeserialize: deserialize_assistant_api_CreateAssistantProviderModelResponse,
-  },
-  //   next gen
-createAssistantKnowledgeConfiguration: {
-    path: '/assistant_api.AssistantService/CreateAssistantKnowledgeConfiguration',
-    requestStream: false,
-    responseStream: false,
-    requestType: assistant$api_pb.CreateAssistantKnowledgeConfigurationRequest,
-    responseType: assistant$api_pb.GetAssistantResponse,
-    requestSerialize: serialize_assistant_api_CreateAssistantKnowledgeConfigurationRequest,
-    requestDeserialize: deserialize_assistant_api_CreateAssistantKnowledgeConfigurationRequest,
-    responseSerialize: serialize_assistant_api_GetAssistantResponse,
-    responseDeserialize: deserialize_assistant_api_GetAssistantResponse,
+    responseSerialize: serialize_assistant_api_GetAssistantProviderModelResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantProviderModelResponse,
   },
   createAssistantTag: {
     path: '/assistant_api.AssistantService/CreateAssistantTag',
@@ -401,11 +700,11 @@ createAssistantKnowledgeConfiguration: {
     requestStream: false,
     responseStream: false,
     requestType: assistant$api_pb.UpdateAssistantVersionRequest,
-    responseType: assistant$api_pb.UpdateAssistantVersionResponse,
+    responseType: assistant$api_pb.GetAssistantResponse,
     requestSerialize: serialize_assistant_api_UpdateAssistantVersionRequest,
     requestDeserialize: deserialize_assistant_api_UpdateAssistantVersionRequest,
-    responseSerialize: serialize_assistant_api_UpdateAssistantVersionResponse,
-    responseDeserialize: deserialize_assistant_api_UpdateAssistantVersionResponse,
+    responseSerialize: serialize_assistant_api_GetAssistantResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantResponse,
   },
   updateAssistantDetail: {
     path: '/assistant_api.AssistantService/UpdateAssistantDetail',
@@ -429,17 +728,6 @@ createAssistantKnowledgeConfiguration: {
     responseSerialize: serialize_assistant_api_GetAllAssistantMessageResponse,
     responseDeserialize: deserialize_assistant_api_GetAllAssistantMessageResponse,
   },
-  getAllAssistantConversation: {
-    path: '/assistant_api.AssistantService/GetAllAssistantConversation',
-    requestStream: false,
-    responseStream: false,
-    requestType: common_pb.GetAllAssistantConversationRequest,
-    responseType: common_pb.GetAllAssistantConversationResponse,
-    requestSerialize: serialize_GetAllAssistantConversationRequest,
-    requestDeserialize: deserialize_GetAllAssistantConversationRequest,
-    responseSerialize: serialize_GetAllAssistantConversationResponse,
-    responseDeserialize: deserialize_GetAllAssistantConversationResponse,
-  },
   getAllConversationMessage: {
     path: '/assistant_api.AssistantService/GetAllConversationMessage',
     requestStream: false,
@@ -451,54 +739,285 @@ createAssistantKnowledgeConfiguration: {
     responseSerialize: serialize_GetAllConversationMessageResponse,
     responseDeserialize: deserialize_GetAllConversationMessageResponse,
   },
-  createAssistantToolConfiguration: {
-    path: '/assistant_api.AssistantService/CreateAssistantToolConfiguration',
+  getAllMessage: {
+    path: '/assistant_api.AssistantService/GetAllMessage',
     requestStream: false,
     responseStream: false,
-    requestType: assistant$api_pb.CreateAssistantToolConfigurationRequest,
-    responseType: assistant$api_pb.GetAssistantResponse,
-    requestSerialize: serialize_assistant_api_CreateAssistantToolConfigurationRequest,
-    requestDeserialize: deserialize_assistant_api_CreateAssistantToolConfigurationRequest,
-    responseSerialize: serialize_assistant_api_GetAssistantResponse,
-    responseDeserialize: deserialize_assistant_api_GetAssistantResponse,
+    requestType: assistant$api_pb.GetAllMessageRequest,
+    responseType: assistant$api_pb.GetAllMessageResponse,
+    requestSerialize: serialize_assistant_api_GetAllMessageRequest,
+    requestDeserialize: deserialize_assistant_api_GetAllMessageRequest,
+    responseSerialize: serialize_assistant_api_GetAllMessageResponse,
+    responseDeserialize: deserialize_assistant_api_GetAllMessageResponse,
+  },
+  getAllAssistantConversation: {
+    path: '/assistant_api.AssistantService/GetAllAssistantConversation',
+    requestStream: false,
+    responseStream: false,
+    requestType: common_pb.GetAllAssistantConversationRequest,
+    responseType: common_pb.GetAllAssistantConversationResponse,
+    requestSerialize: serialize_GetAllAssistantConversationRequest,
+    requestDeserialize: deserialize_GetAllAssistantConversationRequest,
+    responseSerialize: serialize_GetAllAssistantConversationResponse,
+    responseDeserialize: deserialize_GetAllAssistantConversationResponse,
+  },
+  getAssistantConversation: {
+    path: '/assistant_api.AssistantService/GetAssistantConversation',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$api_pb.GetAssistantConversationRequest,
+    responseType: assistant$api_pb.GetAssistantConversationResponse,
+    requestSerialize: serialize_assistant_api_GetAssistantConversationRequest,
+    requestDeserialize: deserialize_assistant_api_GetAssistantConversationRequest,
+    responseSerialize: serialize_assistant_api_GetAssistantConversationResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantConversationResponse,
+  },
+  //   webhook log
+getAssistantWebhookLog: {
+    path: '/assistant_api.AssistantService/GetAssistantWebhookLog',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$webhook_pb.GetAssistantWebhookLogRequest,
+    responseType: assistant$webhook_pb.GetAssistantWebhookLogResponse,
+    requestSerialize: serialize_assistant_api_GetAssistantWebhookLogRequest,
+    requestDeserialize: deserialize_assistant_api_GetAssistantWebhookLogRequest,
+    responseSerialize: serialize_assistant_api_GetAssistantWebhookLogResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantWebhookLogResponse,
+  },
+  getAllAssistantWebhookLog: {
+    path: '/assistant_api.AssistantService/GetAllAssistantWebhookLog',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$webhook_pb.GetAllAssistantWebhookLogRequest,
+    responseType: assistant$webhook_pb.GetAllAssistantWebhookLogResponse,
+    requestSerialize: serialize_assistant_api_GetAllAssistantWebhookLogRequest,
+    requestDeserialize: deserialize_assistant_api_GetAllAssistantWebhookLogRequest,
+    responseSerialize: serialize_assistant_api_GetAllAssistantWebhookLogResponse,
+    responseDeserialize: deserialize_assistant_api_GetAllAssistantWebhookLogResponse,
+  },
+  getAllAssistantWebhook: {
+    path: '/assistant_api.AssistantService/GetAllAssistantWebhook',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$webhook_pb.GetAllAssistantWebhookRequest,
+    responseType: assistant$webhook_pb.GetAllAssistantWebhookResponse,
+    requestSerialize: serialize_assistant_api_GetAllAssistantWebhookRequest,
+    requestDeserialize: deserialize_assistant_api_GetAllAssistantWebhookRequest,
+    responseSerialize: serialize_assistant_api_GetAllAssistantWebhookResponse,
+    responseDeserialize: deserialize_assistant_api_GetAllAssistantWebhookResponse,
+  },
+  getAssistantWebhook: {
+    path: '/assistant_api.AssistantService/GetAssistantWebhook',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$webhook_pb.GetAssistantWebhookRequest,
+    responseType: assistant$webhook_pb.GetAssistantWebhookResponse,
+    requestSerialize: serialize_assistant_api_GetAssistantWebhookRequest,
+    requestDeserialize: deserialize_assistant_api_GetAssistantWebhookRequest,
+    responseSerialize: serialize_assistant_api_GetAssistantWebhookResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantWebhookResponse,
+  },
+  createAssistantWebhook: {
+    path: '/assistant_api.AssistantService/CreateAssistantWebhook',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$webhook_pb.CreateAssistantWebhookRequest,
+    responseType: assistant$webhook_pb.GetAssistantWebhookResponse,
+    requestSerialize: serialize_assistant_api_CreateAssistantWebhookRequest,
+    requestDeserialize: deserialize_assistant_api_CreateAssistantWebhookRequest,
+    responseSerialize: serialize_assistant_api_GetAssistantWebhookResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantWebhookResponse,
+  },
+  updateAssistantWebhook: {
+    path: '/assistant_api.AssistantService/UpdateAssistantWebhook',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$webhook_pb.UpdateAssistantWebhookRequest,
+    responseType: assistant$webhook_pb.GetAssistantWebhookResponse,
+    requestSerialize: serialize_assistant_api_UpdateAssistantWebhookRequest,
+    requestDeserialize: deserialize_assistant_api_UpdateAssistantWebhookRequest,
+    responseSerialize: serialize_assistant_api_GetAssistantWebhookResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantWebhookResponse,
+  },
+  deleteAssistantWebhook: {
+    path: '/assistant_api.AssistantService/DeleteAssistantWebhook',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$webhook_pb.DeleteAssistantWebhookRequest,
+    responseType: assistant$webhook_pb.GetAssistantWebhookResponse,
+    requestSerialize: serialize_assistant_api_DeleteAssistantWebhookRequest,
+    requestDeserialize: deserialize_assistant_api_DeleteAssistantWebhookRequest,
+    responseSerialize: serialize_assistant_api_GetAssistantWebhookResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantWebhookResponse,
+  },
+  //   analysis
+getAssistantAnalysis: {
+    path: '/assistant_api.AssistantService/GetAssistantAnalysis',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$analysis_pb.GetAssistantAnalysisRequest,
+    responseType: assistant$analysis_pb.GetAssistantAnalysisResponse,
+    requestSerialize: serialize_assistant_api_GetAssistantAnalysisRequest,
+    requestDeserialize: deserialize_assistant_api_GetAssistantAnalysisRequest,
+    responseSerialize: serialize_assistant_api_GetAssistantAnalysisResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantAnalysisResponse,
+  },
+  updateAssistantAnalysis: {
+    path: '/assistant_api.AssistantService/UpdateAssistantAnalysis',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$analysis_pb.UpdateAssistantAnalysisRequest,
+    responseType: assistant$analysis_pb.GetAssistantAnalysisResponse,
+    requestSerialize: serialize_assistant_api_UpdateAssistantAnalysisRequest,
+    requestDeserialize: deserialize_assistant_api_UpdateAssistantAnalysisRequest,
+    responseSerialize: serialize_assistant_api_GetAssistantAnalysisResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantAnalysisResponse,
+  },
+  createAssistantAnalysis: {
+    path: '/assistant_api.AssistantService/CreateAssistantAnalysis',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$analysis_pb.CreateAssistantAnalysisRequest,
+    responseType: assistant$analysis_pb.GetAssistantAnalysisResponse,
+    requestSerialize: serialize_assistant_api_CreateAssistantAnalysisRequest,
+    requestDeserialize: deserialize_assistant_api_CreateAssistantAnalysisRequest,
+    responseSerialize: serialize_assistant_api_GetAssistantAnalysisResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantAnalysisResponse,
+  },
+  deleteAssistantAnalysis: {
+    path: '/assistant_api.AssistantService/DeleteAssistantAnalysis',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$analysis_pb.DeleteAssistantAnalysisRequest,
+    responseType: assistant$analysis_pb.GetAssistantAnalysisResponse,
+    requestSerialize: serialize_assistant_api_DeleteAssistantAnalysisRequest,
+    requestDeserialize: deserialize_assistant_api_DeleteAssistantAnalysisRequest,
+    responseSerialize: serialize_assistant_api_GetAssistantAnalysisResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantAnalysisResponse,
+  },
+  getAllAssistantAnalysis: {
+    path: '/assistant_api.AssistantService/GetAllAssistantAnalysis',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$analysis_pb.GetAllAssistantAnalysisRequest,
+    responseType: assistant$analysis_pb.GetAllAssistantAnalysisResponse,
+    requestSerialize: serialize_assistant_api_GetAllAssistantAnalysisRequest,
+    requestDeserialize: deserialize_assistant_api_GetAllAssistantAnalysisRequest,
+    responseSerialize: serialize_assistant_api_GetAllAssistantAnalysisResponse,
+    responseDeserialize: deserialize_assistant_api_GetAllAssistantAnalysisResponse,
+  },
+  // assistant tool
+createAssistantTool: {
+    path: '/assistant_api.AssistantService/CreateAssistantTool',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$tool_pb.CreateAssistantToolRequest,
+    responseType: assistant$tool_pb.GetAssistantToolResponse,
+    requestSerialize: serialize_assistant_api_CreateAssistantToolRequest,
+    requestDeserialize: deserialize_assistant_api_CreateAssistantToolRequest,
+    responseSerialize: serialize_assistant_api_GetAssistantToolResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantToolResponse,
+  },
+  getAssistantTool: {
+    path: '/assistant_api.AssistantService/GetAssistantTool',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$tool_pb.GetAssistantToolRequest,
+    responseType: assistant$tool_pb.GetAssistantToolResponse,
+    requestSerialize: serialize_assistant_api_GetAssistantToolRequest,
+    requestDeserialize: deserialize_assistant_api_GetAssistantToolRequest,
+    responseSerialize: serialize_assistant_api_GetAssistantToolResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantToolResponse,
   },
   getAllAssistantTool: {
     path: '/assistant_api.AssistantService/GetAllAssistantTool',
     requestStream: false,
     responseStream: false,
-    requestType: assistant$api_pb.GetAllAssistantToolRequest,
-    responseType: assistant$api_pb.GetAllAssistantToolResponse,
+    requestType: assistant$tool_pb.GetAllAssistantToolRequest,
+    responseType: assistant$tool_pb.GetAllAssistantToolResponse,
     requestSerialize: serialize_assistant_api_GetAllAssistantToolRequest,
     requestDeserialize: deserialize_assistant_api_GetAllAssistantToolRequest,
     responseSerialize: serialize_assistant_api_GetAllAssistantToolResponse,
     responseDeserialize: deserialize_assistant_api_GetAllAssistantToolResponse,
   },
+  deleteAssistantTool: {
+    path: '/assistant_api.AssistantService/DeleteAssistantTool',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$tool_pb.DeleteAssistantToolRequest,
+    responseType: assistant$tool_pb.GetAssistantToolResponse,
+    requestSerialize: serialize_assistant_api_DeleteAssistantToolRequest,
+    requestDeserialize: deserialize_assistant_api_DeleteAssistantToolRequest,
+    responseSerialize: serialize_assistant_api_GetAssistantToolResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantToolResponse,
+  },
+  updateAssistantTool: {
+    path: '/assistant_api.AssistantService/UpdateAssistantTool',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$tool_pb.UpdateAssistantToolRequest,
+    responseType: assistant$tool_pb.GetAssistantToolResponse,
+    requestSerialize: serialize_assistant_api_UpdateAssistantToolRequest,
+    requestDeserialize: deserialize_assistant_api_UpdateAssistantToolRequest,
+    responseSerialize: serialize_assistant_api_GetAssistantToolResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantToolResponse,
+  },
+  //   //   next gen
+createAssistantKnowledge: {
+    path: '/assistant_api.AssistantService/CreateAssistantKnowledge',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$knowledge_pb.CreateAssistantKnowledgeRequest,
+    responseType: assistant$knowledge_pb.GetAssistantKnowledgeResponse,
+    requestSerialize: serialize_assistant_api_CreateAssistantKnowledgeRequest,
+    requestDeserialize: deserialize_assistant_api_CreateAssistantKnowledgeRequest,
+    responseSerialize: serialize_assistant_api_GetAssistantKnowledgeResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantKnowledgeResponse,
+  },
+  getAssistantKnowledge: {
+    path: '/assistant_api.AssistantService/GetAssistantKnowledge',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$knowledge_pb.GetAssistantKnowledgeRequest,
+    responseType: assistant$knowledge_pb.GetAssistantKnowledgeResponse,
+    requestSerialize: serialize_assistant_api_GetAssistantKnowledgeRequest,
+    requestDeserialize: deserialize_assistant_api_GetAssistantKnowledgeRequest,
+    responseSerialize: serialize_assistant_api_GetAssistantKnowledgeResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantKnowledgeResponse,
+  },
+  getAllAssistantKnowledge: {
+    path: '/assistant_api.AssistantService/GetAllAssistantKnowledge',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$knowledge_pb.GetAllAssistantKnowledgeRequest,
+    responseType: assistant$knowledge_pb.GetAllAssistantKnowledgeResponse,
+    requestSerialize: serialize_assistant_api_GetAllAssistantKnowledgeRequest,
+    requestDeserialize: deserialize_assistant_api_GetAllAssistantKnowledgeRequest,
+    responseSerialize: serialize_assistant_api_GetAllAssistantKnowledgeResponse,
+    responseDeserialize: deserialize_assistant_api_GetAllAssistantKnowledgeResponse,
+  },
+  deleteAssistantKnowledge: {
+    path: '/assistant_api.AssistantService/DeleteAssistantKnowledge',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$knowledge_pb.DeleteAssistantKnowledgeRequest,
+    responseType: assistant$knowledge_pb.GetAssistantKnowledgeResponse,
+    requestSerialize: serialize_assistant_api_DeleteAssistantKnowledgeRequest,
+    requestDeserialize: deserialize_assistant_api_DeleteAssistantKnowledgeRequest,
+    responseSerialize: serialize_assistant_api_GetAssistantKnowledgeResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantKnowledgeResponse,
+  },
+  updateAssistantKnowledge: {
+    path: '/assistant_api.AssistantService/UpdateAssistantKnowledge',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$knowledge_pb.UpdateAssistantKnowledgeRequest,
+    responseType: assistant$knowledge_pb.GetAssistantKnowledgeResponse,
+    requestSerialize: serialize_assistant_api_UpdateAssistantKnowledgeRequest,
+    requestDeserialize: deserialize_assistant_api_UpdateAssistantKnowledgeRequest,
+    responseSerialize: serialize_assistant_api_GetAssistantKnowledgeResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantKnowledgeResponse,
+  },
 };
 
 exports.AssistantServiceClient = grpc.makeGenericClientConstructor(AssistantServiceService, 'AssistantService');
-var ToolServiceService = exports.ToolServiceService = {
-  getAllTool: {
-    path: '/assistant_api.ToolService/GetAllTool',
-    requestStream: false,
-    responseStream: false,
-    requestType: assistant$api_pb.GetAllToolRequest,
-    responseType: assistant$api_pb.GetAllToolResponse,
-    requestSerialize: serialize_assistant_api_GetAllToolRequest,
-    requestDeserialize: deserialize_assistant_api_GetAllToolRequest,
-    responseSerialize: serialize_assistant_api_GetAllToolResponse,
-    responseDeserialize: deserialize_assistant_api_GetAllToolResponse,
-  },
-  getTool: {
-    path: '/assistant_api.ToolService/GetTool',
-    requestStream: false,
-    responseStream: false,
-    requestType: assistant$api_pb.GetToolRequest,
-    responseType: assistant$api_pb.GetToolResponse,
-    requestSerialize: serialize_assistant_api_GetToolRequest,
-    requestDeserialize: deserialize_assistant_api_GetToolRequest,
-    responseSerialize: serialize_assistant_api_GetToolResponse,
-    responseDeserialize: deserialize_assistant_api_GetToolResponse,
-  },
-};
-
-exports.ToolServiceClient = grpc.makeGenericClientConstructor(ToolServiceService, 'ToolService');
