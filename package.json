@@ -1,6 +1,6 @@
 {
     "name": "rapida-nodejs",
-    "version": "1.0.10",
+    "version": "1.0.11",
     "description": "Enable to interact with rapida platform",
     "main": "dist/index.cjs",
     "module": "dist/index.js",
