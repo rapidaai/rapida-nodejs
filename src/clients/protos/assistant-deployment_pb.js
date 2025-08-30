@@ -463,12 +463,12 @@ proto.assistant_api.DeploymentAudioProvider.prototype.toObject = function(opt_in
 proto.assistant_api.DeploymentAudioProvider.toObject = function(includeInstance, msg) {
   var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, "0"),
-    providername: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    optionsList: jspb.Message.toObjectList(msg.getOptionsList(),
+    audioprovider: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    audiooptionsList: jspb.Message.toObjectList(msg.getAudiooptionsList(),
     common_pb.Metadata.toObject, includeInstance),
-    providerid: jspb.Message.getFieldWithDefault(msg, 4, "0"),
+    audioproviderid: jspb.Message.getFieldWithDefault(msg, 4, "0"),
     status: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    type: jspb.Message.getFieldWithDefault(msg, 6, "")
+    audiotype: jspb.Message.getFieldWithDefault(msg, 6, "")
   };
 
   if (includeInstance) {
@@ -511,16 +511,16 @@ proto.assistant_api.DeploymentAudioProvider.deserializeBinaryFromReader = functi
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
-      msg.setProvidername(value);
+      msg.setAudioprovider(value);
       break;
     case 3:
       var value = new common_pb.Metadata;
       reader.readMessage(value,common_pb.Metadata.deserializeBinaryFromReader);
-      msg.addOptions(value);
+      msg.addAudiooptions(value);
       break;
     case 4:
       var value = /** @type {string} */ (reader.readUint64String());
-      msg.setProviderid(value);
+      msg.setAudioproviderid(value);
       break;
     case 5:
       var value = /** @type {string} */ (reader.readString());
@@ -528,7 +528,7 @@ proto.assistant_api.DeploymentAudioProvider.deserializeBinaryFromReader = functi
       break;
     case 6:
       var value = /** @type {string} */ (reader.readString());
-      msg.setType(value);
+      msg.setAudiotype(value);
       break;
     default:
       reader.skipField();
@@ -566,14 +566,14 @@ proto.assistant_api.DeploymentAudioProvider.serializeBinaryToWriter = function(m
       f
     );
   }
-  f = message.getProvidername();
+  f = message.getAudioprovider();
   if (f.length > 0) {
     writer.writeString(
       2,
       f
     );
   }
-  f = message.getOptionsList();
+  f = message.getAudiooptionsList();
   if (f.length > 0) {
     writer.writeRepeatedMessage(
       3,
@@ -581,7 +581,7 @@ proto.assistant_api.DeploymentAudioProvider.serializeBinaryToWriter = function(m
       common_pb.Metadata.serializeBinaryToWriter
     );
   }
-  f = message.getProviderid();
+  f = message.getAudioproviderid();
   if (parseInt(f, 10) !== 0) {
     writer.writeUint64String(
       4,
@@ -595,7 +595,7 @@ proto.assistant_api.DeploymentAudioProvider.serializeBinaryToWriter = function(m
       f
     );
   }
-  f = message.getType();
+  f = message.getAudiotype();
   if (f.length > 0) {
     writer.writeString(
       6,
@@ -624,10 +624,10 @@ proto.assistant_api.DeploymentAudioProvider.prototype.setId = function(value) {
 
 
 /**
- * optional string providerName = 2;
+ * optional string audioProvider = 2;
  * @return {string}
  */
-proto.assistant_api.DeploymentAudioProvider.prototype.getProvidername = function() {
+proto.assistant_api.DeploymentAudioProvider.prototype.getAudioprovider = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
@@ -636,16 +636,16 @@ proto.assistant_api.DeploymentAudioProvider.prototype.getProvidername = function
  * @param {string} value
  * @return {!proto.assistant_api.DeploymentAudioProvider} returns this
  */
-proto.assistant_api.DeploymentAudioProvider.prototype.setProvidername = function(value) {
+proto.assistant_api.DeploymentAudioProvider.prototype.setAudioprovider = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
 /**
- * repeated Metadata options = 3;
+ * repeated Metadata audioOptions = 3;
  * @return {!Array<!proto.Metadata>}
  */
-proto.assistant_api.DeploymentAudioProvider.prototype.getOptionsList = function() {
+proto.assistant_api.DeploymentAudioProvider.prototype.getAudiooptionsList = function() {
   return /** @type{!Array<!proto.Metadata>} */ (
     jspb.Message.getRepeatedWrapperField(this, common_pb.Metadata, 3));
 };
@@ -655,7 +655,7 @@ proto.assistant_api.DeploymentAudioProvider.prototype.getOptionsList = function(
  * @param {!Array<!proto.Metadata>} value
  * @return {!proto.assistant_api.DeploymentAudioProvider} returns this
 */
-proto.assistant_api.DeploymentAudioProvider.prototype.setOptionsList = function(value) {
+proto.assistant_api.DeploymentAudioProvider.prototype.setAudiooptionsList = function(value) {
   return jspb.Message.setRepeatedWrapperField(this, 3, value);
 };
 
@@ -665,7 +665,7 @@ proto.assistant_api.DeploymentAudioProvider.prototype.setOptionsList = function(
  * @param {number=} opt_index
  * @return {!proto.Metadata}
  */
-proto.assistant_api.DeploymentAudioProvider.prototype.addOptions = function(opt_value, opt_index) {
+proto.assistant_api.DeploymentAudioProvider.prototype.addAudiooptions = function(opt_value, opt_index) {
   return jspb.Message.addToRepeatedWrapperField(this, 3, opt_value, proto.Metadata, opt_index);
 };
 
@@ -674,16 +674,16 @@ proto.assistant_api.DeploymentAudioProvider.prototype.addOptions = function(opt_
  * Clears the list making it empty but non-null.
  * @return {!proto.assistant_api.DeploymentAudioProvider} returns this
  */
-proto.assistant_api.DeploymentAudioProvider.prototype.clearOptionsList = function() {
-  return this.setOptionsList([]);
+proto.assistant_api.DeploymentAudioProvider.prototype.clearAudiooptionsList = function() {
+  return this.setAudiooptionsList([]);
 };
 
 
 /**
- * optional uint64 providerId = 4;
+ * optional uint64 audioProviderId = 4;
  * @return {string}
  */
-proto.assistant_api.DeploymentAudioProvider.prototype.getProviderid = function() {
+proto.assistant_api.DeploymentAudioProvider.prototype.getAudioproviderid = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, "0"));
 };
 
@@ -692,7 +692,7 @@ proto.assistant_api.DeploymentAudioProvider.prototype.getProviderid = function()
  * @param {string} value
  * @return {!proto.assistant_api.DeploymentAudioProvider} returns this
  */
-proto.assistant_api.DeploymentAudioProvider.prototype.setProviderid = function(value) {
+proto.assistant_api.DeploymentAudioProvider.prototype.setAudioproviderid = function(value) {
   return jspb.Message.setProto3StringIntField(this, 4, value);
 };
 
@@ -716,10 +716,10 @@ proto.assistant_api.DeploymentAudioProvider.prototype.setStatus = function(value
 
 
 /**
- * optional string type = 6;
+ * optional string audioType = 6;
  * @return {string}
  */
-proto.assistant_api.DeploymentAudioProvider.prototype.getType = function() {
+proto.assistant_api.DeploymentAudioProvider.prototype.getAudiotype = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
 };
 
@@ -728,7 +728,7 @@ proto.assistant_api.DeploymentAudioProvider.prototype.getType = function() {
  * @param {string} value
  * @return {!proto.assistant_api.DeploymentAudioProvider} returns this
  */
-proto.assistant_api.DeploymentAudioProvider.prototype.setType = function(value) {
+proto.assistant_api.DeploymentAudioProvider.prototype.setAudiotype = function(value) {
   return jspb.Message.setProto3StringField(this, 6, value);
 };
 
@@ -774,10 +774,10 @@ proto.assistant_api.AssistantDeploymentCapturer.toObject = function(includeInsta
   var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, "0"),
     assistantdeploymentid: jspb.Message.getFieldWithDefault(msg, 2, "0"),
-    type: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    providerid: jspb.Message.getFieldWithDefault(msg, 4, "0"),
-    providername: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    optionsList: jspb.Message.toObjectList(msg.getOptionsList(),
+    capturertype: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    capturerproviderid: jspb.Message.getFieldWithDefault(msg, 4, "0"),
+    capturerprovider: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    captureroptionsList: jspb.Message.toObjectList(msg.getCaptureroptionsList(),
     common_pb.Metadata.toObject, includeInstance),
     status: jspb.Message.getFieldWithDefault(msg, 7, "")
   };
@@ -826,20 +826,20 @@ proto.assistant_api.AssistantDeploymentCapturer.deserializeBinaryFromReader = fu
       break;
     case 3:
       var value = /** @type {string} */ (reader.readString());
-      msg.setType(value);
+      msg.setCapturertype(value);
       break;
     case 4:
       var value = /** @type {string} */ (reader.readUint64String());
-      msg.setProviderid(value);
+      msg.setCapturerproviderid(value);
       break;
     case 5:
       var value = /** @type {string} */ (reader.readString());
-      msg.setProvidername(value);
+      msg.setCapturerprovider(value);
       break;
     case 6:
       var value = new common_pb.Metadata;
       reader.readMessage(value,common_pb.Metadata.deserializeBinaryFromReader);
-      msg.addOptions(value);
+      msg.addCaptureroptions(value);
       break;
     case 7:
       var value = /** @type {string} */ (reader.readString());
@@ -888,28 +888,28 @@ proto.assistant_api.AssistantDeploymentCapturer.serializeBinaryToWriter = functi
       f
     );
   }
-  f = message.getType();
+  f = message.getCapturertype();
   if (f.length > 0) {
     writer.writeString(
       3,
       f
     );
   }
-  f = message.getProviderid();
+  f = message.getCapturerproviderid();
   if (parseInt(f, 10) !== 0) {
     writer.writeUint64String(
       4,
       f
     );
   }
-  f = message.getProvidername();
+  f = message.getCapturerprovider();
   if (f.length > 0) {
     writer.writeString(
       5,
       f
     );
   }
-  f = message.getOptionsList();
+  f = message.getCaptureroptionsList();
   if (f.length > 0) {
     writer.writeRepeatedMessage(
       6,
@@ -964,10 +964,10 @@ proto.assistant_api.AssistantDeploymentCapturer.prototype.setAssistantdeployment
 
 
 /**
- * optional string type = 3;
+ * optional string capturerType = 3;
  * @return {string}
  */
-proto.assistant_api.AssistantDeploymentCapturer.prototype.getType = function() {
+proto.assistant_api.AssistantDeploymentCapturer.prototype.getCapturertype = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
@@ -976,16 +976,16 @@ proto.assistant_api.AssistantDeploymentCapturer.prototype.getType = function() {
  * @param {string} value
  * @return {!proto.assistant_api.AssistantDeploymentCapturer} returns this
  */
-proto.assistant_api.AssistantDeploymentCapturer.prototype.setType = function(value) {
+proto.assistant_api.AssistantDeploymentCapturer.prototype.setCapturertype = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
 /**
- * optional uint64 providerId = 4;
+ * optional uint64 capturerProviderId = 4;
  * @return {string}
  */
-proto.assistant_api.AssistantDeploymentCapturer.prototype.getProviderid = function() {
+proto.assistant_api.AssistantDeploymentCapturer.prototype.getCapturerproviderid = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, "0"));
 };
 
@@ -994,16 +994,16 @@ proto.assistant_api.AssistantDeploymentCapturer.prototype.getProviderid = functi
  * @param {string} value
  * @return {!proto.assistant_api.AssistantDeploymentCapturer} returns this
  */
-proto.assistant_api.AssistantDeploymentCapturer.prototype.setProviderid = function(value) {
+proto.assistant_api.AssistantDeploymentCapturer.prototype.setCapturerproviderid = function(value) {
   return jspb.Message.setProto3StringIntField(this, 4, value);
 };
 
 
 /**
- * optional string providerName = 5;
+ * optional string capturerProvider = 5;
  * @return {string}
  */
-proto.assistant_api.AssistantDeploymentCapturer.prototype.getProvidername = function() {
+proto.assistant_api.AssistantDeploymentCapturer.prototype.getCapturerprovider = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
 };
 
@@ -1012,16 +1012,16 @@ proto.assistant_api.AssistantDeploymentCapturer.prototype.getProvidername = func
  * @param {string} value
  * @return {!proto.assistant_api.AssistantDeploymentCapturer} returns this
  */
-proto.assistant_api.AssistantDeploymentCapturer.prototype.setProvidername = function(value) {
+proto.assistant_api.AssistantDeploymentCapturer.prototype.setCapturerprovider = function(value) {
   return jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
 /**
- * repeated Metadata options = 6;
+ * repeated Metadata capturerOptions = 6;
  * @return {!Array<!proto.Metadata>}
  */
-proto.assistant_api.AssistantDeploymentCapturer.prototype.getOptionsList = function() {
+proto.assistant_api.AssistantDeploymentCapturer.prototype.getCaptureroptionsList = function() {
   return /** @type{!Array<!proto.Metadata>} */ (
     jspb.Message.getRepeatedWrapperField(this, common_pb.Metadata, 6));
 };
@@ -1031,7 +1031,7 @@ proto.assistant_api.AssistantDeploymentCapturer.prototype.getOptionsList = funct
  * @param {!Array<!proto.Metadata>} value
  * @return {!proto.assistant_api.AssistantDeploymentCapturer} returns this
 */
-proto.assistant_api.AssistantDeploymentCapturer.prototype.setOptionsList = function(value) {
+proto.assistant_api.AssistantDeploymentCapturer.prototype.setCaptureroptionsList = function(value) {
   return jspb.Message.setRepeatedWrapperField(this, 6, value);
 };
 
@@ -1041,7 +1041,7 @@ proto.assistant_api.AssistantDeploymentCapturer.prototype.setOptionsList = funct
  * @param {number=} opt_index
  * @return {!proto.Metadata}
  */
-proto.assistant_api.AssistantDeploymentCapturer.prototype.addOptions = function(opt_value, opt_index) {
+proto.assistant_api.AssistantDeploymentCapturer.prototype.addCaptureroptions = function(opt_value, opt_index) {
   return jspb.Message.addToRepeatedWrapperField(this, 6, opt_value, proto.Metadata, opt_index);
 };
 
@@ -1050,8 +1050,8 @@ proto.assistant_api.AssistantDeploymentCapturer.prototype.addOptions = function(
  * Clears the list making it empty but non-null.
  * @return {!proto.assistant_api.AssistantDeploymentCapturer} returns this
  */
-proto.assistant_api.AssistantDeploymentCapturer.prototype.clearOptionsList = function() {
-  return this.setOptionsList([]);
+proto.assistant_api.AssistantDeploymentCapturer.prototype.clearCaptureroptionsList = function() {
+  return this.setCaptureroptionsList([]);
 };
 
 
@@ -1079,7 +1079,7 @@ proto.assistant_api.AssistantDeploymentCapturer.prototype.setStatus = function(v
  * @private {!Array<number>}
  * @const
  */
-proto.assistant_api.AssistantWebpluginDeployment.repeatedFields_ = [13,14,17,20];
+proto.assistant_api.AssistantWebpluginDeployment.repeatedFields_ = [17,20];
 
 /**
  * Oneof group definitions for this message. Each group defines the field
@@ -1147,10 +1147,8 @@ proto.assistant_api.AssistantWebpluginDeployment.toObject = function(includeInst
     greeting: jspb.Message.getFieldWithDefault(msg, 10, ""),
     mistake: jspb.Message.getFieldWithDefault(msg, 11, ""),
     ending: jspb.Message.getFieldWithDefault(msg, 12, ""),
-    inputaudioList: jspb.Message.toObjectList(msg.getInputaudioList(),
-    proto.assistant_api.DeploymentAudioProvider.toObject, includeInstance),
-    outputaudioList: jspb.Message.toObjectList(msg.getOutputaudioList(),
-    proto.assistant_api.DeploymentAudioProvider.toObject, includeInstance),
+    inputaudio: (f = msg.getInputaudio()) && proto.assistant_api.DeploymentAudioProvider.toObject(includeInstance, f),
+    outputaudio: (f = msg.getOutputaudio()) && proto.assistant_api.DeploymentAudioProvider.toObject(includeInstance, f),
     capturersList: jspb.Message.toObjectList(msg.getCapturersList(),
     proto.assistant_api.AssistantDeploymentCapturer.toObject, includeInstance),
     url: jspb.Message.getFieldWithDefault(msg, 15, ""),
@@ -1238,12 +1236,12 @@ proto.assistant_api.AssistantWebpluginDeployment.deserializeBinaryFromReader = f
     case 13:
       var value = new proto.assistant_api.DeploymentAudioProvider;
       reader.readMessage(value,proto.assistant_api.DeploymentAudioProvider.deserializeBinaryFromReader);
-      msg.addInputaudio(value);
+      msg.setInputaudio(value);
       break;
     case 14:
       var value = new proto.assistant_api.DeploymentAudioProvider;
       reader.readMessage(value,proto.assistant_api.DeploymentAudioProvider.deserializeBinaryFromReader);
-      msg.addOutputaudio(value);
+      msg.setOutputaudio(value);
       break;
     case 17:
       var value = new proto.assistant_api.AssistantDeploymentCapturer;
@@ -1385,17 +1383,17 @@ proto.assistant_api.AssistantWebpluginDeployment.serializeBinaryToWriter = funct
       f
     );
   }
-  f = message.getInputaudioList();
-  if (f.length > 0) {
-    writer.writeRepeatedMessage(
+  f = message.getInputaudio();
+  if (f != null) {
+    writer.writeMessage(
       13,
       f,
       proto.assistant_api.DeploymentAudioProvider.serializeBinaryToWriter
     );
   }
-  f = message.getOutputaudioList();
-  if (f.length > 0) {
-    writer.writeRepeatedMessage(
+  f = message.getOutputaudio();
+  if (f != null) {
+    writer.writeMessage(
       14,
       f,
       proto.assistant_api.DeploymentAudioProvider.serializeBinaryToWriter
@@ -1702,78 +1700,76 @@ proto.assistant_api.AssistantWebpluginDeployment.prototype.hasEnding = function(
 
 
 /**
- * repeated DeploymentAudioProvider inputAudio = 13;
- * @return {!Array<!proto.assistant_api.DeploymentAudioProvider>}
+ * optional DeploymentAudioProvider inputAudio = 13;
+ * @return {?proto.assistant_api.DeploymentAudioProvider}
  */
-proto.assistant_api.AssistantWebpluginDeployment.prototype.getInputaudioList = function() {
-  return /** @type{!Array<!proto.assistant_api.DeploymentAudioProvider>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.assistant_api.DeploymentAudioProvider, 13));
+proto.assistant_api.AssistantWebpluginDeployment.prototype.getInputaudio = function() {
+  return /** @type{?proto.assistant_api.DeploymentAudioProvider} */ (
+    jspb.Message.getWrapperField(this, proto.assistant_api.DeploymentAudioProvider, 13));
 };
 
 
 /**
- * @param {!Array<!proto.assistant_api.DeploymentAudioProvider>} value
+ * @param {?proto.assistant_api.DeploymentAudioProvider|undefined} value
  * @return {!proto.assistant_api.AssistantWebpluginDeployment} returns this
 */
-proto.assistant_api.AssistantWebpluginDeployment.prototype.setInputaudioList = function(value) {
-  return jspb.Message.setRepeatedWrapperField(this, 13, value);
+proto.assistant_api.AssistantWebpluginDeployment.prototype.setInputaudio = function(value) {
+  return jspb.Message.setWrapperField(this, 13, value);
 };
 
 
 /**
- * @param {!proto.assistant_api.DeploymentAudioProvider=} opt_value
- * @param {number=} opt_index
- * @return {!proto.assistant_api.DeploymentAudioProvider}
- */
-proto.assistant_api.AssistantWebpluginDeployment.prototype.addInputaudio = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 13, opt_value, proto.assistant_api.DeploymentAudioProvider, opt_index);
-};
-
-
-/**
- * Clears the list making it empty but non-null.
+ * Clears the message field making it undefined.
  * @return {!proto.assistant_api.AssistantWebpluginDeployment} returns this
  */
-proto.assistant_api.AssistantWebpluginDeployment.prototype.clearInputaudioList = function() {
-  return this.setInputaudioList([]);
+proto.assistant_api.AssistantWebpluginDeployment.prototype.clearInputaudio = function() {
+  return this.setInputaudio(undefined);
 };
 
 
 /**
- * repeated DeploymentAudioProvider outputAudio = 14;
- * @return {!Array<!proto.assistant_api.DeploymentAudioProvider>}
+ * Returns whether this field is set.
+ * @return {boolean}
  */
-proto.assistant_api.AssistantWebpluginDeployment.prototype.getOutputaudioList = function() {
-  return /** @type{!Array<!proto.assistant_api.DeploymentAudioProvider>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.assistant_api.DeploymentAudioProvider, 14));
+proto.assistant_api.AssistantWebpluginDeployment.prototype.hasInputaudio = function() {
+  return jspb.Message.getField(this, 13) != null;
 };
 
 
 /**
- * @param {!Array<!proto.assistant_api.DeploymentAudioProvider>} value
+ * optional DeploymentAudioProvider outputAudio = 14;
+ * @return {?proto.assistant_api.DeploymentAudioProvider}
+ */
+proto.assistant_api.AssistantWebpluginDeployment.prototype.getOutputaudio = function() {
+  return /** @type{?proto.assistant_api.DeploymentAudioProvider} */ (
+    jspb.Message.getWrapperField(this, proto.assistant_api.DeploymentAudioProvider, 14));
+};
+
+
+/**
+ * @param {?proto.assistant_api.DeploymentAudioProvider|undefined} value
  * @return {!proto.assistant_api.AssistantWebpluginDeployment} returns this
 */
-proto.assistant_api.AssistantWebpluginDeployment.prototype.setOutputaudioList = function(value) {
-  return jspb.Message.setRepeatedWrapperField(this, 14, value);
+proto.assistant_api.AssistantWebpluginDeployment.prototype.setOutputaudio = function(value) {
+  return jspb.Message.setWrapperField(this, 14, value);
 };
 
 
 /**
- * @param {!proto.assistant_api.DeploymentAudioProvider=} opt_value
- * @param {number=} opt_index
- * @return {!proto.assistant_api.DeploymentAudioProvider}
- */
-proto.assistant_api.AssistantWebpluginDeployment.prototype.addOutputaudio = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 14, opt_value, proto.assistant_api.DeploymentAudioProvider, opt_index);
-};
-
-
-/**
- * Clears the list making it empty but non-null.
+ * Clears the message field making it undefined.
  * @return {!proto.assistant_api.AssistantWebpluginDeployment} returns this
  */
-proto.assistant_api.AssistantWebpluginDeployment.prototype.clearOutputaudioList = function() {
-  return this.setOutputaudioList([]);
+proto.assistant_api.AssistantWebpluginDeployment.prototype.clearOutputaudio = function() {
+  return this.setOutputaudio(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.assistant_api.AssistantWebpluginDeployment.prototype.hasOutputaudio = function() {
+  return jspb.Message.getField(this, 14) != null;
 };
 
 
@@ -2095,7 +2091,7 @@ proto.assistant_api.AssistantWebpluginDeployment.prototype.setStatus = function(
  * @private {!Array<number>}
  * @const
  */
-proto.assistant_api.AssistantPhoneDeployment.repeatedFields_ = [13,14,17,18];
+proto.assistant_api.AssistantPhoneDeployment.repeatedFields_ = [17,18];
 
 
 
@@ -2137,10 +2133,8 @@ proto.assistant_api.AssistantPhoneDeployment.toObject = function(includeInstance
     greeting: jspb.Message.getFieldWithDefault(msg, 10, ""),
     mistake: jspb.Message.getFieldWithDefault(msg, 11, ""),
     ending: jspb.Message.getFieldWithDefault(msg, 12, ""),
-    inputaudioList: jspb.Message.toObjectList(msg.getInputaudioList(),
-    proto.assistant_api.DeploymentAudioProvider.toObject, includeInstance),
-    outputaudioList: jspb.Message.toObjectList(msg.getOutputaudioList(),
-    proto.assistant_api.DeploymentAudioProvider.toObject, includeInstance),
+    inputaudio: (f = msg.getInputaudio()) && proto.assistant_api.DeploymentAudioProvider.toObject(includeInstance, f),
+    outputaudio: (f = msg.getOutputaudio()) && proto.assistant_api.DeploymentAudioProvider.toObject(includeInstance, f),
     phoneprovidername: jspb.Message.getFieldWithDefault(msg, 15, ""),
     phoneproviderid: jspb.Message.getFieldWithDefault(msg, 16, "0"),
     phoneoptionsList: jspb.Message.toObjectList(msg.getPhoneoptionsList(),
@@ -2225,12 +2219,12 @@ proto.assistant_api.AssistantPhoneDeployment.deserializeBinaryFromReader = funct
     case 13:
       var value = new proto.assistant_api.DeploymentAudioProvider;
       reader.readMessage(value,proto.assistant_api.DeploymentAudioProvider.deserializeBinaryFromReader);
-      msg.addInputaudio(value);
+      msg.setInputaudio(value);
       break;
     case 14:
       var value = new proto.assistant_api.DeploymentAudioProvider;
       reader.readMessage(value,proto.assistant_api.DeploymentAudioProvider.deserializeBinaryFromReader);
-      msg.addOutputaudio(value);
+      msg.setOutputaudio(value);
       break;
     case 15:
       var value = /** @type {string} */ (reader.readString());
@@ -2356,17 +2350,17 @@ proto.assistant_api.AssistantPhoneDeployment.serializeBinaryToWriter = function(
       f
     );
   }
-  f = message.getInputaudioList();
-  if (f.length > 0) {
-    writer.writeRepeatedMessage(
+  f = message.getInputaudio();
+  if (f != null) {
+    writer.writeMessage(
       13,
       f,
       proto.assistant_api.DeploymentAudioProvider.serializeBinaryToWriter
     );
   }
-  f = message.getOutputaudioList();
-  if (f.length > 0) {
-    writer.writeRepeatedMessage(
+  f = message.getOutputaudio();
+  if (f != null) {
+    writer.writeMessage(
       14,
       f,
       proto.assistant_api.DeploymentAudioProvider.serializeBinaryToWriter
@@ -2645,78 +2639,76 @@ proto.assistant_api.AssistantPhoneDeployment.prototype.hasEnding = function() {
 
 
 /**
- * repeated DeploymentAudioProvider inputAudio = 13;
- * @return {!Array<!proto.assistant_api.DeploymentAudioProvider>}
+ * optional DeploymentAudioProvider inputAudio = 13;
+ * @return {?proto.assistant_api.DeploymentAudioProvider}
  */
-proto.assistant_api.AssistantPhoneDeployment.prototype.getInputaudioList = function() {
-  return /** @type{!Array<!proto.assistant_api.DeploymentAudioProvider>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.assistant_api.DeploymentAudioProvider, 13));
+proto.assistant_api.AssistantPhoneDeployment.prototype.getInputaudio = function() {
+  return /** @type{?proto.assistant_api.DeploymentAudioProvider} */ (
+    jspb.Message.getWrapperField(this, proto.assistant_api.DeploymentAudioProvider, 13));
 };
 
 
 /**
- * @param {!Array<!proto.assistant_api.DeploymentAudioProvider>} value
+ * @param {?proto.assistant_api.DeploymentAudioProvider|undefined} value
  * @return {!proto.assistant_api.AssistantPhoneDeployment} returns this
 */
-proto.assistant_api.AssistantPhoneDeployment.prototype.setInputaudioList = function(value) {
-  return jspb.Message.setRepeatedWrapperField(this, 13, value);
+proto.assistant_api.AssistantPhoneDeployment.prototype.setInputaudio = function(value) {
+  return jspb.Message.setWrapperField(this, 13, value);
 };
 
 
 /**
- * @param {!proto.assistant_api.DeploymentAudioProvider=} opt_value
- * @param {number=} opt_index
- * @return {!proto.assistant_api.DeploymentAudioProvider}
- */
-proto.assistant_api.AssistantPhoneDeployment.prototype.addInputaudio = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 13, opt_value, proto.assistant_api.DeploymentAudioProvider, opt_index);
-};
-
-
-/**
- * Clears the list making it empty but non-null.
+ * Clears the message field making it undefined.
  * @return {!proto.assistant_api.AssistantPhoneDeployment} returns this
  */
-proto.assistant_api.AssistantPhoneDeployment.prototype.clearInputaudioList = function() {
-  return this.setInputaudioList([]);
+proto.assistant_api.AssistantPhoneDeployment.prototype.clearInputaudio = function() {
+  return this.setInputaudio(undefined);
 };
 
 
 /**
- * repeated DeploymentAudioProvider outputAudio = 14;
- * @return {!Array<!proto.assistant_api.DeploymentAudioProvider>}
+ * Returns whether this field is set.
+ * @return {boolean}
  */
-proto.assistant_api.AssistantPhoneDeployment.prototype.getOutputaudioList = function() {
-  return /** @type{!Array<!proto.assistant_api.DeploymentAudioProvider>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.assistant_api.DeploymentAudioProvider, 14));
+proto.assistant_api.AssistantPhoneDeployment.prototype.hasInputaudio = function() {
+  return jspb.Message.getField(this, 13) != null;
 };
 
 
 /**
- * @param {!Array<!proto.assistant_api.DeploymentAudioProvider>} value
+ * optional DeploymentAudioProvider outputAudio = 14;
+ * @return {?proto.assistant_api.DeploymentAudioProvider}
+ */
+proto.assistant_api.AssistantPhoneDeployment.prototype.getOutputaudio = function() {
+  return /** @type{?proto.assistant_api.DeploymentAudioProvider} */ (
+    jspb.Message.getWrapperField(this, proto.assistant_api.DeploymentAudioProvider, 14));
+};
+
+
+/**
+ * @param {?proto.assistant_api.DeploymentAudioProvider|undefined} value
  * @return {!proto.assistant_api.AssistantPhoneDeployment} returns this
 */
-proto.assistant_api.AssistantPhoneDeployment.prototype.setOutputaudioList = function(value) {
-  return jspb.Message.setRepeatedWrapperField(this, 14, value);
+proto.assistant_api.AssistantPhoneDeployment.prototype.setOutputaudio = function(value) {
+  return jspb.Message.setWrapperField(this, 14, value);
 };
 
 
 /**
- * @param {!proto.assistant_api.DeploymentAudioProvider=} opt_value
- * @param {number=} opt_index
- * @return {!proto.assistant_api.DeploymentAudioProvider}
- */
-proto.assistant_api.AssistantPhoneDeployment.prototype.addOutputaudio = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 14, opt_value, proto.assistant_api.DeploymentAudioProvider, opt_index);
-};
-
-
-/**
- * Clears the list making it empty but non-null.
+ * Clears the message field making it undefined.
  * @return {!proto.assistant_api.AssistantPhoneDeployment} returns this
  */
-proto.assistant_api.AssistantPhoneDeployment.prototype.clearOutputaudioList = function() {
-  return this.setOutputaudioList([]);
+proto.assistant_api.AssistantPhoneDeployment.prototype.clearOutputaudio = function() {
+  return this.setOutputaudio(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.assistant_api.AssistantPhoneDeployment.prototype.hasOutputaudio = function() {
+  return jspb.Message.getField(this, 14) != null;
 };
 
 
@@ -3606,7 +3598,7 @@ proto.assistant_api.AssistantWhatsappDeployment.prototype.setStatus = function(v
  * @private {!Array<number>}
  * @const
  */
-proto.assistant_api.AssistantDebuggerDeployment.repeatedFields_ = [13,14,18,20];
+proto.assistant_api.AssistantDebuggerDeployment.repeatedFields_ = [18,20];
 
 /**
  * Oneof group definitions for this message. Each group defines the field
@@ -3674,10 +3666,8 @@ proto.assistant_api.AssistantDebuggerDeployment.toObject = function(includeInsta
     greeting: jspb.Message.getFieldWithDefault(msg, 10, ""),
     mistake: jspb.Message.getFieldWithDefault(msg, 11, ""),
     ending: jspb.Message.getFieldWithDefault(msg, 12, ""),
-    inputaudioList: jspb.Message.toObjectList(msg.getInputaudioList(),
-    proto.assistant_api.DeploymentAudioProvider.toObject, includeInstance),
-    outputaudioList: jspb.Message.toObjectList(msg.getOutputaudioList(),
-    proto.assistant_api.DeploymentAudioProvider.toObject, includeInstance),
+    inputaudio: (f = msg.getInputaudio()) && proto.assistant_api.DeploymentAudioProvider.toObject(includeInstance, f),
+    outputaudio: (f = msg.getOutputaudio()) && proto.assistant_api.DeploymentAudioProvider.toObject(includeInstance, f),
     capturersList: jspb.Message.toObjectList(msg.getCapturersList(),
     proto.assistant_api.AssistantDeploymentCapturer.toObject, includeInstance),
     url: jspb.Message.getFieldWithDefault(msg, 15, ""),
@@ -3761,12 +3751,12 @@ proto.assistant_api.AssistantDebuggerDeployment.deserializeBinaryFromReader = fu
     case 13:
       var value = new proto.assistant_api.DeploymentAudioProvider;
       reader.readMessage(value,proto.assistant_api.DeploymentAudioProvider.deserializeBinaryFromReader);
-      msg.addInputaudio(value);
+      msg.setInputaudio(value);
       break;
     case 14:
       var value = new proto.assistant_api.DeploymentAudioProvider;
       reader.readMessage(value,proto.assistant_api.DeploymentAudioProvider.deserializeBinaryFromReader);
-      msg.addOutputaudio(value);
+      msg.setOutputaudio(value);
       break;
     case 18:
       var value = new proto.assistant_api.AssistantDeploymentCapturer;
@@ -3892,17 +3882,17 @@ proto.assistant_api.AssistantDebuggerDeployment.serializeBinaryToWriter = functi
       f
     );
   }
-  f = message.getInputaudioList();
-  if (f.length > 0) {
-    writer.writeRepeatedMessage(
+  f = message.getInputaudio();
+  if (f != null) {
+    writer.writeMessage(
       13,
       f,
       proto.assistant_api.DeploymentAudioProvider.serializeBinaryToWriter
     );
   }
-  f = message.getOutputaudioList();
-  if (f.length > 0) {
-    writer.writeRepeatedMessage(
+  f = message.getOutputaudio();
+  if (f != null) {
+    writer.writeMessage(
       14,
       f,
       proto.assistant_api.DeploymentAudioProvider.serializeBinaryToWriter
@@ -4181,78 +4171,76 @@ proto.assistant_api.AssistantDebuggerDeployment.prototype.hasEnding = function()
 
 
 /**
- * repeated DeploymentAudioProvider inputAudio = 13;
- * @return {!Array<!proto.assistant_api.DeploymentAudioProvider>}
+ * optional DeploymentAudioProvider inputAudio = 13;
+ * @return {?proto.assistant_api.DeploymentAudioProvider}
  */
-proto.assistant_api.AssistantDebuggerDeployment.prototype.getInputaudioList = function() {
-  return /** @type{!Array<!proto.assistant_api.DeploymentAudioProvider>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.assistant_api.DeploymentAudioProvider, 13));
+proto.assistant_api.AssistantDebuggerDeployment.prototype.getInputaudio = function() {
+  return /** @type{?proto.assistant_api.DeploymentAudioProvider} */ (
+    jspb.Message.getWrapperField(this, proto.assistant_api.DeploymentAudioProvider, 13));
 };
 
 
 /**
- * @param {!Array<!proto.assistant_api.DeploymentAudioProvider>} value
+ * @param {?proto.assistant_api.DeploymentAudioProvider|undefined} value
  * @return {!proto.assistant_api.AssistantDebuggerDeployment} returns this
 */
-proto.assistant_api.AssistantDebuggerDeployment.prototype.setInputaudioList = function(value) {
-  return jspb.Message.setRepeatedWrapperField(this, 13, value);
+proto.assistant_api.AssistantDebuggerDeployment.prototype.setInputaudio = function(value) {
+  return jspb.Message.setWrapperField(this, 13, value);
 };
 
 
 /**
- * @param {!proto.assistant_api.DeploymentAudioProvider=} opt_value
- * @param {number=} opt_index
- * @return {!proto.assistant_api.DeploymentAudioProvider}
- */
-proto.assistant_api.AssistantDebuggerDeployment.prototype.addInputaudio = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 13, opt_value, proto.assistant_api.DeploymentAudioProvider, opt_index);
-};
-
-
-/**
- * Clears the list making it empty but non-null.
+ * Clears the message field making it undefined.
  * @return {!proto.assistant_api.AssistantDebuggerDeployment} returns this
  */
-proto.assistant_api.AssistantDebuggerDeployment.prototype.clearInputaudioList = function() {
-  return this.setInputaudioList([]);
+proto.assistant_api.AssistantDebuggerDeployment.prototype.clearInputaudio = function() {
+  return this.setInputaudio(undefined);
 };
 
 
 /**
- * repeated DeploymentAudioProvider outputAudio = 14;
- * @return {!Array<!proto.assistant_api.DeploymentAudioProvider>}
+ * Returns whether this field is set.
+ * @return {boolean}
  */
-proto.assistant_api.AssistantDebuggerDeployment.prototype.getOutputaudioList = function() {
-  return /** @type{!Array<!proto.assistant_api.DeploymentAudioProvider>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.assistant_api.DeploymentAudioProvider, 14));
+proto.assistant_api.AssistantDebuggerDeployment.prototype.hasInputaudio = function() {
+  return jspb.Message.getField(this, 13) != null;
 };
 
 
 /**
- * @param {!Array<!proto.assistant_api.DeploymentAudioProvider>} value
+ * optional DeploymentAudioProvider outputAudio = 14;
+ * @return {?proto.assistant_api.DeploymentAudioProvider}
+ */
+proto.assistant_api.AssistantDebuggerDeployment.prototype.getOutputaudio = function() {
+  return /** @type{?proto.assistant_api.DeploymentAudioProvider} */ (
+    jspb.Message.getWrapperField(this, proto.assistant_api.DeploymentAudioProvider, 14));
+};
+
+
+/**
+ * @param {?proto.assistant_api.DeploymentAudioProvider|undefined} value
  * @return {!proto.assistant_api.AssistantDebuggerDeployment} returns this
 */
-proto.assistant_api.AssistantDebuggerDeployment.prototype.setOutputaudioList = function(value) {
-  return jspb.Message.setRepeatedWrapperField(this, 14, value);
+proto.assistant_api.AssistantDebuggerDeployment.prototype.setOutputaudio = function(value) {
+  return jspb.Message.setWrapperField(this, 14, value);
 };
 
 
 /**
- * @param {!proto.assistant_api.DeploymentAudioProvider=} opt_value
- * @param {number=} opt_index
- * @return {!proto.assistant_api.DeploymentAudioProvider}
- */
-proto.assistant_api.AssistantDebuggerDeployment.prototype.addOutputaudio = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 14, opt_value, proto.assistant_api.DeploymentAudioProvider, opt_index);
-};
-
-
-/**
- * Clears the list making it empty but non-null.
+ * Clears the message field making it undefined.
  * @return {!proto.assistant_api.AssistantDebuggerDeployment} returns this
  */
-proto.assistant_api.AssistantDebuggerDeployment.prototype.clearOutputaudioList = function() {
-  return this.setOutputaudioList([]);
+proto.assistant_api.AssistantDebuggerDeployment.prototype.clearOutputaudio = function() {
+  return this.setOutputaudio(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.assistant_api.AssistantDebuggerDeployment.prototype.hasOutputaudio = function() {
+  return jspb.Message.getField(this, 14) != null;
 };
 
 
@@ -4502,7 +4490,7 @@ proto.assistant_api.AssistantDebuggerDeployment.prototype.setStatus = function(v
  * @private {!Array<number>}
  * @const
  */
-proto.assistant_api.AssistantApiDeployment.repeatedFields_ = [13,14,15];
+proto.assistant_api.AssistantApiDeployment.repeatedFields_ = [15];
 
 
 
@@ -4544,10 +4532,8 @@ proto.assistant_api.AssistantApiDeployment.toObject = function(includeInstance, 
     greeting: jspb.Message.getFieldWithDefault(msg, 10, ""),
     mistake: jspb.Message.getFieldWithDefault(msg, 11, ""),
     ending: jspb.Message.getFieldWithDefault(msg, 12, ""),
-    inputaudioList: jspb.Message.toObjectList(msg.getInputaudioList(),
-    proto.assistant_api.DeploymentAudioProvider.toObject, includeInstance),
-    outputaudioList: jspb.Message.toObjectList(msg.getOutputaudioList(),
-    proto.assistant_api.DeploymentAudioProvider.toObject, includeInstance),
+    inputaudio: (f = msg.getInputaudio()) && proto.assistant_api.DeploymentAudioProvider.toObject(includeInstance, f),
+    outputaudio: (f = msg.getOutputaudio()) && proto.assistant_api.DeploymentAudioProvider.toObject(includeInstance, f),
     capturersList: jspb.Message.toObjectList(msg.getCapturersList(),
     proto.assistant_api.AssistantDeploymentCapturer.toObject, includeInstance),
     createddate: (f = msg.getCreateddate()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
@@ -4628,12 +4614,12 @@ proto.assistant_api.AssistantApiDeployment.deserializeBinaryFromReader = functio
     case 13:
       var value = new proto.assistant_api.DeploymentAudioProvider;
       reader.readMessage(value,proto.assistant_api.DeploymentAudioProvider.deserializeBinaryFromReader);
-      msg.addInputaudio(value);
+      msg.setInputaudio(value);
       break;
     case 14:
       var value = new proto.assistant_api.DeploymentAudioProvider;
       reader.readMessage(value,proto.assistant_api.DeploymentAudioProvider.deserializeBinaryFromReader);
-      msg.addOutputaudio(value);
+      msg.setOutputaudio(value);
       break;
     case 15:
       var value = new proto.assistant_api.AssistantDeploymentCapturer;
@@ -4746,17 +4732,17 @@ proto.assistant_api.AssistantApiDeployment.serializeBinaryToWriter = function(me
       f
     );
   }
-  f = message.getInputaudioList();
-  if (f.length > 0) {
-    writer.writeRepeatedMessage(
+  f = message.getInputaudio();
+  if (f != null) {
+    writer.writeMessage(
       13,
       f,
       proto.assistant_api.DeploymentAudioProvider.serializeBinaryToWriter
     );
   }
-  f = message.getOutputaudioList();
-  if (f.length > 0) {
-    writer.writeRepeatedMessage(
+  f = message.getOutputaudio();
+  if (f != null) {
+    writer.writeMessage(
       14,
       f,
       proto.assistant_api.DeploymentAudioProvider.serializeBinaryToWriter
@@ -5013,78 +4999,76 @@ proto.assistant_api.AssistantApiDeployment.prototype.hasEnding = function() {
 
 
 /**
- * repeated DeploymentAudioProvider inputAudio = 13;
- * @return {!Array<!proto.assistant_api.DeploymentAudioProvider>}
+ * optional DeploymentAudioProvider inputAudio = 13;
+ * @return {?proto.assistant_api.DeploymentAudioProvider}
  */
-proto.assistant_api.AssistantApiDeployment.prototype.getInputaudioList = function() {
-  return /** @type{!Array<!proto.assistant_api.DeploymentAudioProvider>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.assistant_api.DeploymentAudioProvider, 13));
+proto.assistant_api.AssistantApiDeployment.prototype.getInputaudio = function() {
+  return /** @type{?proto.assistant_api.DeploymentAudioProvider} */ (
+    jspb.Message.getWrapperField(this, proto.assistant_api.DeploymentAudioProvider, 13));
 };
 
 
 /**
- * @param {!Array<!proto.assistant_api.DeploymentAudioProvider>} value
+ * @param {?proto.assistant_api.DeploymentAudioProvider|undefined} value
  * @return {!proto.assistant_api.AssistantApiDeployment} returns this
 */
-proto.assistant_api.AssistantApiDeployment.prototype.setInputaudioList = function(value) {
-  return jspb.Message.setRepeatedWrapperField(this, 13, value);
+proto.assistant_api.AssistantApiDeployment.prototype.setInputaudio = function(value) {
+  return jspb.Message.setWrapperField(this, 13, value);
 };
 
 
 /**
- * @param {!proto.assistant_api.DeploymentAudioProvider=} opt_value
- * @param {number=} opt_index
- * @return {!proto.assistant_api.DeploymentAudioProvider}
- */
-proto.assistant_api.AssistantApiDeployment.prototype.addInputaudio = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 13, opt_value, proto.assistant_api.DeploymentAudioProvider, opt_index);
-};
-
-
-/**
- * Clears the list making it empty but non-null.
+ * Clears the message field making it undefined.
  * @return {!proto.assistant_api.AssistantApiDeployment} returns this
  */
-proto.assistant_api.AssistantApiDeployment.prototype.clearInputaudioList = function() {
-  return this.setInputaudioList([]);
+proto.assistant_api.AssistantApiDeployment.prototype.clearInputaudio = function() {
+  return this.setInputaudio(undefined);
 };
 
 
 /**
- * repeated DeploymentAudioProvider outputAudio = 14;
- * @return {!Array<!proto.assistant_api.DeploymentAudioProvider>}
+ * Returns whether this field is set.
+ * @return {boolean}
  */
-proto.assistant_api.AssistantApiDeployment.prototype.getOutputaudioList = function() {
-  return /** @type{!Array<!proto.assistant_api.DeploymentAudioProvider>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.assistant_api.DeploymentAudioProvider, 14));
+proto.assistant_api.AssistantApiDeployment.prototype.hasInputaudio = function() {
+  return jspb.Message.getField(this, 13) != null;
 };
 
 
 /**
- * @param {!Array<!proto.assistant_api.DeploymentAudioProvider>} value
+ * optional DeploymentAudioProvider outputAudio = 14;
+ * @return {?proto.assistant_api.DeploymentAudioProvider}
+ */
+proto.assistant_api.AssistantApiDeployment.prototype.getOutputaudio = function() {
+  return /** @type{?proto.assistant_api.DeploymentAudioProvider} */ (
+    jspb.Message.getWrapperField(this, proto.assistant_api.DeploymentAudioProvider, 14));
+};
+
+
+/**
+ * @param {?proto.assistant_api.DeploymentAudioProvider|undefined} value
  * @return {!proto.assistant_api.AssistantApiDeployment} returns this
 */
-proto.assistant_api.AssistantApiDeployment.prototype.setOutputaudioList = function(value) {
-  return jspb.Message.setRepeatedWrapperField(this, 14, value);
+proto.assistant_api.AssistantApiDeployment.prototype.setOutputaudio = function(value) {
+  return jspb.Message.setWrapperField(this, 14, value);
 };
 
 
 /**
- * @param {!proto.assistant_api.DeploymentAudioProvider=} opt_value
- * @param {number=} opt_index
- * @return {!proto.assistant_api.DeploymentAudioProvider}
- */
-proto.assistant_api.AssistantApiDeployment.prototype.addOutputaudio = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 14, opt_value, proto.assistant_api.DeploymentAudioProvider, opt_index);
-};
-
-
-/**
- * Clears the list making it empty but non-null.
+ * Clears the message field making it undefined.
  * @return {!proto.assistant_api.AssistantApiDeployment} returns this
  */
-proto.assistant_api.AssistantApiDeployment.prototype.clearOutputaudioList = function() {
-  return this.setOutputaudioList([]);
+proto.assistant_api.AssistantApiDeployment.prototype.clearOutputaudio = function() {
+  return this.setOutputaudio(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.assistant_api.AssistantApiDeployment.prototype.hasOutputaudio = function() {
+  return jspb.Message.getField(this, 14) != null;
 };
 
 

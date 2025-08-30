@@ -10,7 +10,6 @@ import * as grpc from "grpc";
 interface IEndpointServiceService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
   getEndpoint: grpc.MethodDefinition<endpoint_api_pb.GetEndpointRequest, endpoint_api_pb.GetEndpointResponse>;
   getAllEndpoint: grpc.MethodDefinition<endpoint_api_pb.GetAllEndpointRequest, endpoint_api_pb.GetAllEndpointResponse>;
-  getAllDeployment: grpc.MethodDefinition<endpoint_api_pb.GetAllDeploymentRequest, endpoint_api_pb.GetAllDeploymentResponse>;
   getAllEndpointProviderModel: grpc.MethodDefinition<endpoint_api_pb.GetAllEndpointProviderModelRequest, endpoint_api_pb.GetAllEndpointProviderModelResponse>;
   updateEndpointVersion: grpc.MethodDefinition<endpoint_api_pb.UpdateEndpointVersionRequest, endpoint_api_pb.UpdateEndpointVersionResponse>;
   createEndpoint: grpc.MethodDefinition<endpoint_api_pb.CreateEndpointRequest, endpoint_api_pb.CreateEndpointResponse>;
@@ -20,6 +19,8 @@ interface IEndpointServiceService extends grpc.ServiceDefinition<grpc.UntypedSer
   createEndpointTag: grpc.MethodDefinition<endpoint_api_pb.CreateEndpointTagRequest, endpoint_api_pb.GetEndpointResponse>;
   forkEndpoint: grpc.MethodDefinition<endpoint_api_pb.ForkEndpointRequest, common_pb.BaseResponse>;
   updateEndpointDetail: grpc.MethodDefinition<endpoint_api_pb.UpdateEndpointDetailRequest, endpoint_api_pb.GetEndpointResponse>;
+  getAllEndpointLog: grpc.MethodDefinition<endpoint_api_pb.GetAllEndpointLogRequest, endpoint_api_pb.GetAllEndpointLogResponse>;
+  getEndpointLog: grpc.MethodDefinition<endpoint_api_pb.GetEndpointLogRequest, endpoint_api_pb.GetEndpointLogResponse>;
 }
 
 export const EndpointServiceService: IEndpointServiceService;
@@ -27,7 +28,6 @@ export const EndpointServiceService: IEndpointServiceService;
 export interface IEndpointServiceServer extends grpc.UntypedServiceImplementation {
   getEndpoint: grpc.handleUnaryCall<endpoint_api_pb.GetEndpointRequest, endpoint_api_pb.GetEndpointResponse>;
   getAllEndpoint: grpc.handleUnaryCall<endpoint_api_pb.GetAllEndpointRequest, endpoint_api_pb.GetAllEndpointResponse>;
-  getAllDeployment: grpc.handleUnaryCall<endpoint_api_pb.GetAllDeploymentRequest, endpoint_api_pb.GetAllDeploymentResponse>;
   getAllEndpointProviderModel: grpc.handleUnaryCall<endpoint_api_pb.GetAllEndpointProviderModelRequest, endpoint_api_pb.GetAllEndpointProviderModelResponse>;
   updateEndpointVersion: grpc.handleUnaryCall<endpoint_api_pb.UpdateEndpointVersionRequest, endpoint_api_pb.UpdateEndpointVersionResponse>;
   createEndpoint: grpc.handleUnaryCall<endpoint_api_pb.CreateEndpointRequest, endpoint_api_pb.CreateEndpointResponse>;
@@ -37,6 +37,8 @@ export interface IEndpointServiceServer extends grpc.UntypedServiceImplementatio
   createEndpointTag: grpc.handleUnaryCall<endpoint_api_pb.CreateEndpointTagRequest, endpoint_api_pb.GetEndpointResponse>;
   forkEndpoint: grpc.handleUnaryCall<endpoint_api_pb.ForkEndpointRequest, common_pb.BaseResponse>;
   updateEndpointDetail: grpc.handleUnaryCall<endpoint_api_pb.UpdateEndpointDetailRequest, endpoint_api_pb.GetEndpointResponse>;
+  getAllEndpointLog: grpc.handleUnaryCall<endpoint_api_pb.GetAllEndpointLogRequest, endpoint_api_pb.GetAllEndpointLogResponse>;
+  getEndpointLog: grpc.handleUnaryCall<endpoint_api_pb.GetEndpointLogRequest, endpoint_api_pb.GetEndpointLogResponse>;
 }
 
 export class EndpointServiceClient extends grpc.Client {
@@ -47,9 +49,6 @@ export class EndpointServiceClient extends grpc.Client {
   getAllEndpoint(argument: endpoint_api_pb.GetAllEndpointRequest, callback: grpc.requestCallback<endpoint_api_pb.GetAllEndpointResponse>): grpc.ClientUnaryCall;
   getAllEndpoint(argument: endpoint_api_pb.GetAllEndpointRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<endpoint_api_pb.GetAllEndpointResponse>): grpc.ClientUnaryCall;
   getAllEndpoint(argument: endpoint_api_pb.GetAllEndpointRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<endpoint_api_pb.GetAllEndpointResponse>): grpc.ClientUnaryCall;
-  getAllDeployment(argument: endpoint_api_pb.GetAllDeploymentRequest, callback: grpc.requestCallback<endpoint_api_pb.GetAllDeploymentResponse>): grpc.ClientUnaryCall;
-  getAllDeployment(argument: endpoint_api_pb.GetAllDeploymentRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<endpoint_api_pb.GetAllDeploymentResponse>): grpc.ClientUnaryCall;
-  getAllDeployment(argument: endpoint_api_pb.GetAllDeploymentRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<endpoint_api_pb.GetAllDeploymentResponse>): grpc.ClientUnaryCall;
   getAllEndpointProviderModel(argument: endpoint_api_pb.GetAllEndpointProviderModelRequest, callback: grpc.requestCallback<endpoint_api_pb.GetAllEndpointProviderModelResponse>): grpc.ClientUnaryCall;
   getAllEndpointProviderModel(argument: endpoint_api_pb.GetAllEndpointProviderModelRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<endpoint_api_pb.GetAllEndpointProviderModelResponse>): grpc.ClientUnaryCall;
   getAllEndpointProviderModel(argument: endpoint_api_pb.GetAllEndpointProviderModelRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<endpoint_api_pb.GetAllEndpointProviderModelResponse>): grpc.ClientUnaryCall;
@@ -77,4 +76,10 @@ export class EndpointServiceClient extends grpc.Client {
   updateEndpointDetail(argument: endpoint_api_pb.UpdateEndpointDetailRequest, callback: grpc.requestCallback<endpoint_api_pb.GetEndpointResponse>): grpc.ClientUnaryCall;
   updateEndpointDetail(argument: endpoint_api_pb.UpdateEndpointDetailRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<endpoint_api_pb.GetEndpointResponse>): grpc.ClientUnaryCall;
   updateEndpointDetail(argument: endpoint_api_pb.UpdateEndpointDetailRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<endpoint_api_pb.GetEndpointResponse>): grpc.ClientUnaryCall;
+  getAllEndpointLog(argument: endpoint_api_pb.GetAllEndpointLogRequest, callback: grpc.requestCallback<endpoint_api_pb.GetAllEndpointLogResponse>): grpc.ClientUnaryCall;
+  getAllEndpointLog(argument: endpoint_api_pb.GetAllEndpointLogRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<endpoint_api_pb.GetAllEndpointLogResponse>): grpc.ClientUnaryCall;
+  getAllEndpointLog(argument: endpoint_api_pb.GetAllEndpointLogRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<endpoint_api_pb.GetAllEndpointLogResponse>): grpc.ClientUnaryCall;
+  getEndpointLog(argument: endpoint_api_pb.GetEndpointLogRequest, callback: grpc.requestCallback<endpoint_api_pb.GetEndpointLogResponse>): grpc.ClientUnaryCall;
+  getEndpointLog(argument: endpoint_api_pb.GetEndpointLogRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<endpoint_api_pb.GetEndpointLogResponse>): grpc.ClientUnaryCall;
+  getEndpointLog(argument: endpoint_api_pb.GetEndpointLogRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<endpoint_api_pb.GetEndpointLogResponse>): grpc.ClientUnaryCall;
 }

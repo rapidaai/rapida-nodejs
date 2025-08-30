@@ -13,9 +13,6 @@ export class CreateKnowledgeRequest extends jspb.Message {
   getDescription(): string;
   setDescription(value: string): void;
 
-  getEmbeddingprovidermodelid(): string;
-  setEmbeddingprovidermodelid(value: string): void;
-
   clearTagsList(): void;
   getTagsList(): Array<string>;
   setTagsList(value: Array<string>): void;
@@ -24,8 +21,16 @@ export class CreateKnowledgeRequest extends jspb.Message {
   getVisibility(): string;
   setVisibility(value: string): void;
 
-  getEmbeddingproviderid(): string;
-  setEmbeddingproviderid(value: string): void;
+  getEmbeddingmodelproviderid(): string;
+  setEmbeddingmodelproviderid(value: string): void;
+
+  getEmbeddingmodelprovidername(): string;
+  setEmbeddingmodelprovidername(value: string): void;
+
+  clearKnowledgeembeddingmodeloptionsList(): void;
+  getKnowledgeembeddingmodeloptionsList(): Array<common_pb.Metadata>;
+  setKnowledgeembeddingmodeloptionsList(value: Array<common_pb.Metadata>): void;
+  addKnowledgeembeddingmodeloptions(value?: common_pb.Metadata, index?: number): common_pb.Metadata;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): CreateKnowledgeRequest.AsObject;
@@ -41,10 +46,11 @@ export namespace CreateKnowledgeRequest {
   export type AsObject = {
     name: string,
     description: string,
-    embeddingprovidermodelid: string,
     tagsList: Array<string>,
     visibility: string,
-    embeddingproviderid: string,
+    embeddingmodelproviderid: string,
+    embeddingmodelprovidername: string,
+    knowledgeembeddingmodeloptionsList: Array<common_pb.Metadata.AsObject>,
   }
 }
 

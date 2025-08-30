@@ -22,6 +22,7 @@
  *  Author: Prashant <prashant@rapida.ai>
  *
  */
+import { Metadata } from "@/rapida/clients/protos/common_pb";
 import { getBrowser } from "@/rapida/utils/rapida_client";
 import { Timestamp } from "google-protobuf/google/protobuf/timestamp_pb";
 import moment from "moment";
@@ -185,4 +186,10 @@ export function isIOSSafari(): boolean {
     (/iPad|iPhone|iPod/.test(navigator.platform) ||
       (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1))
   );
+}
+
+export interface ProviderConfig {
+  providerId: string;
+  provider: string;
+  parameters: Metadata[];
 }

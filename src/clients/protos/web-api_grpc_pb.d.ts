@@ -167,20 +167,3 @@ export class ProjectServiceClient extends grpc.Client {
   getAllProjectCredential(argument: web_api_pb.GetAllProjectCredentialRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<web_api_pb.GetAllProjectCredentialResponse>): grpc.ClientUnaryCall;
   getAllProjectCredential(argument: web_api_pb.GetAllProjectCredentialRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<web_api_pb.GetAllProjectCredentialResponse>): grpc.ClientUnaryCall;
 }
-
-interface ILeadServiceService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
-  createLead: grpc.MethodDefinition<web_api_pb.LeadCreationRequest, common_pb.BaseResponse>;
-}
-
-export const LeadServiceService: ILeadServiceService;
-
-export interface ILeadServiceServer extends grpc.UntypedServiceImplementation {
-  createLead: grpc.handleUnaryCall<web_api_pb.LeadCreationRequest, common_pb.BaseResponse>;
-}
-
-export class LeadServiceClient extends grpc.Client {
-  constructor(address: string, credentials: grpc.ChannelCredentials, options?: object);
-  createLead(argument: web_api_pb.LeadCreationRequest, callback: grpc.requestCallback<common_pb.BaseResponse>): grpc.ClientUnaryCall;
-  createLead(argument: web_api_pb.LeadCreationRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<common_pb.BaseResponse>): grpc.ClientUnaryCall;
-  createLead(argument: web_api_pb.LeadCreationRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<common_pb.BaseResponse>): grpc.ClientUnaryCall;
-}
