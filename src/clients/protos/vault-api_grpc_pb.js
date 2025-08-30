@@ -18,17 +18,6 @@ function deserialize_vault_api_CreateProviderCredentialRequest(buffer_arg) {
   return vault$api_pb.CreateProviderCredentialRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_vault_api_CreateProviderCredentialResponse(arg) {
-  if (!(arg instanceof vault$api_pb.CreateProviderCredentialResponse)) {
-    throw new Error('Expected argument of type vault_api.CreateProviderCredentialResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_vault_api_CreateProviderCredentialResponse(buffer_arg) {
-  return vault$api_pb.CreateProviderCredentialResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_vault_api_CreateToolCredentialRequest(arg) {
   if (!(arg instanceof vault$api_pb.CreateToolCredentialRequest)) {
     throw new Error('Expected argument of type vault_api.CreateToolCredentialRequest');
@@ -40,37 +29,15 @@ function deserialize_vault_api_CreateToolCredentialRequest(buffer_arg) {
   return vault$api_pb.CreateToolCredentialRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_vault_api_CreateToolCredentialResponse(arg) {
-  if (!(arg instanceof vault$api_pb.CreateToolCredentialResponse)) {
-    throw new Error('Expected argument of type vault_api.CreateToolCredentialResponse');
+function serialize_vault_api_DeleteCredentialRequest(arg) {
+  if (!(arg instanceof vault$api_pb.DeleteCredentialRequest)) {
+    throw new Error('Expected argument of type vault_api.DeleteCredentialRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_vault_api_CreateToolCredentialResponse(buffer_arg) {
-  return vault$api_pb.CreateToolCredentialResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_vault_api_DeleteProviderCredentialRequest(arg) {
-  if (!(arg instanceof vault$api_pb.DeleteProviderCredentialRequest)) {
-    throw new Error('Expected argument of type vault_api.DeleteProviderCredentialRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_vault_api_DeleteProviderCredentialRequest(buffer_arg) {
-  return vault$api_pb.DeleteProviderCredentialRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_vault_api_DeleteProviderCredentialResponse(arg) {
-  if (!(arg instanceof vault$api_pb.DeleteProviderCredentialResponse)) {
-    throw new Error('Expected argument of type vault_api.DeleteProviderCredentialResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_vault_api_DeleteProviderCredentialResponse(buffer_arg) {
-  return vault$api_pb.DeleteProviderCredentialResponse.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_vault_api_DeleteCredentialRequest(buffer_arg) {
+  return vault$api_pb.DeleteCredentialRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_vault_api_GetAllOrganizationCredentialRequest(arg) {
@@ -95,26 +62,26 @@ function deserialize_vault_api_GetAllOrganizationCredentialResponse(buffer_arg) 
   return vault$api_pb.GetAllOrganizationCredentialResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_vault_api_GetOauth2VaultCredentialRequest(arg) {
-  if (!(arg instanceof vault$api_pb.GetOauth2VaultCredentialRequest)) {
-    throw new Error('Expected argument of type vault_api.GetOauth2VaultCredentialRequest');
+function serialize_vault_api_GetCredentialRequest(arg) {
+  if (!(arg instanceof vault$api_pb.GetCredentialRequest)) {
+    throw new Error('Expected argument of type vault_api.GetCredentialRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_vault_api_GetOauth2VaultCredentialRequest(buffer_arg) {
-  return vault$api_pb.GetOauth2VaultCredentialRequest.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_vault_api_GetCredentialRequest(buffer_arg) {
+  return vault$api_pb.GetCredentialRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_vault_api_GetOauth2VaultCredentialResponse(arg) {
-  if (!(arg instanceof vault$api_pb.GetOauth2VaultCredentialResponse)) {
-    throw new Error('Expected argument of type vault_api.GetOauth2VaultCredentialResponse');
+function serialize_vault_api_GetCredentialResponse(arg) {
+  if (!(arg instanceof vault$api_pb.GetCredentialResponse)) {
+    throw new Error('Expected argument of type vault_api.GetCredentialResponse');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_vault_api_GetOauth2VaultCredentialResponse(buffer_arg) {
-  return vault$api_pb.GetOauth2VaultCredentialResponse.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_vault_api_GetCredentialResponse(buffer_arg) {
+  return vault$api_pb.GetCredentialResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_vault_api_GetProviderCredentialRequest(arg) {
@@ -128,17 +95,6 @@ function deserialize_vault_api_GetProviderCredentialRequest(buffer_arg) {
   return vault$api_pb.GetProviderCredentialRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_vault_api_GetProviderCredentialResponse(arg) {
-  if (!(arg instanceof vault$api_pb.GetProviderCredentialResponse)) {
-    throw new Error('Expected argument of type vault_api.GetProviderCredentialResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_vault_api_GetProviderCredentialResponse(buffer_arg) {
-  return vault$api_pb.GetProviderCredentialResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 
 var VaultServiceService = exports.VaultServiceService = {
   createProviderCredential: {
@@ -146,33 +102,22 @@ var VaultServiceService = exports.VaultServiceService = {
     requestStream: false,
     responseStream: false,
     requestType: vault$api_pb.CreateProviderCredentialRequest,
-    responseType: vault$api_pb.CreateProviderCredentialResponse,
+    responseType: vault$api_pb.GetCredentialResponse,
     requestSerialize: serialize_vault_api_CreateProviderCredentialRequest,
     requestDeserialize: deserialize_vault_api_CreateProviderCredentialRequest,
-    responseSerialize: serialize_vault_api_CreateProviderCredentialResponse,
-    responseDeserialize: deserialize_vault_api_CreateProviderCredentialResponse,
+    responseSerialize: serialize_vault_api_GetCredentialResponse,
+    responseDeserialize: deserialize_vault_api_GetCredentialResponse,
   },
   createToolCredential: {
     path: '/vault_api.VaultService/CreateToolCredential',
     requestStream: false,
     responseStream: false,
     requestType: vault$api_pb.CreateToolCredentialRequest,
-    responseType: vault$api_pb.CreateToolCredentialResponse,
+    responseType: vault$api_pb.GetCredentialResponse,
     requestSerialize: serialize_vault_api_CreateToolCredentialRequest,
     requestDeserialize: deserialize_vault_api_CreateToolCredentialRequest,
-    responseSerialize: serialize_vault_api_CreateToolCredentialResponse,
-    responseDeserialize: deserialize_vault_api_CreateToolCredentialResponse,
-  },
-  deleteProviderCredential: {
-    path: '/vault_api.VaultService/DeleteProviderCredential',
-    requestStream: false,
-    responseStream: false,
-    requestType: vault$api_pb.DeleteProviderCredentialRequest,
-    responseType: vault$api_pb.DeleteProviderCredentialResponse,
-    requestSerialize: serialize_vault_api_DeleteProviderCredentialRequest,
-    requestDeserialize: deserialize_vault_api_DeleteProviderCredentialRequest,
-    responseSerialize: serialize_vault_api_DeleteProviderCredentialResponse,
-    responseDeserialize: deserialize_vault_api_DeleteProviderCredentialResponse,
+    responseSerialize: serialize_vault_api_GetCredentialResponse,
+    responseDeserialize: deserialize_vault_api_GetCredentialResponse,
   },
   getAllOrganizationCredential: {
     path: '/vault_api.VaultService/GetAllOrganizationCredential',
@@ -185,27 +130,49 @@ var VaultServiceService = exports.VaultServiceService = {
     responseSerialize: serialize_vault_api_GetAllOrganizationCredentialResponse,
     responseDeserialize: deserialize_vault_api_GetAllOrganizationCredentialResponse,
   },
+  deleteCredential: {
+    path: '/vault_api.VaultService/DeleteCredential',
+    requestStream: false,
+    responseStream: false,
+    requestType: vault$api_pb.DeleteCredentialRequest,
+    responseType: vault$api_pb.GetCredentialResponse,
+    requestSerialize: serialize_vault_api_DeleteCredentialRequest,
+    requestDeserialize: deserialize_vault_api_DeleteCredentialRequest,
+    responseSerialize: serialize_vault_api_GetCredentialResponse,
+    responseDeserialize: deserialize_vault_api_GetCredentialResponse,
+  },
   getProviderCredential: {
     path: '/vault_api.VaultService/GetProviderCredential',
     requestStream: false,
     responseStream: false,
     requestType: vault$api_pb.GetProviderCredentialRequest,
-    responseType: vault$api_pb.GetProviderCredentialResponse,
+    responseType: vault$api_pb.GetCredentialResponse,
     requestSerialize: serialize_vault_api_GetProviderCredentialRequest,
     requestDeserialize: deserialize_vault_api_GetProviderCredentialRequest,
-    responseSerialize: serialize_vault_api_GetProviderCredentialResponse,
-    responseDeserialize: deserialize_vault_api_GetProviderCredentialResponse,
+    responseSerialize: serialize_vault_api_GetCredentialResponse,
+    responseDeserialize: deserialize_vault_api_GetCredentialResponse,
   },
-  getOauth2VaultCredential: {
-    path: '/vault_api.VaultService/GetOauth2VaultCredential',
+  getCredential: {
+    path: '/vault_api.VaultService/GetCredential',
     requestStream: false,
     responseStream: false,
-    requestType: vault$api_pb.GetOauth2VaultCredentialRequest,
-    responseType: vault$api_pb.GetOauth2VaultCredentialResponse,
-    requestSerialize: serialize_vault_api_GetOauth2VaultCredentialRequest,
-    requestDeserialize: deserialize_vault_api_GetOauth2VaultCredentialRequest,
-    responseSerialize: serialize_vault_api_GetOauth2VaultCredentialResponse,
-    responseDeserialize: deserialize_vault_api_GetOauth2VaultCredentialResponse,
+    requestType: vault$api_pb.GetCredentialRequest,
+    responseType: vault$api_pb.GetCredentialResponse,
+    requestSerialize: serialize_vault_api_GetCredentialRequest,
+    requestDeserialize: deserialize_vault_api_GetCredentialRequest,
+    responseSerialize: serialize_vault_api_GetCredentialResponse,
+    responseDeserialize: deserialize_vault_api_GetCredentialResponse,
+  },
+  getOauth2Credential: {
+    path: '/vault_api.VaultService/GetOauth2Credential',
+    requestStream: false,
+    responseStream: false,
+    requestType: vault$api_pb.GetCredentialRequest,
+    responseType: vault$api_pb.GetCredentialResponse,
+    requestSerialize: serialize_vault_api_GetCredentialRequest,
+    requestDeserialize: deserialize_vault_api_GetCredentialRequest,
+    responseSerialize: serialize_vault_api_GetCredentialResponse,
+    responseDeserialize: deserialize_vault_api_GetCredentialResponse,
   },
 };
 

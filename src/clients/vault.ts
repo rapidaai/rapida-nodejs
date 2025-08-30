@@ -26,13 +26,11 @@
 
 import {
   CreateProviderCredentialRequest,
-  CreateProviderCredentialResponse,
-  DeleteProviderCredentialRequest,
-  DeleteProviderCredentialResponse,
+  GetCredentialResponse,
+  DeleteCredentialRequest,
   GetAllOrganizationCredentialResponse,
   GetAllOrganizationCredentialRequest,
   CreateToolCredentialRequest,
-  CreateToolCredentialResponse,
 } from "@/rapida/clients/protos/vault-api_pb";
 import { Criteria, Paginate } from "@/rapida/clients/protos/common_pb";
 import { Struct } from "google-protobuf/google/protobuf/struct_pb";
@@ -58,7 +56,7 @@ export function CreateProviderKey(
   credential: {},
   name: string,
   authHeader: ClientAuthInfo | UserAuthInfo
-): Promise<CreateProviderCredentialResponse> {
+): Promise<GetCredentialResponse> {
   return new Promise((resolve, reject) => {
     const requestObject = new CreateProviderCredentialRequest();
     requestObject.setProviderid(providerId);
@@ -68,10 +66,7 @@ export function CreateProviderKey(
     connectionConfig.vaultClient.createProviderCredential(
       requestObject,
       WithAuthContext(authHeader),
-      (
-        err: ServiceError | null,
-        response: CreateProviderCredentialResponse
-      ) => {
+      (err: ServiceError | null, response: GetCredentialResponse) => {
         if (err) reject(err);
         else resolve(response);
       }
@@ -83,17 +78,14 @@ export function DeleteProviderKey(
   connectionConfig: ConnectionConfig,
   providerKeyId: string,
   authHeader: ClientAuthInfo | UserAuthInfo
-): Promise<DeleteProviderCredentialResponse> {
+): Promise<GetCredentialResponse> {
   return new Promise((resolve, reject) => {
-    const requestObject = new DeleteProviderCredentialRequest();
-    requestObject.setProviderkeyid(providerKeyId);
-    connectionConfig.vaultClient.deleteProviderCredential(
+    const requestObject = new DeleteCredentialRequest();
+    requestObject.setVaultid(providerKeyId);
+    connectionConfig.vaultClient.deleteCredential(
       requestObject,
       WithAuthContext(authHeader),
-      (
-        err: ServiceError | null,
-        response: DeleteProviderCredentialResponse
-      ) => {
+      (err: ServiceError | null, response: GetCredentialResponse) => {
         if (err) reject(err);
         else resolve(response);
       }
@@ -141,7 +133,7 @@ export function CreateToolCredential(
   credential: {},
   name: string,
   authHeader: ClientAuthInfo | UserAuthInfo
-): Promise<CreateToolCredentialResponse> {
+): Promise<GetCredentialResponse> {
   return new Promise((resolve, reject) => {
     const requestObject = new CreateToolCredentialRequest();
     requestObject.setToolid(toolId);
@@ -151,7 +143,7 @@ export function CreateToolCredential(
     connectionConfig.vaultClient.createToolCredential(
       requestObject,
       WithAuthContext(authHeader),
-      (err: ServiceError | null, response: CreateToolCredentialResponse) => {
+      (err: ServiceError | null, response: GetCredentialResponse) => {
         if (err) reject(err);
         else resolve(response!);
       }

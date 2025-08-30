@@ -163,17 +163,6 @@ function deserialize_talk_api_CreatePhoneCallResponse(buffer_arg) {
 
 
 var TalkServiceService = exports.TalkServiceService = {
-  assistantMessaging: {
-    path: '/talk_api.TalkService/AssistantMessaging',
-    requestStream: false,
-    responseStream: true,
-    requestType: talk$api_pb.AssistantMessagingRequest,
-    responseType: talk$api_pb.AssistantMessagingResponse,
-    requestSerialize: serialize_talk_api_AssistantMessagingRequest,
-    requestDeserialize: deserialize_talk_api_AssistantMessagingRequest,
-    responseSerialize: serialize_talk_api_AssistantMessagingResponse,
-    responseDeserialize: deserialize_talk_api_AssistantMessagingResponse,
-  },
   assistantTalk: {
     path: '/talk_api.TalkService/AssistantTalk',
     requestStream: true,

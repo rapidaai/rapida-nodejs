@@ -57,165 +57,6 @@ import { AssistantDeploymentServiceClient } from "@/rapida/clients/protos/assist
 import { ConnectServiceClient } from "@/rapida/clients/protos/connect-api_grpc_pb";
 import { ProviderServiceClient } from "@/rapida/clients/protos/provider-api_grpc_pb";
 
-/**
- * Represents a connection to the TalkService, providing both a conversation client
- * and a streaming client for real-time communication.
- */
-// export class ConnectionConfig {
-//   /**
-//    * gRPC client for handling standard conversation requests.
-//    */
-//   conversationClient: TalkServiceClient;
-
-//   /**
-//    * gRPC client for assistant apis
-//    */
-//   assistantClient: AssistantServiceClient;
-
-//   /**
-//    * deployment client to invoke endpoint
-//    */
-//   endpointClient: DeploymentClient;
-
-//   /**
-//    * Authentication information for the client, supporting both client and user authentication.
-//    */
-//   auth: ClientAuthInfo | UserAuthInfo;
-
-//   /**
-//    * an utils for debugger credentials
-//    * @param param0
-//    * @returns
-//    */
-//   static WithDebugger({
-//     authorization,
-//     userId,
-//     projectId,
-//   }: {
-//     authorization: string;
-//     userId: string;
-//     projectId: string;
-//   }): UserAuthInfo {
-//     return {
-//       authorization,
-//       [HEADER_AUTH_ID]: userId,
-//       [HEADER_PROJECT_ID]: projectId,
-//       Client: {
-//         [HEADER_SOURCE_KEY]: RapidaSource.DEBUGGER,
-//       },
-//     };
-//   }
-
-//   /**
-//    *
-//    * @param param0
-//    * @returns
-//    */
-//   static WithSDK({
-//     apiKey,
-//     userId,
-//   }: {
-//     apiKey: string;
-//     userId: string;
-//   }): ClientAuthInfo {
-//     return {
-//       [HEADER_API_KEY]: apiKey,
-//       [HEADER_AUTH_ID]: userId,
-//       Client: {
-//         [HEADER_SOURCE_KEY]: RapidaSource.NODE_SDK,
-//       },
-//     };
-//   }
-
-//   /**
-//    * Creates a new Connection instance, initializing the conversation and streaming clients.
-//    *
-//    * @param auth - Authentication information for the connection.
-//    * @param endpoint - (Optional) Custom API endpoint for connecting to the TalkService.
-//    *                   If not provided, it defaults to `ASSISTANT_API`.
-//    */
-//   constructor(
-//     auth: ClientAuthInfo | UserAuthInfo,
-//     assistantEndpoint?: string,
-//     deploymentEndpoint?: string,
-//     debug?: boolean
-//   ) {
-//     this.auth = auth;
-//     this.auth.Client = getClientInfo(this.auth.Client);
-//     this.conversationClient = new TalkServiceClient(
-//       assistantEndpoint ? assistantEndpoint : ASSISTANT_API,
-//       debug ? credentials.createInsecure() : credentials.createSsl()
-//     );
-
-//     this.assistantClient = new AssistantServiceClient(
-//       assistantEndpoint ? assistantEndpoint : ASSISTANT_API,
-//       debug ? credentials.createInsecure() : credentials.createSsl()
-//     );
-
-//     this.endpointClient = new DeploymentClient(
-//       deploymentEndpoint ? deploymentEndpoint : ENDPOINT_API,
-//       debug ? credentials.createInsecure() : credentials.createSsl()
-//     );
-//   }
-
-//   /**
-//    * Only for testing
-//    * @returns
-//    */
-//   withLocal(): this {
-//     return this.withCustomEndpoint(
-//       LOCAL_ASSISTANT_API,
-//       LOCAL_ENDPOINT_API,
-//       true
-//     );
-//   }
-
-//   /**
-//    * On premise deployment options
-//    * @param endpoint
-//    * @returns
-//    */
-//   withCustomEndpoint(
-//     assistantEndpoint: string,
-//     deploymentEndpoint: string,
-//     debug?: boolean
-//   ): this {
-//     console.log(
-//       `Debug: Initializing TalkServiceClient with endpoint: ${assistantEndpoint}`
-//     );
-//     this.conversationClient = new TalkServiceClient(
-//       assistantEndpoint,
-//       debug ? credentials.createInsecure() : credentials.createSsl()
-//     );
-//     console.log(
-//       `Debug: TalkServiceClient initialized: ${this.conversationClient}`
-//     );
-
-//     console.log(
-//       `Debug: Initializing AssistantServiceClient with endpoint: ${assistantEndpoint}`
-//     );
-//     this.assistantClient = new AssistantServiceClient(
-//       assistantEndpoint,
-//       debug ? credentials.createInsecure() : credentials.createSsl()
-//     );
-//     console.log(
-//       `Debug: AssistantServiceClient initialized: ${this.assistantClient}`
-//     );
-
-//     console.log(
-//       `Debug: Initializing DeploymentClient with endpoint: ${deploymentEndpoint}`
-//     );
-//     this.endpointClient = new DeploymentClient(
-//       deploymentEndpoint,
-//       debug ? credentials.createInsecure() : credentials.createSsl()
-//     );
-//     console.log(`Debug: DeploymentClient initialized: ${this.endpointClient}`);
-
-//     console.log("Debug: All clients initialized");
-//     return this;
-//   }
-// }
-
 export class ConnectionConfig {
   /**
    * an utils for debugger credentials
@@ -241,6 +82,11 @@ export class ConnectionConfig {
     };
   }
 
+  /**
+   *
+   * @param param0
+   * @returns
+   */
   static WithPersonalToken({
     authorization,
     userId,
@@ -301,22 +147,18 @@ export class ConnectionConfig {
     };
   }
 
-  _endpoint: {
+  private _endpoint: {
     assistant: string;
     web: string;
     endpoint: string;
   };
-
-  _debug: boolean;
-
-  private _auth: ClientAuthInfo | UserAuthInfo;
+  private _debug: boolean;
+  private _auth?: ClientAuthInfo | UserAuthInfo;
 
   getClientOptions() {
     return { debug: this._debug };
   }
-
   constructor(
-    auth: ClientAuthInfo | UserAuthInfo,
     endpoint: {
       assistant?: string;
       web?: string;
@@ -333,7 +175,6 @@ export class ConnectionConfig {
       web: endpoint.web || WEB_API,
       endpoint: endpoint.endpoint || ENDPOINT_API,
     };
-    this._auth = auth;
     this._debug = debug;
   }
 
@@ -441,7 +282,7 @@ export class ConnectionConfig {
     });
   }
 
-  get auth(): ClientAuthInfo | UserAuthInfo {
+  get auth(): ClientAuthInfo | UserAuthInfo | undefined {
     return this._auth;
   }
 
@@ -464,5 +305,18 @@ export class ConnectionConfig {
     };
     if (debug !== undefined) this._debug = debug;
     return this;
+  }
+
+  withAuth(auth: ClientAuthInfo | UserAuthInfo): this {
+    this._auth = auth;
+    return this;
+  }
+
+  static DefaultConnectionConfig(
+    auth: ClientAuthInfo | UserAuthInfo
+  ): ConnectionConfig {
+    const cc = new ConnectionConfig();
+    cc.withAuth(auth);
+    return cc;
   }
 }

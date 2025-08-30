@@ -9,22 +9,22 @@ export class DeploymentAudioProvider extends jspb.Message {
   getId(): string;
   setId(value: string): void;
 
-  getProvidername(): string;
-  setProvidername(value: string): void;
+  getAudioprovider(): string;
+  setAudioprovider(value: string): void;
 
-  clearOptionsList(): void;
-  getOptionsList(): Array<common_pb.Metadata>;
-  setOptionsList(value: Array<common_pb.Metadata>): void;
-  addOptions(value?: common_pb.Metadata, index?: number): common_pb.Metadata;
+  clearAudiooptionsList(): void;
+  getAudiooptionsList(): Array<common_pb.Metadata>;
+  setAudiooptionsList(value: Array<common_pb.Metadata>): void;
+  addAudiooptions(value?: common_pb.Metadata, index?: number): common_pb.Metadata;
 
-  getProviderid(): string;
-  setProviderid(value: string): void;
+  getAudioproviderid(): string;
+  setAudioproviderid(value: string): void;
 
   getStatus(): string;
   setStatus(value: string): void;
 
-  getType(): string;
-  setType(value: string): void;
+  getAudiotype(): string;
+  setAudiotype(value: string): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): DeploymentAudioProvider.AsObject;
@@ -39,11 +39,11 @@ export class DeploymentAudioProvider extends jspb.Message {
 export namespace DeploymentAudioProvider {
   export type AsObject = {
     id: string,
-    providername: string,
-    optionsList: Array<common_pb.Metadata.AsObject>,
-    providerid: string,
+    audioprovider: string,
+    audiooptionsList: Array<common_pb.Metadata.AsObject>,
+    audioproviderid: string,
     status: string,
-    type: string,
+    audiotype: string,
   }
 }
 
@@ -54,19 +54,19 @@ export class AssistantDeploymentCapturer extends jspb.Message {
   getAssistantdeploymentid(): string;
   setAssistantdeploymentid(value: string): void;
 
-  getType(): string;
-  setType(value: string): void;
+  getCapturertype(): string;
+  setCapturertype(value: string): void;
 
-  getProviderid(): string;
-  setProviderid(value: string): void;
+  getCapturerproviderid(): string;
+  setCapturerproviderid(value: string): void;
 
-  getProvidername(): string;
-  setProvidername(value: string): void;
+  getCapturerprovider(): string;
+  setCapturerprovider(value: string): void;
 
-  clearOptionsList(): void;
-  getOptionsList(): Array<common_pb.Metadata>;
-  setOptionsList(value: Array<common_pb.Metadata>): void;
-  addOptions(value?: common_pb.Metadata, index?: number): common_pb.Metadata;
+  clearCaptureroptionsList(): void;
+  getCaptureroptionsList(): Array<common_pb.Metadata>;
+  setCaptureroptionsList(value: Array<common_pb.Metadata>): void;
+  addCaptureroptions(value?: common_pb.Metadata, index?: number): common_pb.Metadata;
 
   getStatus(): string;
   setStatus(value: string): void;
@@ -85,10 +85,10 @@ export namespace AssistantDeploymentCapturer {
   export type AsObject = {
     id: string,
     assistantdeploymentid: string,
-    type: string,
-    providerid: string,
-    providername: string,
-    optionsList: Array<common_pb.Metadata.AsObject>,
+    capturertype: string,
+    capturerproviderid: string,
+    capturerprovider: string,
+    captureroptionsList: Array<common_pb.Metadata.AsObject>,
     status: string,
   }
 }

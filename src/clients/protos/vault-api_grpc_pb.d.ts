@@ -7,43 +7,48 @@ import * as vault_api_pb from "./vault-api_pb";
 import * as grpc from "grpc";
 
 interface IVaultServiceService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
-  createProviderCredential: grpc.MethodDefinition<vault_api_pb.CreateProviderCredentialRequest, vault_api_pb.CreateProviderCredentialResponse>;
-  createToolCredential: grpc.MethodDefinition<vault_api_pb.CreateToolCredentialRequest, vault_api_pb.CreateToolCredentialResponse>;
-  deleteProviderCredential: grpc.MethodDefinition<vault_api_pb.DeleteProviderCredentialRequest, vault_api_pb.DeleteProviderCredentialResponse>;
+  createProviderCredential: grpc.MethodDefinition<vault_api_pb.CreateProviderCredentialRequest, vault_api_pb.GetCredentialResponse>;
+  createToolCredential: grpc.MethodDefinition<vault_api_pb.CreateToolCredentialRequest, vault_api_pb.GetCredentialResponse>;
   getAllOrganizationCredential: grpc.MethodDefinition<vault_api_pb.GetAllOrganizationCredentialRequest, vault_api_pb.GetAllOrganizationCredentialResponse>;
-  getProviderCredential: grpc.MethodDefinition<vault_api_pb.GetProviderCredentialRequest, vault_api_pb.GetProviderCredentialResponse>;
-  getOauth2VaultCredential: grpc.MethodDefinition<vault_api_pb.GetOauth2VaultCredentialRequest, vault_api_pb.GetOauth2VaultCredentialResponse>;
+  deleteCredential: grpc.MethodDefinition<vault_api_pb.DeleteCredentialRequest, vault_api_pb.GetCredentialResponse>;
+  getProviderCredential: grpc.MethodDefinition<vault_api_pb.GetProviderCredentialRequest, vault_api_pb.GetCredentialResponse>;
+  getCredential: grpc.MethodDefinition<vault_api_pb.GetCredentialRequest, vault_api_pb.GetCredentialResponse>;
+  getOauth2Credential: grpc.MethodDefinition<vault_api_pb.GetCredentialRequest, vault_api_pb.GetCredentialResponse>;
 }
 
 export const VaultServiceService: IVaultServiceService;
 
 export interface IVaultServiceServer extends grpc.UntypedServiceImplementation {
-  createProviderCredential: grpc.handleUnaryCall<vault_api_pb.CreateProviderCredentialRequest, vault_api_pb.CreateProviderCredentialResponse>;
-  createToolCredential: grpc.handleUnaryCall<vault_api_pb.CreateToolCredentialRequest, vault_api_pb.CreateToolCredentialResponse>;
-  deleteProviderCredential: grpc.handleUnaryCall<vault_api_pb.DeleteProviderCredentialRequest, vault_api_pb.DeleteProviderCredentialResponse>;
+  createProviderCredential: grpc.handleUnaryCall<vault_api_pb.CreateProviderCredentialRequest, vault_api_pb.GetCredentialResponse>;
+  createToolCredential: grpc.handleUnaryCall<vault_api_pb.CreateToolCredentialRequest, vault_api_pb.GetCredentialResponse>;
   getAllOrganizationCredential: grpc.handleUnaryCall<vault_api_pb.GetAllOrganizationCredentialRequest, vault_api_pb.GetAllOrganizationCredentialResponse>;
-  getProviderCredential: grpc.handleUnaryCall<vault_api_pb.GetProviderCredentialRequest, vault_api_pb.GetProviderCredentialResponse>;
-  getOauth2VaultCredential: grpc.handleUnaryCall<vault_api_pb.GetOauth2VaultCredentialRequest, vault_api_pb.GetOauth2VaultCredentialResponse>;
+  deleteCredential: grpc.handleUnaryCall<vault_api_pb.DeleteCredentialRequest, vault_api_pb.GetCredentialResponse>;
+  getProviderCredential: grpc.handleUnaryCall<vault_api_pb.GetProviderCredentialRequest, vault_api_pb.GetCredentialResponse>;
+  getCredential: grpc.handleUnaryCall<vault_api_pb.GetCredentialRequest, vault_api_pb.GetCredentialResponse>;
+  getOauth2Credential: grpc.handleUnaryCall<vault_api_pb.GetCredentialRequest, vault_api_pb.GetCredentialResponse>;
 }
 
 export class VaultServiceClient extends grpc.Client {
   constructor(address: string, credentials: grpc.ChannelCredentials, options?: object);
-  createProviderCredential(argument: vault_api_pb.CreateProviderCredentialRequest, callback: grpc.requestCallback<vault_api_pb.CreateProviderCredentialResponse>): grpc.ClientUnaryCall;
-  createProviderCredential(argument: vault_api_pb.CreateProviderCredentialRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<vault_api_pb.CreateProviderCredentialResponse>): grpc.ClientUnaryCall;
-  createProviderCredential(argument: vault_api_pb.CreateProviderCredentialRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<vault_api_pb.CreateProviderCredentialResponse>): grpc.ClientUnaryCall;
-  createToolCredential(argument: vault_api_pb.CreateToolCredentialRequest, callback: grpc.requestCallback<vault_api_pb.CreateToolCredentialResponse>): grpc.ClientUnaryCall;
-  createToolCredential(argument: vault_api_pb.CreateToolCredentialRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<vault_api_pb.CreateToolCredentialResponse>): grpc.ClientUnaryCall;
-  createToolCredential(argument: vault_api_pb.CreateToolCredentialRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<vault_api_pb.CreateToolCredentialResponse>): grpc.ClientUnaryCall;
-  deleteProviderCredential(argument: vault_api_pb.DeleteProviderCredentialRequest, callback: grpc.requestCallback<vault_api_pb.DeleteProviderCredentialResponse>): grpc.ClientUnaryCall;
-  deleteProviderCredential(argument: vault_api_pb.DeleteProviderCredentialRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<vault_api_pb.DeleteProviderCredentialResponse>): grpc.ClientUnaryCall;
-  deleteProviderCredential(argument: vault_api_pb.DeleteProviderCredentialRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<vault_api_pb.DeleteProviderCredentialResponse>): grpc.ClientUnaryCall;
+  createProviderCredential(argument: vault_api_pb.CreateProviderCredentialRequest, callback: grpc.requestCallback<vault_api_pb.GetCredentialResponse>): grpc.ClientUnaryCall;
+  createProviderCredential(argument: vault_api_pb.CreateProviderCredentialRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<vault_api_pb.GetCredentialResponse>): grpc.ClientUnaryCall;
+  createProviderCredential(argument: vault_api_pb.CreateProviderCredentialRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<vault_api_pb.GetCredentialResponse>): grpc.ClientUnaryCall;
+  createToolCredential(argument: vault_api_pb.CreateToolCredentialRequest, callback: grpc.requestCallback<vault_api_pb.GetCredentialResponse>): grpc.ClientUnaryCall;
+  createToolCredential(argument: vault_api_pb.CreateToolCredentialRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<vault_api_pb.GetCredentialResponse>): grpc.ClientUnaryCall;
+  createToolCredential(argument: vault_api_pb.CreateToolCredentialRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<vault_api_pb.GetCredentialResponse>): grpc.ClientUnaryCall;
   getAllOrganizationCredential(argument: vault_api_pb.GetAllOrganizationCredentialRequest, callback: grpc.requestCallback<vault_api_pb.GetAllOrganizationCredentialResponse>): grpc.ClientUnaryCall;
   getAllOrganizationCredential(argument: vault_api_pb.GetAllOrganizationCredentialRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<vault_api_pb.GetAllOrganizationCredentialResponse>): grpc.ClientUnaryCall;
   getAllOrganizationCredential(argument: vault_api_pb.GetAllOrganizationCredentialRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<vault_api_pb.GetAllOrganizationCredentialResponse>): grpc.ClientUnaryCall;
-  getProviderCredential(argument: vault_api_pb.GetProviderCredentialRequest, callback: grpc.requestCallback<vault_api_pb.GetProviderCredentialResponse>): grpc.ClientUnaryCall;
-  getProviderCredential(argument: vault_api_pb.GetProviderCredentialRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<vault_api_pb.GetProviderCredentialResponse>): grpc.ClientUnaryCall;
-  getProviderCredential(argument: vault_api_pb.GetProviderCredentialRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<vault_api_pb.GetProviderCredentialResponse>): grpc.ClientUnaryCall;
-  getOauth2VaultCredential(argument: vault_api_pb.GetOauth2VaultCredentialRequest, callback: grpc.requestCallback<vault_api_pb.GetOauth2VaultCredentialResponse>): grpc.ClientUnaryCall;
-  getOauth2VaultCredential(argument: vault_api_pb.GetOauth2VaultCredentialRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<vault_api_pb.GetOauth2VaultCredentialResponse>): grpc.ClientUnaryCall;
-  getOauth2VaultCredential(argument: vault_api_pb.GetOauth2VaultCredentialRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<vault_api_pb.GetOauth2VaultCredentialResponse>): grpc.ClientUnaryCall;
+  deleteCredential(argument: vault_api_pb.DeleteCredentialRequest, callback: grpc.requestCallback<vault_api_pb.GetCredentialResponse>): grpc.ClientUnaryCall;
+  deleteCredential(argument: vault_api_pb.DeleteCredentialRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<vault_api_pb.GetCredentialResponse>): grpc.ClientUnaryCall;
+  deleteCredential(argument: vault_api_pb.DeleteCredentialRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<vault_api_pb.GetCredentialResponse>): grpc.ClientUnaryCall;
+  getProviderCredential(argument: vault_api_pb.GetProviderCredentialRequest, callback: grpc.requestCallback<vault_api_pb.GetCredentialResponse>): grpc.ClientUnaryCall;
+  getProviderCredential(argument: vault_api_pb.GetProviderCredentialRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<vault_api_pb.GetCredentialResponse>): grpc.ClientUnaryCall;
+  getProviderCredential(argument: vault_api_pb.GetProviderCredentialRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<vault_api_pb.GetCredentialResponse>): grpc.ClientUnaryCall;
+  getCredential(argument: vault_api_pb.GetCredentialRequest, callback: grpc.requestCallback<vault_api_pb.GetCredentialResponse>): grpc.ClientUnaryCall;
+  getCredential(argument: vault_api_pb.GetCredentialRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<vault_api_pb.GetCredentialResponse>): grpc.ClientUnaryCall;
+  getCredential(argument: vault_api_pb.GetCredentialRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<vault_api_pb.GetCredentialResponse>): grpc.ClientUnaryCall;
+  getOauth2Credential(argument: vault_api_pb.GetCredentialRequest, callback: grpc.requestCallback<vault_api_pb.GetCredentialResponse>): grpc.ClientUnaryCall;
+  getOauth2Credential(argument: vault_api_pb.GetCredentialRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<vault_api_pb.GetCredentialResponse>): grpc.ClientUnaryCall;
+  getOauth2Credential(argument: vault_api_pb.GetCredentialRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<vault_api_pb.GetCredentialResponse>): grpc.ClientUnaryCall;
 }
