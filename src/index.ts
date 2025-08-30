@@ -1,7 +1,3 @@
-import { AssistantConversation, Error } from "./clients/protos/common_pb";
-import { AssistantApiDeployment } from "./clients/protos/assistant-deployment_pb";
-import { EndpointDefinition } from "./clients/protos/invoker-api_pb";
-import { AssistantDefinition } from "./clients/protos/talk-api_pb";
 import { Any } from "google-protobuf/google/protobuf/any_pb";
 import {
   StringToAny,

@@ -88,18 +88,18 @@ export class ConnectionConfig {
    * @returns
    */
   static WithPersonalToken({
-    authorization,
-    userId,
-    projectId,
+    Authorization,
+    AuthId,
+    ProjectId,
   }: {
-    authorization: string;
-    userId: string;
-    projectId: string;
+    Authorization: string;
+    AuthId: string;
+    ProjectId: string;
   }): UserAuthInfo {
     return {
-      authorization,
-      [HEADER_AUTH_ID]: userId,
-      [HEADER_PROJECT_ID]: projectId,
+      authorization: Authorization,
+      [HEADER_AUTH_ID]: AuthId,
+      [HEADER_PROJECT_ID]: ProjectId,
       Client: {
         [HEADER_SOURCE_KEY]: RapidaSource.SDK,
       },
@@ -112,15 +112,15 @@ export class ConnectionConfig {
    * @returns
    */
   static WithWebpluginClient({
-    apiKey,
-    userId,
+    ApiKey,
+    UserId,
   }: {
-    apiKey: string;
-    userId?: string;
+    ApiKey: string;
+    UserId?: string;
   }): ClientAuthInfo {
     return {
-      [HEADER_API_KEY]: apiKey,
-      [HEADER_AUTH_ID]: userId,
+      [HEADER_API_KEY]: ApiKey,
+      [HEADER_AUTH_ID]: UserId,
       Client: {
         [HEADER_SOURCE_KEY]: RapidaSource.WEB_PLUGIN,
       },
@@ -132,15 +132,15 @@ export class ConnectionConfig {
    * @returns
    */
   static WithSDK({
-    apiKey,
-    userId,
+    ApiKey,
+    UserId,
   }: {
-    apiKey: string;
-    userId?: string;
+    ApiKey: string;
+    UserId?: string;
   }): ClientAuthInfo {
     return {
-      [HEADER_API_KEY]: apiKey,
-      [HEADER_AUTH_ID]: userId,
+      [HEADER_API_KEY]: ApiKey,
+      [HEADER_AUTH_ID]: UserId,
       Client: {
         [HEADER_SOURCE_KEY]: RapidaSource.SDK,
       },
@@ -179,107 +179,119 @@ export class ConnectionConfig {
   }
 
   get conversationClient(): TalkServiceClient {
-    return new TalkServiceClient(this._endpoint.web, this.getClientOptions());
+    return new TalkServiceClient(
+      this._endpoint.assistant,
+      this._debug ? credentials.createInsecure() : credentials.createSsl()
+    );
   }
 
   get assistantClient(): AssistantServiceClient {
     return new AssistantServiceClient(
       this._endpoint.web,
-      this.getClientOptions()
+      this._debug ? credentials.createInsecure() : credentials.createSsl()
     );
   }
 
   get projectClient(): ProjectServiceClient {
     return new ProjectServiceClient(
       this._endpoint.web,
-      this.getClientOptions()
+      this._debug ? credentials.createInsecure() : credentials.createSsl()
     );
   }
 
   get knowledgeClient(): KnowledgeServiceClient {
     return new KnowledgeServiceClient(
       this._endpoint.web,
-      this.getClientOptions()
+      this._debug ? credentials.createInsecure() : credentials.createSsl()
     );
   }
 
   get deploymentClient(): DeploymentClient {
-    return new DeploymentClient(this._endpoint.web, this.getClientOptions());
+    return new DeploymentClient(
+      this._endpoint.web,
+      this._debug ? credentials.createInsecure() : credentials.createSsl()
+    );
   }
 
   get marketplaceClient(): MarketplaceServiceClient {
     return new MarketplaceServiceClient(
       this._endpoint.web,
-      this.getClientOptions()
+      this._debug ? credentials.createInsecure() : credentials.createSsl()
     );
   }
 
   get documentClient(): DocumentServiceClient {
     return new DocumentServiceClient(
       this._endpoint.web,
-      this.getClientOptions()
+      this._debug ? credentials.createInsecure() : credentials.createSsl()
     );
   }
 
   get vaultClient(): VaultServiceClient {
-    return new VaultServiceClient(this._endpoint.web, this.getClientOptions());
+    return new VaultServiceClient(
+      this._endpoint.web,
+      this._debug ? credentials.createInsecure() : credentials.createSsl()
+    );
   }
 
   get endpointClient(): EndpointServiceClient {
     return new EndpointServiceClient(
       this._endpoint.web,
-      this.getClientOptions()
+      this._debug ? credentials.createInsecure() : credentials.createSsl()
     );
   }
 
   get auditLoggingClient(): AuditLoggingServiceClient {
     return new AuditLoggingServiceClient(
       this._endpoint.web,
-      this.getClientOptions()
+      this._debug ? credentials.createInsecure() : credentials.createSsl()
     );
   }
 
   get assistantDeploymentClient(): AssistantDeploymentServiceClient {
     return new AssistantDeploymentServiceClient(
       this._endpoint.web,
-      this.getClientOptions()
+      this._debug ? credentials.createInsecure() : credentials.createSsl()
     );
   }
 
   get organizationClient(): OrganizationServiceClient {
     return new OrganizationServiceClient(
       this._endpoint.web,
-      this.getClientOptions()
+      this._debug ? credentials.createInsecure() : credentials.createSsl()
     );
   }
 
   get connectClient(): ConnectServiceClient {
     return new ConnectServiceClient(
       this._endpoint.web,
-      this.getClientOptions()
+      this._debug ? credentials.createInsecure() : credentials.createSsl()
     );
   }
 
   get providerClient(): ProviderServiceClient {
     return new ProviderServiceClient(
       this._endpoint.web,
-      this.getClientOptions()
+      this._debug ? credentials.createInsecure() : credentials.createSsl()
     );
   }
 
   get authenticationClient(): AuthenticationServiceClient {
     return new AuthenticationServiceClient(
       this._endpoint.web,
-      this.getClientOptions()
+      this._debug ? credentials.createInsecure() : credentials.createSsl()
     );
   }
 
   withLocal(): this {
-    return this.withCustomEndpoint({
-      assistant: LOCAL_ASSISTANT_API,
-      web: LOCAL_WEB_API,
-      endpoint: LOCAL_ENDPOINT_API,
-    });
+    return this.withCustomEndpoint(
+      {
+        assistant: LOCAL_ASSISTANT_API,
+        web: LOCAL_WEB_API,
+        endpoint: LOCAL_ENDPOINT_API,
+      },
+      true
+    );
   }
 
   get auth(): ClientAuthInfo | UserAuthInfo | undefined {
@@ -312,6 +324,11 @@ export class ConnectionConfig {
     return this;
   }
 
+  /**
+   *
+   * @param auth
+   * @returns
+   */
   static DefaultConnectionConfig(
     auth: ClientAuthInfo | UserAuthInfo
   ): ConnectionConfig {
