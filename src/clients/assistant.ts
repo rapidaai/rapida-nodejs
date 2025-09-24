@@ -700,8 +700,7 @@ export function GetAssistantConversation(
 ): Promise<GetAssistantConversationResponse> {
   const req = new GetAssistantConversationRequest();
   req.setAssistantid(assistantId);
-  req.setConversationid(conversaiontId);
-
+  req.setAssistantconversationid(conversaiontId);
   return new Promise((resolve, reject) => {
     connectionConfig.assistantClient.getAssistantConversation(
       req,

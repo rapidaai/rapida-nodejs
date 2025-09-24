@@ -462,22 +462,11 @@ export {
 } from "@/rapida/clients/protos/integration-api_pb";
 export {
   DeploymentAudioProvider,
-  AssistantDeploymentCapturer,
   AssistantWebpluginDeployment,
   AssistantPhoneDeployment,
   AssistantWhatsappDeployment,
   AssistantDebuggerDeployment,
   AssistantApiDeployment,
-  CreateAssistantApiDeploymentRequest,
-  AssistantApiDeploymentResponse,
-  CreateAssistantPhoneDeploymentRequest,
-  AssistantPhoneDeploymentResponse,
-  CreateAssistantWhatsappDeploymentRequest,
-  AssistantWhatsappDeploymentResponse,
-  CreateAssistantDebuggerDeploymentRequest,
-  AssistantDebuggerDeploymentResponse,
-  CreateAssistantWebpluginDeploymentRequest,
-  AssistantWebpluginDeploymentResponse,
   GetAssistantDeploymentRequest,
 } from "@/rapida/clients/protos/assistant-deployment_pb";
 
