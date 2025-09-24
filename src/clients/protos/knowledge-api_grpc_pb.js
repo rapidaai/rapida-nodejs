@@ -128,6 +128,28 @@ function deserialize_knowledge_api_GetAllKnowledgeDocumentSegmentResponse(buffer
   return knowledge$api_pb.GetAllKnowledgeDocumentSegmentResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_knowledge_api_GetAllKnowledgeLogRequest(arg) {
+  if (!(arg instanceof knowledge$api_pb.GetAllKnowledgeLogRequest)) {
+    throw new Error('Expected argument of type knowledge_api.GetAllKnowledgeLogRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_knowledge_api_GetAllKnowledgeLogRequest(buffer_arg) {
+  return knowledge$api_pb.GetAllKnowledgeLogRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_knowledge_api_GetAllKnowledgeLogResponse(arg) {
+  if (!(arg instanceof knowledge$api_pb.GetAllKnowledgeLogResponse)) {
+    throw new Error('Expected argument of type knowledge_api.GetAllKnowledgeLogResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_knowledge_api_GetAllKnowledgeLogResponse(buffer_arg) {
+  return knowledge$api_pb.GetAllKnowledgeLogResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_knowledge_api_GetAllKnowledgeRequest(arg) {
   if (!(arg instanceof knowledge$api_pb.GetAllKnowledgeRequest)) {
     throw new Error('Expected argument of type knowledge_api.GetAllKnowledgeRequest');
@@ -148,6 +170,28 @@ function serialize_knowledge_api_GetAllKnowledgeResponse(arg) {
 
 function deserialize_knowledge_api_GetAllKnowledgeResponse(buffer_arg) {
   return knowledge$api_pb.GetAllKnowledgeResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_knowledge_api_GetKnowledgeLogRequest(arg) {
+  if (!(arg instanceof knowledge$api_pb.GetKnowledgeLogRequest)) {
+    throw new Error('Expected argument of type knowledge_api.GetKnowledgeLogRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_knowledge_api_GetKnowledgeLogRequest(buffer_arg) {
+  return knowledge$api_pb.GetKnowledgeLogRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_knowledge_api_GetKnowledgeLogResponse(arg) {
+  if (!(arg instanceof knowledge$api_pb.GetKnowledgeLogResponse)) {
+    throw new Error('Expected argument of type knowledge_api.GetKnowledgeLogResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_knowledge_api_GetKnowledgeLogResponse(buffer_arg) {
+  return knowledge$api_pb.GetKnowledgeLogResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_knowledge_api_GetKnowledgeRequest(arg) {
@@ -306,6 +350,29 @@ updateKnowledgeDocumentSegment: {
     requestDeserialize: deserialize_knowledge_api_DeleteKnowledgeDocumentSegmentRequest,
     responseSerialize: serialize_BaseResponse,
     responseDeserialize: deserialize_BaseResponse,
+  },
+  // knowledge log retrieval log
+getAllKnowledgeLog: {
+    path: '/knowledge_api.KnowledgeService/GetAllKnowledgeLog',
+    requestStream: false,
+    responseStream: false,
+    requestType: knowledge$api_pb.GetAllKnowledgeLogRequest,
+    responseType: knowledge$api_pb.GetAllKnowledgeLogResponse,
+    requestSerialize: serialize_knowledge_api_GetAllKnowledgeLogRequest,
+    requestDeserialize: deserialize_knowledge_api_GetAllKnowledgeLogRequest,
+    responseSerialize: serialize_knowledge_api_GetAllKnowledgeLogResponse,
+    responseDeserialize: deserialize_knowledge_api_GetAllKnowledgeLogResponse,
+  },
+  getKnowledgeLog: {
+    path: '/knowledge_api.KnowledgeService/GetKnowledgeLog',
+    requestStream: false,
+    responseStream: false,
+    requestType: knowledge$api_pb.GetKnowledgeLogRequest,
+    responseType: knowledge$api_pb.GetKnowledgeLogResponse,
+    requestSerialize: serialize_knowledge_api_GetKnowledgeLogRequest,
+    requestDeserialize: deserialize_knowledge_api_GetKnowledgeLogRequest,
+    responseSerialize: serialize_knowledge_api_GetKnowledgeLogResponse,
+    responseDeserialize: deserialize_knowledge_api_GetKnowledgeLogResponse,
   },
 };
 

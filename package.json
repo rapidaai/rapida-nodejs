@@ -1,6 +1,6 @@
 {
-    "name": "rapida-nodejs",
-    "version": "1.0.11",
+    "name": "@rapidaai/nodejs",
+    "version": "1.0.12",
     "description": "Enable to interact with rapida platform",
     "main": "dist/index.cjs",
     "module": "dist/index.js",
@@ -25,7 +25,7 @@
     "keywords": [
         "rapida"
     ],
-    "author": "Prashant Srivastav <ps@rapida.ai>",
+    "author": "Prashant Srivastav <prashant@rapida.ai>",
     "bugs": {
         "url": "https://github.com/rapidaai/rapida-nodejs/issues"
     },

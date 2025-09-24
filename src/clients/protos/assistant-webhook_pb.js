@@ -1160,7 +1160,7 @@ proto.assistant_api.AssistantWebhookLog.toObject = function(includeInstance, msg
     assistantid: jspb.Message.getFieldWithDefault(msg, 8, "0"),
     projectid: jspb.Message.getFieldWithDefault(msg, 9, "0"),
     organizationid: jspb.Message.getFieldWithDefault(msg, 10, "0"),
-    conversationid: jspb.Message.getFieldWithDefault(msg, 11, "0"),
+    assistantconversationid: jspb.Message.getFieldWithDefault(msg, 11, "0"),
     assetprefix: jspb.Message.getFieldWithDefault(msg, 12, ""),
     event: jspb.Message.getFieldWithDefault(msg, 13, ""),
     responsestatus: jspb.Message.getFieldWithDefault(msg, 14, "0"),
@@ -1250,7 +1250,7 @@ proto.assistant_api.AssistantWebhookLog.deserializeBinaryFromReader = function(m
       break;
     case 11:
       var value = /** @type {string} */ (reader.readUint64String());
-      msg.setConversationid(value);
+      msg.setAssistantconversationid(value);
       break;
     case 12:
       var value = /** @type {string} */ (reader.readString());
@@ -1383,7 +1383,7 @@ proto.assistant_api.AssistantWebhookLog.serializeBinaryToWriter = function(messa
       f
     );
   }
-  f = message.getConversationid();
+  f = message.getAssistantconversationid();
   if (parseInt(f, 10) !== 0) {
     writer.writeUint64String(
       11,
@@ -1699,10 +1699,10 @@ proto.assistant_api.AssistantWebhookLog.prototype.setOrganizationid = function(v
 
 
 /**
- * optional uint64 conversationId = 11;
+ * optional uint64 assistantConversationId = 11;
  * @return {string}
  */
-proto.assistant_api.AssistantWebhookLog.prototype.getConversationid = function() {
+proto.assistant_api.AssistantWebhookLog.prototype.getAssistantconversationid = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 11, "0"));
 };
 
@@ -1711,7 +1711,7 @@ proto.assistant_api.AssistantWebhookLog.prototype.getConversationid = function()
  * @param {string} value
  * @return {!proto.assistant_api.AssistantWebhookLog} returns this
  */
-proto.assistant_api.AssistantWebhookLog.prototype.setConversationid = function(value) {
+proto.assistant_api.AssistantWebhookLog.prototype.setAssistantconversationid = function(value) {
   return jspb.Message.setProto3StringIntField(this, 11, value);
 };
 

@@ -297,6 +297,28 @@ function deserialize_assistant_api_GetAllAssistantResponse(buffer_arg) {
   return assistant$api_pb.GetAllAssistantResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_assistant_api_GetAllAssistantToolLogRequest(arg) {
+  if (!(arg instanceof assistant$tool_pb.GetAllAssistantToolLogRequest)) {
+    throw new Error('Expected argument of type assistant_api.GetAllAssistantToolLogRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAllAssistantToolLogRequest(buffer_arg) {
+  return assistant$tool_pb.GetAllAssistantToolLogRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_GetAllAssistantToolLogResponse(arg) {
+  if (!(arg instanceof assistant$tool_pb.GetAllAssistantToolLogResponse)) {
+    throw new Error('Expected argument of type assistant_api.GetAllAssistantToolLogResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAllAssistantToolLogResponse(buffer_arg) {
+  return assistant$tool_pb.GetAllAssistantToolLogResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_assistant_api_GetAllAssistantToolRequest(arg) {
   if (!(arg instanceof assistant$tool_pb.GetAllAssistantToolRequest)) {
     throw new Error('Expected argument of type assistant_api.GetAllAssistantToolRequest');
@@ -482,6 +504,28 @@ function serialize_assistant_api_GetAssistantResponse(arg) {
 
 function deserialize_assistant_api_GetAssistantResponse(buffer_arg) {
   return assistant$api_pb.GetAssistantResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_GetAssistantToolLogRequest(arg) {
+  if (!(arg instanceof assistant$tool_pb.GetAssistantToolLogRequest)) {
+    throw new Error('Expected argument of type assistant_api.GetAssistantToolLogRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAssistantToolLogRequest(buffer_arg) {
+  return assistant$tool_pb.GetAssistantToolLogRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_GetAssistantToolLogResponse(arg) {
+  if (!(arg instanceof assistant$tool_pb.GetAssistantToolLogResponse)) {
+    throw new Error('Expected argument of type assistant_api.GetAssistantToolLogResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAssistantToolLogResponse(buffer_arg) {
+  return assistant$tool_pb.GetAssistantToolLogResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_assistant_api_GetAssistantToolRequest(arg) {
@@ -849,6 +893,29 @@ getAssistantWebhookLog: {
     requestDeserialize: deserialize_assistant_api_DeleteAssistantWebhookRequest,
     responseSerialize: serialize_assistant_api_GetAssistantWebhookResponse,
     responseDeserialize: deserialize_assistant_api_GetAssistantWebhookResponse,
+  },
+  // tool log
+getAssistantToolLog: {
+    path: '/assistant_api.AssistantService/GetAssistantToolLog',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$tool_pb.GetAssistantToolLogRequest,
+    responseType: assistant$tool_pb.GetAssistantToolLogResponse,
+    requestSerialize: serialize_assistant_api_GetAssistantToolLogRequest,
+    requestDeserialize: deserialize_assistant_api_GetAssistantToolLogRequest,
+    responseSerialize: serialize_assistant_api_GetAssistantToolLogResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantToolLogResponse,
+  },
+  getAllAssistantToolLog: {
+    path: '/assistant_api.AssistantService/GetAllAssistantToolLog',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$tool_pb.GetAllAssistantToolLogRequest,
+    responseType: assistant$tool_pb.GetAllAssistantToolLogResponse,
+    requestSerialize: serialize_assistant_api_GetAllAssistantToolLogRequest,
+    requestDeserialize: deserialize_assistant_api_GetAllAssistantToolLogRequest,
+    responseSerialize: serialize_assistant_api_GetAllAssistantToolLogResponse,
+    responseDeserialize: deserialize_assistant_api_GetAllAssistantToolLogResponse,
   },
   //   analysis
 getAssistantAnalysis: {
