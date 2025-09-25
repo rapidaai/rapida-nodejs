@@ -39,51 +39,17 @@ import p from "google-protobuf/google/protobuf/any_pb";
 import { StringToAny } from "@/rapida/utils/rapida_value";
 import { ConnectionConfig } from "@/rapida/connections/connection-config";
 import grpc, { ServiceError } from "@grpc/grpc-js";
+import { UserInfo } from "os";
 
-/**
- * Invoke an endpoint with specified parameters.
- *
- * @param connectionCfg - The connection configuration.
- * @param endpointId - The ID of the endpoint to invoke.
- * @param endpointProviderModelId - The provider model ID of the endpoint.
- * @param parameters - A map of parameters to pass to the endpoint.
- * @param metadata - Optional metadata to include in the request.
- * @returns Promise<InvokeResponse> - A promise that resolves with the InvokeResponse.
- */
 export function Invoke(
   config: ConnectionConfig,
-  endpointId: string,
-  parameters: Map<string, p.Any>,
-  version?: string,
-  metadata?: Map<string, string>
+  req: InvokeRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<InvokeResponse> {
   return new Promise((resolve, reject) => {
-    const req = new InvokeRequest();
-    const endpoint = new EndpointDefinition();
-    endpoint.setEndpointid(endpointId);
-    if (version) {
-      endpoint.setVersion(version);
-    } else {
-      endpoint.setVersion("latest");
-    }
-
-    req.setEndpoint(endpoint);
-
-    // Set the parameters for the request
-    parameters.forEach((value, key) => {
-      req.getArgsMap().set(key, value);
-    });
-
-    // Set the optional metadata for the request
-    if (metadata) {
-      metadata.forEach((value, key) => {
-        req.getMetadataMap().set(key, StringToAny(value));
-      });
-    }
-
     return config.deploymentClient.invoke(
       req,
-      WithAuthContext(config.auth),
+      WithAuthContext(auth || config.auth),
       (err: ServiceError, response: InvokeResponse) => {
         if (err) reject(err);
         else resolve(response);

@@ -108,7 +108,7 @@ export {
   UpdateAssistantDetail,
   GetAssistantMessages,
   GetMessages,
-  GetAllAssistantSession,
+  GetAllAssistantConversation,
   GetAllAssistantConversationMessage,
   GetAllAssistantWebhook,
   CreateWebhook,
@@ -154,13 +154,7 @@ export {
   UpdateEndpointVersion,
   GetAllEndpointProviderModel,
   GetEndpoint,
-  CreateEndpointProviderModel,
-  CreateEndpoint,
-  CreateEndpointTag,
-  UpdateEndpointDetail,
   CreateEndpointRetryConfiguration,
-  CreateEndpointCacheConfiguration,
-  GetAllEndpointLog,
   GetEndpointLog,
 } from "@/rapida/clients/endpoint";
 export {
@@ -173,7 +167,6 @@ export {
   AssistantTalk,
   CreateMessageMetric,
   CreateConversationMetric,
-  GetAllAssistantConversation,
 } from "@/rapida/clients/talk";
 
 export {

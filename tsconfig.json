@@ -1,7 +1,6 @@
 {
     "compilerOptions": {
         "target": "es2020",
-        "module": "esnext",
         "allowSyntheticDefaultImports": true,
         "moduleResolution": "node",
         "strict": true,
@@ -17,5 +16,8 @@
     },
     "include": [
         "src/**/*"
+    ],
+    "exclude": [
+        "node_modules"
     ]
 }

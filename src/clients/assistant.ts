@@ -111,31 +111,17 @@ import {
 import { GetAllAssistantConversationRequest } from "@/rapida/clients/protos/common_pb";
 import { Struct } from "google-protobuf/google/protobuf/struct_pb";
 import { ConnectionConfig } from "@/rapida/connections/connection-config";
+// ... existing imports ...
 
 export function GetAllAssistant(
-  connectionConfig: ConnectionConfig,
-  page: number,
-  pageSize: number,
-  criteria: { key: string; value: string }[]
+  config: ConnectionConfig,
+  req: GetAllAssistantRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAllAssistantResponse> {
   return new Promise((resolve, reject) => {
-    const req = new GetAllAssistantRequest();
-    const paginate = new Paginate();
-
-    criteria.forEach(({ key, value }) => {
-      const ctr = new Criteria();
-      ctr.setKey(key);
-      ctr.setValue(value);
-      req.addCriterias(ctr);
-    });
-
-    paginate.setPage(page);
-    paginate.setPagesize(pageSize);
-    req.setPaginate(paginate);
-
-    connectionConfig.assistantClient.getAllAssistant(
+    config.assistantClient.getAllAssistant(
       req,
-      WithAuthContext(connectionConfig.auth),
+      WithAuthContext(auth || config.auth),
       (err: ServiceError | null, response: GetAllAssistantResponse | null) => {
         if (err) reject(err);
         else resolve(response!);
@@ -145,18 +131,14 @@ export function GetAllAssistant(
 }
 
 export function UpdateAssistantVersion(
-  connectionConfig: ConnectionConfig,
-  assistantId: string,
-  assistantProviderModelId: string
+  config: ConnectionConfig,
+  req: UpdateAssistantVersionRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAssistantResponse> {
   return new Promise((resolve, reject) => {
-    const req = new UpdateAssistantVersionRequest();
-    req.setAssistantid(assistantId);
-    req.setAssistantprovidermodelid(assistantProviderModelId);
-
-    connectionConfig.assistantClient.updateAssistantVersion(
+    config.assistantClient.updateAssistantVersion(
       req,
-      WithAuthContext(connectionConfig.auth),
+      WithAuthContext(auth || config.auth),
       (err: ServiceError | null, response: GetAssistantResponse | null) => {
         if (err) reject(err);
         else resolve(response!);
@@ -166,31 +148,14 @@ export function UpdateAssistantVersion(
 }
 
 export function GetAllAssistantProviderModel(
-  connectionConfig: ConnectionConfig,
-  assistantId: string,
-  page: number,
-  pageSize: number,
-  criteria: { key: string; value: string }[]
+  config: ConnectionConfig,
+  req: GetAllAssistantProviderModelRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAllAssistantProviderModelResponse> {
   return new Promise((resolve, reject) => {
-    const req = new GetAllAssistantProviderModelRequest();
-    req.setAssistantid(assistantId);
-
-    const paginate = new Paginate();
-    criteria.forEach(({ key, value }) => {
-      const ctr = new Criteria();
-      ctr.setKey(key);
-      ctr.setValue(value);
-      req.addCriterias(ctr);
-    });
-
-    paginate.setPage(page);
-    paginate.setPagesize(pageSize);
-    req.setPaginate(paginate);
-
-    connectionConfig.assistantClient.getAllAssistantProviderModel(
+    config.assistantClient.getAllAssistantProviderModel(
       req,
-      WithAuthContext(connectionConfig.auth),
+      WithAuthContext(auth || config.auth),
       (
         err: ServiceError | null,
         response: GetAllAssistantProviderModelResponse | null
@@ -203,19 +168,14 @@ export function GetAllAssistantProviderModel(
 }
 
 export function GetAssistant(
-  connectionConfig: ConnectionConfig,
-  assistantId: string,
-  assistantProviderModelId: string | null
+  config: ConnectionConfig,
+  req: GetAssistantRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAssistantResponse> {
   return new Promise((resolve, reject) => {
-    const req = new GetAssistantRequest();
-    req.setId(assistantId);
-    if (assistantProviderModelId) {
-      req.setAssistantprovidermodelid(assistantProviderModelId);
-    }
-    connectionConfig.assistantClient.getAssistant(
+    config.assistantClient.getAssistant(
       req,
-      WithAuthContext(connectionConfig.auth),
+      WithAuthContext(auth || config.auth),
       (err: ServiceError | null, response: GetAssistantResponse | null) => {
         if (err) reject(err);
         else resolve(response!);
@@ -225,25 +185,14 @@ export function GetAssistant(
 }
 
 export function CreateAssistantProviderModel(
-  connectionConfig: ConnectionConfig,
-  assistantId: string,
-  template: TextChatCompletePrompt,
-  modelProviderId: string,
-  modelProviderName: string,
-  modelProviderOptions: Array<Metadata>,
-  description: string
+  config: ConnectionConfig,
+  req: CreateAssistantProviderModelRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAssistantProviderModelResponse> {
   return new Promise((resolve, reject) => {
-    const req = new CreateAssistantProviderModelRequest();
-    req.setAssistantid(assistantId);
-    req.setDescription(description);
-    req.setAssistantmodeloptionsList(modelProviderOptions);
-    req.setModelproviderid(modelProviderId);
-    req.setTemplate(template);
-    req.setModelprovidername(modelProviderName);
-    connectionConfig.assistantClient.createAssistantProviderModel(
+    config.assistantClient.createAssistantProviderModel(
       req,
-      WithAuthContext(connectionConfig.auth),
+      WithAuthContext(auth || config.auth),
       (
         err: ServiceError | null,
         response: GetAssistantProviderModelResponse | null
@@ -256,29 +205,14 @@ export function CreateAssistantProviderModel(
 }
 
 export function CreateAssistant(
-  connectionConfig: ConnectionConfig,
-  name: string,
-  description: string,
-  tagsList: Array<string>,
-  assistantProviderModel: CreateAssistantProviderModelRequest,
-  tags: string[],
-  assistantKnowledgeConfig?: Array<CreateAssistantKnowledgeRequest>,
-  assistantToolConfig?: Array<CreateAssistantToolRequest>
+  config: ConnectionConfig,
+  req: CreateAssistantRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAssistantResponse> {
   return new Promise((resolve, reject) => {
-    const req = new CreateAssistantRequest();
-    req.setName(name);
-    req.setDescription(description);
-    req.setTagsList(tagsList);
-    req.setAssistantprovidermodel(assistantProviderModel);
-    if (assistantKnowledgeConfig)
-      req.setAssistantknowledgesList(assistantKnowledgeConfig);
-    if (assistantToolConfig) req.setAssistanttoolsList(assistantToolConfig);
-
-    req.setTagsList(tags);
-    connectionConfig.assistantClient.createAssistant(
+    config.assistantClient.createAssistant(
       req,
-      WithAuthContext(connectionConfig.auth),
+      WithAuthContext(auth || config.auth),
       (err: ServiceError | null, response: GetAssistantResponse | null) => {
         if (err) reject(err);
         else resolve(response!);
@@ -288,18 +222,14 @@ export function CreateAssistant(
 }
 
 export function CreateAssistantTag(
-  connectionConfig: ConnectionConfig,
-  assistantId: string,
-  tags: string[]
+  config: ConnectionConfig,
+  req: CreateAssistantTagRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAssistantResponse> {
   return new Promise((resolve, reject) => {
-    const req = new CreateAssistantTagRequest();
-    req.setTagsList(tags);
-    req.setAssistantid(assistantId);
-
-    connectionConfig.assistantClient.createAssistantTag(
+    config.assistantClient.createAssistantTag(
       req,
-      WithAuthContext(connectionConfig.auth),
+      WithAuthContext(auth || config.auth),
       (err: ServiceError | null, response: GetAssistantResponse | null) => {
         if (err) reject(err);
         else resolve(response!);
@@ -309,20 +239,14 @@ export function CreateAssistantTag(
 }
 
 export function UpdateAssistantDetail(
-  connectionConfig: ConnectionConfig,
-  assistantId: string,
-  name: string,
-  description: string
+  config: ConnectionConfig,
+  req: UpdateAssistantDetailRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAssistantResponse> {
   return new Promise((resolve, reject) => {
-    const req = new UpdateAssistantDetailRequest();
-    req.setName(name);
-    req.setDescription(description);
-    req.setAssistantid(assistantId);
-
-    connectionConfig.assistantClient.updateAssistantDetail(
+    config.assistantClient.updateAssistantDetail(
       req,
-      WithAuthContext(connectionConfig.auth),
+      WithAuthContext(auth || config.auth),
       (err: ServiceError | null, response: GetAssistantResponse | null) => {
         if (err) reject(err);
         else resolve(response!);
@@ -332,42 +256,14 @@ export function UpdateAssistantDetail(
 }
 
 export function GetAssistantMessages(
-  connectionConfig: ConnectionConfig,
-  assistantId: string,
-  page: number,
-  pageSize: number,
-  criteria: { key: string; value: string; logic: string }[],
-  selectors: ("metadata" | "metric" | "stage" | "request" | "response")[]
+  config: ConnectionConfig,
+  req: GetAllAssistantMessageRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAllAssistantMessageResponse> {
   return new Promise((resolve, reject) => {
-    const req = new GetAllAssistantMessageRequest();
-    const paginate = new Paginate();
-
-    criteria.forEach(({ key, value, logic }) => {
-      const ctr = new Criteria();
-      ctr.setKey(key);
-      ctr.setValue(value);
-      ctr.setLogic(logic);
-      req.addCriterias(ctr);
-    });
-
-    req.setAssistantid(assistantId);
-
-    selectors.forEach((v) => {
-      const selectors = new FieldSelector();
-      selectors.setField(v);
-      req.addSelectors(selectors);
-    });
-    paginate.setPage(page);
-    paginate.setPagesize(pageSize);
-    const order = new Ordering();
-    order.setColumn("created_date");
-    order.setOrder("desc");
-    req.setOrder(order);
-    req.setPaginate(paginate);
-    connectionConfig.assistantClient.getAllAssistantMessage(
+    config.assistantClient.getAllAssistantMessage(
       req,
-      WithAuthContext(connectionConfig.auth),
+      WithAuthContext(auth || config.auth),
       (
         err: ServiceError | null,
         response: GetAllAssistantMessageResponse | null
@@ -380,39 +276,14 @@ export function GetAssistantMessages(
 }
 
 export function GetMessages(
-  connectionConfig: ConnectionConfig,
-  page: number,
-  pageSize: number,
-  criteria: { key: string; value: string; logic: string }[],
-  selectors: ("metadata" | "metric" | "stage" | "request" | "response")[]
+  config: ConnectionConfig,
+  req: GetAllMessageRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAllMessageResponse> {
   return new Promise((resolve, reject) => {
-    const req = new GetAllMessageRequest();
-    const paginate = new Paginate();
-
-    criteria.forEach(({ key, value, logic }) => {
-      const ctr = new Criteria();
-      ctr.setKey(key);
-      ctr.setValue(value);
-      ctr.setLogic(logic);
-      req.addCriterias(ctr);
-    });
-
-    selectors.forEach((v) => {
-      const selectors = new FieldSelector();
-      selectors.setField(v);
-      req.addSelectors(selectors);
-    });
-    paginate.setPage(page);
-    paginate.setPagesize(pageSize);
-    const order = new Ordering();
-    order.setColumn("created_date");
-    order.setOrder("desc");
-    req.setOrder(order);
-    req.setPaginate(paginate);
-    connectionConfig.assistantClient.getAllMessage(
+    config.assistantClient.getAllMessage(
       req,
-      WithAuthContext(connectionConfig.auth),
+      WithAuthContext(auth || config.auth),
       (err: ServiceError | null, response: GetAllMessageResponse | null) => {
         if (err) reject(err);
         else resolve(response!);
@@ -421,30 +292,15 @@ export function GetMessages(
   });
 }
 
-export function GetAllAssistantSession(
-  connectionConfig: ConnectionConfig,
-  assistantId: string,
-  page: number,
-  pageSize: number,
-  criteria: { key: string; value: string; logic: string }[]
+export function GetAllAssistantConversation(
+  config: ConnectionConfig,
+  req: GetAllAssistantConversationRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAllAssistantConversationResponse> {
   return new Promise((resolve, reject) => {
-    const req = new GetAllAssistantConversationRequest();
-    req.setAssistantid(assistantId);
-    const paginate = new Paginate();
-    criteria.forEach((x) => {
-      let ctr = new Criteria();
-      ctr.setKey(x.key);
-      ctr.setValue(x.value);
-      ctr.setLogic(x.logic);
-      req.addCriterias(ctr);
-    });
-    paginate.setPage(page);
-    paginate.setPagesize(pageSize);
-    req.setPaginate(paginate);
-    connectionConfig.assistantClient.getAllAssistantConversation(
+    config.assistantClient.getAllAssistantConversation(
       req,
-      WithAuthContext(connectionConfig.auth),
+      WithAuthContext(auth || config.auth),
       (
         err: ServiceError | null,
         response: GetAllAssistantConversationResponse | null
@@ -457,30 +313,14 @@ export function GetAllAssistantSession(
 }
 
 export function GetAllAssistantConversationMessage(
-  connectionConfig: ConnectionConfig,
-  assistantId: string,
-  assistantConversationId: string,
-  page: number,
-  pageSize: number,
-  criteria: { key: string; value: string }[]
+  config: ConnectionConfig,
+  req: GetAllConversationMessageRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAllConversationMessageResponse> {
   return new Promise((resolve, reject) => {
-    const req = new GetAllConversationMessageRequest();
-    req.setAssistantid(assistantId);
-    req.setAssistantconversationid(assistantConversationId);
-    const paginate = new Paginate();
-    criteria.forEach((x) => {
-      let ctr = new Criteria();
-      ctr.setKey(x.key);
-      ctr.setValue(x.value);
-      req.addCriterias(ctr);
-    });
-    paginate.setPage(page);
-    paginate.setPagesize(pageSize);
-    req.setPaginate(paginate);
-    connectionConfig.assistantClient.getAllConversationMessage(
+    config.assistantClient.getAllConversationMessage(
       req,
-      WithAuthContext(connectionConfig.auth),
+      WithAuthContext(auth || config.auth),
       (
         err: ServiceError | null,
         response: GetAllConversationMessageResponse | null
@@ -493,30 +333,14 @@ export function GetAllAssistantConversationMessage(
 }
 
 export function GetAllAssistantWebhook(
-  connectionConfig: ConnectionConfig,
-  assistantId: string,
-  page: number,
-  pageSize: number,
-  criteria: { key: string; value: string }[]
+  config: ConnectionConfig,
+  req: GetAllAssistantWebhookRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAllAssistantWebhookResponse> {
   return new Promise((resolve, reject) => {
-    const req = new GetAllAssistantWebhookRequest();
-    const paginate = new Paginate();
-    criteria.forEach(({ key, value }) => {
-      const ctr = new Criteria();
-      ctr.setKey(key);
-      ctr.setValue(value);
-      req.addCriterias(ctr);
-    });
-
-    paginate.setPage(page);
-    paginate.setPagesize(pageSize);
-    req.setPaginate(paginate);
-
-    req.setAssistantid(assistantId);
-    return connectionConfig.assistantClient.getAllAssistantWebhook(
+    config.assistantClient.getAllAssistantWebhook(
       req,
-      WithAuthContext(connectionConfig.auth),
+      WithAuthContext(auth || config.auth),
       (
         err: ServiceError | null,
         response: GetAllAssistantWebhookResponse | null
@@ -528,684 +352,449 @@ export function GetAllAssistantWebhook(
   });
 }
 
-/**
- *
- * @param assistantId
- * @param method
- * @param endpoint
- * @param headers
- * @param parameters
- * @param events
- * @param retryOnStatus
- * @param maxRetries
- * @param timeout
- * @param priority
- * @param cb
- * @param authHeader
- * @param description
- * @returns
- */
 export function CreateWebhook(
-  connectionConfig: ConnectionConfig,
-  assistantId: string,
-  method: string,
-  endpoint: string,
-  headers: { key: string; value: string }[],
-  parameters: { key: string; value: string }[],
-  events: string[],
-  retryOnStatus: string[],
-  maxRetries: number,
-  timeout: number,
-  priority: number,
-  description?: string
+  config: ConnectionConfig,
+  req: CreateAssistantWebhookRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAssistantWebhookResponse> {
   return new Promise((resolve, reject) => {
-    const req = new CreateAssistantWebhookRequest();
-    req.setAssistantid(assistantId);
-    req.setHttpurl(endpoint);
-    req.setHttpmethod(method);
-    req.setAssistanteventsList(events);
-    headers.forEach((k) => {
-      req.getHttpheadersMap().set(k.key, k.value);
-    });
-    parameters.forEach((k) => {
-      req.getHttpbodyMap().set(k.key, k.value);
-    });
-    req.setRetrystatuscodesList(retryOnStatus);
-    req.setMaxretrycount(maxRetries);
-    req.setTimeoutsecond(timeout);
-    req.setExecutionpriority(priority);
-    if (description) req.setDescription(description);
-
-    connectionConfig.assistantClient.createAssistantWebhook(
+    config.assistantClient.createAssistantWebhook(
       req,
-      WithAuthContext(connectionConfig.auth),
+      WithAuthContext(auth || config.auth),
       (
         err: ServiceError | null,
         response: GetAssistantWebhookResponse | null
       ) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(response!);
-        }
+        if (err) reject(err);
+        else resolve(response!);
       }
     );
   });
 }
 
-/**
- *
- * @param assistantId
- * @param webhookId
- * @param method
- * @param endpoint
- * @param headers
- * @param events
- * @param retryOnStatus
- * @param maxRetries
- * @param timeout
- * @param cb
- * @param authHeader
- * @param description
- * @returns
- */
-export function UpdateWebhook(
-  connectionConfig: ConnectionConfig,
-  assistantId: string,
-  webhookId: string,
-  method: string,
-  endpoint: string,
-  headers: { key: string; value: string }[],
-  parameters: { key: string; value: string }[],
-  events: string[],
-  retryOnStatus: string[],
-  maxRetries: number,
-  timeout: number,
-  priority: number,
-  description?: string
-): Promise<GetAssistantWebhookResponse> {
-  const req = new UpdateAssistantWebhookRequest();
-  req.setId(webhookId);
-  req.setAssistantid(assistantId);
-  req.setHttpurl(endpoint);
-  req.setHttpmethod(method);
-  req.setAssistanteventsList(events);
-  headers.forEach((k) => req.getHttpheadersMap().set(k.key, k.value));
-  parameters.forEach((k) => req.getHttpbodyMap().set(k.key, k.value));
-  req.setRetrystatuscodesList(retryOnStatus);
-  req.setMaxretrycount(maxRetries);
-  req.setTimeoutsecond(timeout);
-  req.setExecutionpriority(priority);
-  if (description) req.setDescription(description);
+// Repeat similar approach for the rest of the functions previously defined.
 
+export function UpdateWebhook(
+  config: ConnectionConfig,
+  req: UpdateAssistantWebhookRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
+): Promise<GetAssistantWebhookResponse> {
   return new Promise((resolve, reject) => {
-    connectionConfig.assistantClient.updateAssistantWebhook(
+    config.assistantClient.updateAssistantWebhook(
       req,
-      WithAuthContext(connectionConfig.auth),
+      WithAuthContext(auth || config.auth),
       (
         err: ServiceError | null,
         response: GetAssistantWebhookResponse | null
-      ) => (err ? reject(err) : resolve(response!))
+      ) => {
+        if (err) reject(err);
+        else resolve(response!);
+      }
     );
   });
 }
 
 export function GetAssistantWebhook(
-  connectionConfig: ConnectionConfig,
-  assistantId: string,
-  webhookId: string
+  config: ConnectionConfig,
+  req: GetAssistantWebhookRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAssistantWebhookResponse> {
-  const req = new GetAssistantWebhookRequest();
-  req.setAssistantid(assistantId);
-  req.setId(webhookId);
-
   return new Promise((resolve, reject) => {
-    connectionConfig.assistantClient.getAssistantWebhook(
+    config.assistantClient.getAssistantWebhook(
       req,
-      WithAuthContext(connectionConfig.auth),
+      WithAuthContext(auth || config.auth),
       (
         err: ServiceError | null,
         response: GetAssistantWebhookResponse | null
-      ) => (err ? reject(err) : resolve(response!))
+      ) => {
+        if (err) reject(err);
+        else resolve(response!);
+      }
     );
   });
 }
 
 export function DeleteAssistantWebhook(
-  connectionConfig: ConnectionConfig,
-  assistantId: string,
-  webhookId: string
+  config: ConnectionConfig,
+  req: DeleteAssistantWebhookRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAssistantWebhookResponse> {
-  const req = new DeleteAssistantWebhookRequest();
-  req.setAssistantid(assistantId);
-  req.setId(webhookId);
-
   return new Promise((resolve, reject) => {
-    connectionConfig.assistantClient.deleteAssistantWebhook(
+    config.assistantClient.deleteAssistantWebhook(
       req,
-      WithAuthContext(connectionConfig.auth),
+      WithAuthContext(auth || config.auth),
       (
         err: ServiceError | null,
         response: GetAssistantWebhookResponse | null
-      ) => (err ? reject(err) : resolve(response!))
+      ) => {
+        if (err) reject(err);
+        else resolve(response!);
+      }
     );
   });
 }
 
 export function GetAssistantConversation(
-  connectionConfig: ConnectionConfig,
-  assistantId: string,
-  conversaiontId: string
+  config: ConnectionConfig,
+  req: GetAssistantConversationRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAssistantConversationResponse> {
-  const req = new GetAssistantConversationRequest();
-  req.setAssistantid(assistantId);
-  req.setAssistantconversationid(conversaiontId);
   return new Promise((resolve, reject) => {
-    connectionConfig.assistantClient.getAssistantConversation(
+    config.assistantClient.getAssistantConversation(
       req,
-      WithAuthContext(connectionConfig.auth),
+      WithAuthContext(auth || config.auth),
       (
         err: ServiceError | null,
         response: GetAssistantConversationResponse | null
-      ) => (err ? reject(err) : resolve(response!))
+      ) => {
+        if (err) reject(err);
+        else resolve(response!);
+      }
     );
   });
 }
 
 export function DeleteAssistant(
-  connectionConfig: ConnectionConfig,
-  assistantId: string
+  config: ConnectionConfig,
+  req: DeleteAssistantRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAssistantResponse> {
-  const req = new DeleteAssistantRequest();
-  req.setId(assistantId);
-
   return new Promise((resolve, reject) => {
-    connectionConfig.assistantClient.deleteAssistant(
+    config.assistantClient.deleteAssistant(
       req,
-      WithAuthContext(connectionConfig.auth),
-      (err: ServiceError | null, response: GetAssistantResponse | null) =>
-        err ? reject(err) : resolve(response!)
+      WithAuthContext(auth || config.auth),
+      (err: ServiceError | null, response: GetAssistantResponse | null) => {
+        if (err) reject(err);
+        else resolve(response!);
+      }
     );
   });
 }
 
 export function GetAllAssistantAnalysis(
-  connectionConfig: ConnectionConfig,
-  assistantId: string,
-  page: number,
-  pageSize: number,
-  criteria: { key: string; value: string }[]
+  config: ConnectionConfig,
+  req: GetAllAssistantAnalysisRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAllAssistantAnalysisResponse> {
-  const req = new GetAllAssistantAnalysisRequest();
-  req.setAssistantid(assistantId);
-  const paginate = new Paginate();
-
-  criteria.forEach(({ key, value }) => {
-    const ctr = new Criteria();
-    ctr.setKey(key);
-    ctr.setValue(value);
-    req.addCriterias(ctr);
-  });
-
-  paginate.setPage(page);
-  paginate.setPagesize(pageSize);
-  req.setPaginate(paginate);
-
   return new Promise((resolve, reject) => {
-    connectionConfig.assistantClient.getAllAssistantAnalysis(
+    config.assistantClient.getAllAssistantAnalysis(
       req,
-      WithAuthContext(connectionConfig.auth),
+      WithAuthContext(auth || config.auth),
       (
         err: ServiceError | null,
         response: GetAllAssistantAnalysisResponse | null
-      ) => (err ? reject(err) : resolve(response!))
+      ) => {
+        if (err) reject(err);
+        else resolve(response!);
+      }
     );
   });
 }
 
 export function CreateAnalysis(
-  connectionConfig: ConnectionConfig,
-  assistantId: string,
-  name: string,
-  endpointid: string,
-  endpointversion: string,
-  executionpriority: number,
-  parameters: { key: string; value: string }[],
-  description?: string
+  config: ConnectionConfig,
+  req: CreateAssistantAnalysisRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAssistantAnalysisResponse> {
-  const req = new CreateAssistantAnalysisRequest();
-  req.setAssistantid(assistantId);
-  req.setEndpointid(endpointid);
-  req.setEndpointversion(endpointversion);
-  req.setName(name);
-  req.setExecutionpriority(executionpriority);
-  parameters.forEach((k) => req.getEndpointparametersMap().set(k.key, k.value));
-  if (description) req.setDescription(description);
-
   return new Promise((resolve, reject) => {
-    connectionConfig.assistantClient.createAssistantAnalysis(
+    config.assistantClient.createAssistantAnalysis(
       req,
-      WithAuthContext(connectionConfig.auth),
+      WithAuthContext(auth || config.auth),
       (
         err: ServiceError | null,
         response: GetAssistantAnalysisResponse | null
-      ) => (err ? reject(err) : resolve(response!))
+      ) => {
+        if (err) reject(err);
+        else resolve(response!);
+      }
     );
   });
 }
 
 export function UpdateAnalysis(
-  connectionConfig: ConnectionConfig,
-  assistantId: string,
-  AnalysisId: string,
-  name: string,
-  endpointid: string,
-  endpointversion: string,
-  executionpriority: number,
-  parameters: { key: string; value: string }[],
-  description?: string
+  config: ConnectionConfig,
+  req: UpdateAssistantAnalysisRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAssistantAnalysisResponse> {
-  const req = new UpdateAssistantAnalysisRequest();
-  req.setId(AnalysisId);
-  req.setAssistantid(assistantId);
-  req.setEndpointid(endpointid);
-  req.setEndpointversion(endpointversion);
-  req.setName(name);
-  req.setExecutionpriority(executionpriority);
-  parameters.forEach((k) => req.getEndpointparametersMap().set(k.key, k.value));
-  if (description) req.setDescription(description);
-
   return new Promise((resolve, reject) => {
-    connectionConfig.assistantClient.updateAssistantAnalysis(
+    config.assistantClient.updateAssistantAnalysis(
       req,
-      WithAuthContext(connectionConfig.auth),
+      WithAuthContext(auth || config.auth),
       (
         err: ServiceError | null,
         response: GetAssistantAnalysisResponse | null
-      ) => (err ? reject(err) : resolve(response!))
+      ) => {
+        if (err) reject(err);
+        else resolve(response!);
+      }
     );
   });
 }
 
 export function GetAssistantAnalysis(
-  connectionConfig: ConnectionConfig,
-  assistantId: string,
-  AnalysisId: string
+  config: ConnectionConfig,
+  req: GetAssistantAnalysisRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAssistantAnalysisResponse> {
-  const req = new GetAssistantAnalysisRequest();
-  req.setAssistantid(assistantId);
-  req.setId(AnalysisId);
-
   return new Promise((resolve, reject) => {
-    connectionConfig.assistantClient.getAssistantAnalysis(
+    config.assistantClient.getAssistantAnalysis(
       req,
-      WithAuthContext(connectionConfig.auth),
+      WithAuthContext(auth || config.auth),
       (
         err: ServiceError | null,
         response: GetAssistantAnalysisResponse | null
-      ) => (err ? reject(err) : resolve(response!))
+      ) => {
+        if (err) reject(err);
+        else resolve(response!);
+      }
     );
   });
 }
 
 export function DeleteAssistantAnalysis(
-  connectionConfig: ConnectionConfig,
-  assistantId: string,
-  AnalysisId: string
+  config: ConnectionConfig,
+  req: DeleteAssistantAnalysisRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAssistantAnalysisResponse> {
-  const req = new DeleteAssistantAnalysisRequest();
-  req.setAssistantid(assistantId);
-  req.setId(AnalysisId);
-
   return new Promise((resolve, reject) => {
-    connectionConfig.assistantClient.deleteAssistantAnalysis(
+    config.assistantClient.deleteAssistantAnalysis(
       req,
-      WithAuthContext(connectionConfig.auth),
+      WithAuthContext(auth || config.auth),
       (
         err: ServiceError | null,
         response: GetAssistantAnalysisResponse | null
-      ) => (err ? reject(err) : resolve(response!))
+      ) => {
+        if (err) reject(err);
+        else resolve(response!);
+      }
     );
   });
 }
 
 export function GetAllWebhookLog(
-  connectionConfig: ConnectionConfig,
-  projectId: string,
-  page: number,
-  pageSize: number,
-  criteria: { key: string; value: string; logic: string }[]
+  config: ConnectionConfig,
+  req: GetAllAssistantWebhookLogRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAllAssistantWebhookLogResponse> {
-  const req = new GetAllAssistantWebhookLogRequest();
-  req.setProjectid(projectId);
-  const paginate = new Paginate();
-
-  criteria.forEach(({ key, value, logic }) => {
-    const ctr = new Criteria();
-    ctr.setKey(key);
-    ctr.setValue(value);
-    ctr.setLogic(logic);
-    req.addCriterias(ctr);
-  });
-
-  paginate.setPage(page);
-  paginate.setPagesize(pageSize);
-  req.setPaginate(paginate);
-
   return new Promise((resolve, reject) => {
-    connectionConfig.assistantClient.getAllAssistantWebhookLog(
+    config.assistantClient.getAllAssistantWebhookLog(
       req,
-      WithAuthContext(connectionConfig.auth),
+      WithAuthContext(auth || config.auth),
       (
         err: ServiceError | null,
         response: GetAllAssistantWebhookLogResponse | null
-      ) => (err ? reject(err) : resolve(response!))
+      ) => {
+        if (err) reject(err);
+        else resolve(response!);
+      }
     );
   });
 }
 
 export function GetWebhookLog(
-  connectionConfig: ConnectionConfig,
-  projectId: string,
-  webhookLogId: string
+  config: ConnectionConfig,
+  req: GetAssistantWebhookLogRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAssistantWebhookLogResponse> {
-  const req = new GetAssistantWebhookLogRequest();
-  req.setProjectid(projectId);
-  req.setId(webhookLogId);
-
   return new Promise((resolve, reject) => {
-    connectionConfig.assistantClient.getAssistantWebhookLog(
+    config.assistantClient.getAssistantWebhookLog(
       req,
-      WithAuthContext(connectionConfig.auth),
+      WithAuthContext(auth || config.auth),
       (
         err: ServiceError | null,
         response: GetAssistantWebhookLogResponse | null
-      ) => (err ? reject(err) : resolve(response!))
+      ) => {
+        if (err) reject(err);
+        else resolve(response!);
+      }
     );
   });
 }
 
 export function GetAllAssistantTool(
-  connectionConfig: ConnectionConfig,
-  assistantId: string,
-  page: number,
-  pageSize: number,
-  criteria: { key: string; value: string }[]
+  config: ConnectionConfig,
+  req: GetAllAssistantToolRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAllAssistantToolResponse> {
-  const req = new GetAllAssistantToolRequest();
-  req.setAssistantid(assistantId);
-  const paginate = new Paginate();
-
-  criteria.forEach(({ key, value }) => {
-    const ctr = new Criteria();
-    ctr.setKey(key);
-    ctr.setValue(value);
-    req.addCriterias(ctr);
-  });
-
-  paginate.setPage(page);
-  paginate.setPagesize(pageSize);
-  req.setPaginate(paginate);
-
   return new Promise((resolve, reject) => {
-    connectionConfig.assistantClient.getAllAssistantTool(
+    config.assistantClient.getAllAssistantTool(
       req,
-      WithAuthContext(connectionConfig.auth),
+      WithAuthContext(auth || config.auth),
       (
         err: ServiceError | null,
         response: GetAllAssistantToolResponse | null
-      ) => (err ? reject(err) : resolve(response!))
+      ) => {
+        if (err) reject(err);
+        else resolve(response!);
+      }
     );
   });
 }
 
 export function CreateAssistantTool(
-  connectionConfig: ConnectionConfig,
-  assistantId: string,
-  name: string,
-  description: string,
-  fields: {},
-  executionMethod: string,
-  executionOptions: Metadata[]
+  config: ConnectionConfig,
+  req: CreateAssistantToolRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAssistantToolResponse> {
-  const req = new CreateAssistantToolRequest();
-  req.setAssistantid(assistantId);
-  req.setName(name);
-  req.setDescription(description);
-  req.setFields(Struct.fromJavaScript(fields));
-  req.setExecutionmethod(executionMethod);
-  executionOptions.forEach((x) => req.addExecutionoptions(x));
-
   return new Promise((resolve, reject) => {
-    connectionConfig.assistantClient.createAssistantTool(
+    config.assistantClient.createAssistantTool(
       req,
-      WithAuthContext(connectionConfig.auth),
-      (err: ServiceError | null, response: GetAssistantToolResponse | null) =>
-        err ? reject(err) : resolve(response!)
+      WithAuthContext(auth || config.auth),
+      (err: ServiceError | null, response: GetAssistantToolResponse | null) => {
+        if (err) reject(err);
+        else resolve(response!);
+      }
     );
   });
 }
 
 export function UpdateAssistantTool(
-  connectionConfig: ConnectionConfig,
-  assistantId: string,
-  assistantToolId: string,
-  name: string,
-  description: string,
-  fields: {},
-  executionMethod: string,
-  executionOptions: Metadata[]
+  config: ConnectionConfig,
+  req: UpdateAssistantToolRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAssistantToolResponse> {
-  const req = new UpdateAssistantToolRequest();
-  req.setId(assistantToolId);
-  req.setAssistantid(assistantId);
-  req.setName(name);
-  req.setDescription(description);
-  req.setFields(Struct.fromJavaScript(fields));
-  req.setExecutionmethod(executionMethod);
-  executionOptions.forEach((x) => req.addExecutionoptions(x));
-
   return new Promise((resolve, reject) => {
-    connectionConfig.assistantClient.updateAssistantTool(
+    config.assistantClient.updateAssistantTool(
       req,
-      WithAuthContext(connectionConfig.auth),
-      (err: ServiceError | null, response: GetAssistantToolResponse | null) =>
-        err ? reject(err) : resolve(response!)
+      WithAuthContext(auth || config.auth),
+      (err: ServiceError | null, response: GetAssistantToolResponse | null) => {
+        if (err) reject(err);
+        else resolve(response!);
+      }
     );
   });
 }
 
 export function GetAssistantTool(
-  connectionConfig: ConnectionConfig,
-  assistantId: string,
-  ToolId: string
+  config: ConnectionConfig,
+  req: GetAssistantToolRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAssistantToolResponse> {
-  const req = new GetAssistantToolRequest();
-  req.setAssistantid(assistantId);
-  req.setId(ToolId);
-
   return new Promise((resolve, reject) => {
-    connectionConfig.assistantClient.getAssistantTool(
+    config.assistantClient.getAssistantTool(
       req,
-      WithAuthContext(connectionConfig.auth),
-      (err: ServiceError | null, response: GetAssistantToolResponse | null) =>
-        err ? reject(err) : resolve(response!)
+      WithAuthContext(auth || config.auth),
+      (err: ServiceError | null, response: GetAssistantToolResponse | null) => {
+        if (err) reject(err);
+        else resolve(response!);
+      }
     );
   });
 }
 
 export function DeleteAssistantTool(
-  connectionConfig: ConnectionConfig,
-  assistantId: string,
-  ToolId: string
+  config: ConnectionConfig,
+  req: DeleteAssistantToolRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAssistantToolResponse> {
-  const req = new DeleteAssistantToolRequest();
-  req.setAssistantid(assistantId);
-  req.setId(ToolId);
-
   return new Promise((resolve, reject) => {
-    connectionConfig.assistantClient.deleteAssistantTool(
+    config.assistantClient.deleteAssistantTool(
       req,
-      WithAuthContext(connectionConfig.auth),
-      (err: ServiceError | null, response: GetAssistantToolResponse | null) =>
-        err ? reject(err) : resolve(response!)
+      WithAuthContext(auth || config.auth),
+      (err: ServiceError | null, response: GetAssistantToolResponse | null) => {
+        if (err) reject(err);
+        else resolve(response!);
+      }
     );
   });
 }
 
 export function GetAllAssistantKnowledge(
-  connectionConfig: ConnectionConfig,
-  assistantId: string,
-  page: number,
-  pageSize: number,
-  criteria: { key: string; value: string }[]
+  config: ConnectionConfig,
+  req: GetAllAssistantKnowledgeRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAllAssistantKnowledgeResponse> {
-  const req = new GetAllAssistantKnowledgeRequest();
-  req.setAssistantid(assistantId);
-  const paginate = new Paginate();
-
-  criteria.forEach(({ key, value }) => {
-    const ctr = new Criteria();
-    ctr.setKey(key);
-    ctr.setValue(value);
-    req.addCriterias(ctr);
-  });
-
-  paginate.setPage(page);
-  paginate.setPagesize(pageSize);
-  req.setPaginate(paginate);
-
   return new Promise((resolve, reject) => {
-    connectionConfig.assistantClient.getAllAssistantKnowledge(
+    config.assistantClient.getAllAssistantKnowledge(
       req,
-      WithAuthContext(connectionConfig.auth),
+      WithAuthContext(auth || config.auth),
       (
         err: ServiceError | null,
         response: GetAllAssistantKnowledgeResponse | null
-      ) => (err ? reject(err) : resolve(response!))
+      ) => {
+        if (err) reject(err);
+        else resolve(response!);
+      }
     );
   });
 }
 
 export function CreateAssistantKnowledge(
-  connectionConfig: ConnectionConfig,
-  assistantId: string,
-  knowledgeId: string,
-  config: {
-    searchMethod: "semantic" | "fullText" | "hybrid" | "invertedIndex";
-    rerankingEnable: boolean;
-    rerankerModelProvider?: string;
-    rerankerModelProviderId?: string;
-    rerankerModelOptions?: Metadata[];
-    topK: number;
-    scoreThreshold: number;
-  }
+  config: ConnectionConfig,
+  req: CreateAssistantKnowledgeRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAssistantKnowledgeResponse> {
-  const req = new CreateAssistantKnowledgeRequest();
-  req.setKnowledgeid(knowledgeId);
-  req.setAssistantid(assistantId);
-  if (config.rerankingEnable) {
-    req.setRerankerenable(config.rerankingEnable);
-    req.setRerankermodelproviderid(config.rerankerModelProviderId!);
-    req.setRerankermodelprovidername(config.rerankerModelProvider!);
-    req.setAssistantknowledgererankeroptionsList(config.rerankerModelOptions!);
-  }
-  req.setTopk(config.topK);
-  req.setScorethreshold(config.scoreThreshold);
-  req.setRetrievalmethod(config.searchMethod);
-
   return new Promise((resolve, reject) => {
-    connectionConfig.assistantClient.createAssistantKnowledge(
+    config.assistantClient.createAssistantKnowledge(
       req,
-      WithAuthContext(connectionConfig.auth),
+      WithAuthContext(auth || config.auth),
       (
         err: ServiceError | null,
         response: GetAssistantKnowledgeResponse | null
-      ) => (err ? reject(err) : resolve(response!))
+      ) => {
+        if (err) reject(err);
+        else resolve(response!);
+      }
     );
   });
 }
 
 export function UpdateAssistantKnowledge(
-  connectionConfig: ConnectionConfig,
-  id: string,
-  assistantId: string,
-  knowledgeId: string,
-  config: {
-    searchMethod: "semantic" | "fullText" | "hybrid" | "invertedIndex";
-    rerankingEnable: boolean;
-    rerankerModelProvider?: string;
-    rerankerModelProviderId?: string;
-    rerankerModelOptions?: Metadata[];
-    topK: number;
-    scoreThreshold: number;
-  }
+  config: ConnectionConfig,
+  req: UpdateAssistantKnowledgeRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAssistantKnowledgeResponse> {
-  const req = new UpdateAssistantKnowledgeRequest();
-  req.setKnowledgeid(knowledgeId);
-  req.setAssistantid(assistantId);
-  req.setId(id);
-  if (config.rerankingEnable) {
-    req.setRerankerenable(config.rerankingEnable);
-    req.setRerankermodelproviderid(config.rerankerModelProviderId!);
-    req.setRerankermodelprovidername(config.rerankerModelProvider!);
-    req.setAssistantknowledgererankeroptionsList(config.rerankerModelOptions!);
-  }
-  req.setTopk(config.topK);
-  req.setScorethreshold(config.scoreThreshold);
-  req.setRetrievalmethod(config.searchMethod);
-
   return new Promise((resolve, reject) => {
-    connectionConfig.assistantClient.updateAssistantKnowledge(
+    config.assistantClient.updateAssistantKnowledge(
       req,
-      WithAuthContext(connectionConfig.auth),
+      WithAuthContext(auth || config.auth),
       (
         err: ServiceError | null,
         response: GetAssistantKnowledgeResponse | null
-      ) => (err ? reject(err) : resolve(response!))
+      ) => {
+        if (err) reject(err);
+        else resolve(response!);
+      }
     );
   });
 }
 
 export function GetAssistantKnowledge(
-  connectionConfig: ConnectionConfig,
-  assistantId: string,
-  ToolId: string
+  config: ConnectionConfig,
+  req: GetAssistantKnowledgeRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAssistantKnowledgeResponse> {
-  const req = new GetAssistantKnowledgeRequest();
-  req.setAssistantid(assistantId);
-  req.setId(ToolId);
-
   return new Promise((resolve, reject) => {
-    connectionConfig.assistantClient.getAssistantKnowledge(
+    config.assistantClient.getAssistantKnowledge(
       req,
-      WithAuthContext(connectionConfig.auth),
+      WithAuthContext(auth || config.auth),
       (
         err: ServiceError | null,
         response: GetAssistantKnowledgeResponse | null
-      ) => (err ? reject(err) : resolve(response!))
+      ) => {
+        if (err) reject(err);
+        else resolve(response!);
+      }
     );
   });
 }
 
 export function DeleteAssistantKnowledge(
-  connectionConfig: ConnectionConfig,
-  assistantId: string,
-  knowledgeId: string
+  config: ConnectionConfig,
+  req: DeleteAssistantKnowledgeRequest,
+  auth?: UserAuthInfo | ClientAuthInfo
 ): Promise<GetAssistantKnowledgeResponse> {
-  const req = new DeleteAssistantKnowledgeRequest();
-  req.setAssistantid(assistantId);
-  req.setId(knowledgeId);
-
   return new Promise((resolve, reject) => {
-    connectionConfig.assistantClient.deleteAssistantKnowledge(
+    config.assistantClient.deleteAssistantKnowledge(
       req,
-      WithAuthContext(connectionConfig.auth),
+      WithAuthContext(auth || config.auth),
       (
         err: ServiceError | null,
         response: GetAssistantKnowledgeResponse | null
-      ) => (err ? reject(err) : resolve(response!))
+      ) => {
+        if (err) reject(err);
+        else resolve(response!);
+      }
     );
   });
 }
