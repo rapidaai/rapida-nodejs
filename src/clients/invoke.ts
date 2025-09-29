@@ -31,16 +31,19 @@ import {
   WithAuthContext,
 } from "@/rapida/clients";
 import {
-  EndpointDefinition,
   InvokeRequest,
   InvokeResponse,
 } from "@/rapida/clients/protos/invoker-api_pb";
-import p from "google-protobuf/google/protobuf/any_pb";
-import { StringToAny } from "@/rapida/utils/rapida_value";
 import { ConnectionConfig } from "@/rapida/connections/connection-config";
-import grpc, { ServiceError } from "@grpc/grpc-js";
-import { UserInfo } from "os";
+import { ServiceError } from "@grpc/grpc-js";
 
+/**
+ *
+ * @param config
+ * @param req
+ * @param auth
+ * @returns
+ */
 export function Invoke(
   config: ConnectionConfig,
   req: InvokeRequest,
