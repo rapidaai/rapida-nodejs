@@ -503,8 +503,6 @@ export {
   GetAllMessageResponse,
   UpdateAssistantVersionRequest,
   UpdateAssistantDetailRequest,
-  GetAllAssistantUserConversationRequest,
-  GetAllAssistantUserConversationResponse,
   GetAssistantConversationRequest,
   GetAssistantConversationResponse,
 } from "@/rapida/clients/protos/assistant-api_pb";
