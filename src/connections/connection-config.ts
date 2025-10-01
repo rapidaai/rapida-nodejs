@@ -187,7 +187,7 @@ export class ConnectionConfig {
 
   get assistantClient(): AssistantServiceClient {
     return new AssistantServiceClient(
-      this._endpoint.web,
+      this._endpoint.assistant,
       this._debug ? credentials.createInsecure() : credentials.createSsl()
     );
   }
@@ -201,28 +201,28 @@ export class ConnectionConfig {
 
   get knowledgeClient(): KnowledgeServiceClient {
     return new KnowledgeServiceClient(
-      this._endpoint.web,
+      this._endpoint.assistant,
       this._debug ? credentials.createInsecure() : credentials.createSsl()
     );
   }
 
   get deploymentClient(): DeploymentClient {
     return new DeploymentClient(
-      this._endpoint.web,
+      this._endpoint.endpoint,
       this._debug ? credentials.createInsecure() : credentials.createSsl()
     );
   }
 
   get marketplaceClient(): MarketplaceServiceClient {
     return new MarketplaceServiceClient(
-      this._endpoint.web,
+      this._endpoint.endpoint,
       this._debug ? credentials.createInsecure() : credentials.createSsl()
     );
   }
 
   get documentClient(): DocumentServiceClient {
     return new DocumentServiceClient(
-      this._endpoint.web,
+      this._endpoint.assistant,
       this._debug ? credentials.createInsecure() : credentials.createSsl()
     );
   }
@@ -236,7 +236,7 @@ export class ConnectionConfig {
 
   get endpointClient(): EndpointServiceClient {
     return new EndpointServiceClient(
-      this._endpoint.web,
+      this._endpoint.endpoint,
       this._debug ? credentials.createInsecure() : credentials.createSsl()
     );
   }
@@ -250,7 +250,7 @@ export class ConnectionConfig {
 
   get assistantDeploymentClient(): AssistantDeploymentServiceClient {
     return new AssistantDeploymentServiceClient(
-      this._endpoint.web,
+      this._endpoint.assistant,
       this._debug ? credentials.createInsecure() : credentials.createSsl()
     );
   }
