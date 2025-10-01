@@ -31,6 +31,7 @@ export {
   StringToAny,
 };
 
+export { ToContentText } from "./utils/rapida_content";
 export { ConnectionConfig } from "./connections/connection-config";
 export * from "@/rapida/utils/rapida_value";
 export * from "@/rapida/utils/rapida_source";

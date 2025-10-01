@@ -96,18 +96,17 @@ export const toStreamAudioContent = (raw: Uint8Array | string): Content => {
   return cnt;
 };
 
-export const toContentText = (cnt?: Content[]): string => {
-  let text = "";
-  if (!cnt) return text;
-  cnt
+export const ToContentText = (cnt?: Content[]): string => {
+  if (!cnt) return "";
+
+  return cnt
     .filter((x) => x.getContenttype() === "text")
-    .forEach((x) => {
+    .map((x) => {
       try {
-        const contentText = new TextDecoder().decode(
-          x.getContent() as Uint8Array
-        );
-        text += contentText; // Append the decoded text to the `text` variable
-      } catch (error) {}
-    });
-  return text;
+        return new TextDecoder().decode(x.getContent() as Uint8Array);
+      } catch (error) {
+        return "";
+      }
+    })
+    .join(" ");
 };
