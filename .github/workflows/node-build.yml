@@ -53,10 +53,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Get version and create tag
+      - name: Get version from package.json and check tag
         id: version
         run: |
-          VERSION="0.1.$(date +%Y%m%d)-$(git rev-parse --short HEAD)"
+          VERSION=$(jq -r .version package.json)
           echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
           echo "TAG_NAME=v${VERSION}" >> $GITHUB_OUTPUT
           if git tag -l "v${VERSION}" | grep -q "v${VERSION}"; then
