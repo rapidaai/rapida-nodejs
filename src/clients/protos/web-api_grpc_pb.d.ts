@@ -15,6 +15,7 @@ interface IAuthenticationServiceService extends grpc.ServiceDefinition<grpc.Unty
   verifyToken: grpc.MethodDefinition<web_api_pb.VerifyTokenRequest, web_api_pb.VerifyTokenResponse>;
   forgotPassword: grpc.MethodDefinition<web_api_pb.ForgotPasswordRequest, web_api_pb.ForgotPasswordResponse>;
   createPassword: grpc.MethodDefinition<web_api_pb.CreatePasswordRequest, web_api_pb.CreatePasswordResponse>;
+  changePassword: grpc.MethodDefinition<web_api_pb.ChangePasswordRequest, web_api_pb.ChangePasswordResponse>;
   getUser: grpc.MethodDefinition<web_api_pb.GetUserRequest, web_api_pb.GetUserResponse>;
   updateUser: grpc.MethodDefinition<web_api_pb.UpdateUserRequest, web_api_pb.UpdateUserResponse>;
   getAllUser: grpc.MethodDefinition<web_api_pb.GetAllUserRequest, web_api_pb.GetAllUserResponse>;
@@ -33,6 +34,7 @@ export interface IAuthenticationServiceServer extends grpc.UntypedServiceImpleme
   verifyToken: grpc.handleUnaryCall<web_api_pb.VerifyTokenRequest, web_api_pb.VerifyTokenResponse>;
   forgotPassword: grpc.handleUnaryCall<web_api_pb.ForgotPasswordRequest, web_api_pb.ForgotPasswordResponse>;
   createPassword: grpc.handleUnaryCall<web_api_pb.CreatePasswordRequest, web_api_pb.CreatePasswordResponse>;
+  changePassword: grpc.handleUnaryCall<web_api_pb.ChangePasswordRequest, web_api_pb.ChangePasswordResponse>;
   getUser: grpc.handleUnaryCall<web_api_pb.GetUserRequest, web_api_pb.GetUserResponse>;
   updateUser: grpc.handleUnaryCall<web_api_pb.UpdateUserRequest, web_api_pb.UpdateUserResponse>;
   getAllUser: grpc.handleUnaryCall<web_api_pb.GetAllUserRequest, web_api_pb.GetAllUserResponse>;
@@ -64,6 +66,9 @@ export class AuthenticationServiceClient extends grpc.Client {
   createPassword(argument: web_api_pb.CreatePasswordRequest, callback: grpc.requestCallback<web_api_pb.CreatePasswordResponse>): grpc.ClientUnaryCall;
   createPassword(argument: web_api_pb.CreatePasswordRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<web_api_pb.CreatePasswordResponse>): grpc.ClientUnaryCall;
   createPassword(argument: web_api_pb.CreatePasswordRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<web_api_pb.CreatePasswordResponse>): grpc.ClientUnaryCall;
+  changePassword(argument: web_api_pb.ChangePasswordRequest, callback: grpc.requestCallback<web_api_pb.ChangePasswordResponse>): grpc.ClientUnaryCall;
+  changePassword(argument: web_api_pb.ChangePasswordRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<web_api_pb.ChangePasswordResponse>): grpc.ClientUnaryCall;
+  changePassword(argument: web_api_pb.ChangePasswordRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<web_api_pb.ChangePasswordResponse>): grpc.ClientUnaryCall;
   getUser(argument: web_api_pb.GetUserRequest, callback: grpc.requestCallback<web_api_pb.GetUserResponse>): grpc.ClientUnaryCall;
   getUser(argument: web_api_pb.GetUserRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<web_api_pb.GetUserResponse>): grpc.ClientUnaryCall;
   getUser(argument: web_api_pb.GetUserRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<web_api_pb.GetUserResponse>): grpc.ClientUnaryCall;

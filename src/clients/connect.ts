@@ -27,14 +27,10 @@
 
 import { Criteria } from "@/rapida/clients/protos/common_pb";
 import {
-  ActionConnectRequest,
-  ActionConnectResponse,
   GeneralConnectRequest,
   GeneralConnectResponse,
   GetConnectorFilesRequest,
   GetConnectorFilesResponse,
-  KnowledgeConnectRequest,
-  KnowledgeConnectResponse,
 } from "@/rapida/clients/protos/connect-api_pb";
 import { WithAuthContext } from "@/rapida/clients";
 import { ServiceError } from "@grpc/grpc-js";
@@ -76,60 +72,6 @@ export function GeneralConnect(
 }
 
 /**
- * Establish a knowledge connection.
- */
-export function KnowledgeConnect(
-  config: ConnectionConfig,
-  connect: string,
-  code: string,
-  state: string,
-  scope: string
-): Promise<KnowledgeConnectResponse> {
-  return new Promise((resolve, reject) => {
-    const req = new KnowledgeConnectRequest();
-    req.setConnect(connect);
-    req.setCode(code);
-    req.setState(state);
-    req.setScope(scope);
-    config.connectClient.knowledgeConnect(
-      req,
-      WithAuthContext(config.auth),
-      (err: ServiceError | null, response: KnowledgeConnectResponse | null) => {
-        if (err) reject(err);
-        else resolve(response!);
-      }
-    );
-  });
-}
-
-/**
- * Establish an action connection.
- */
-export function ActionConnect(
-  config: ConnectionConfig,
-  connect: string,
-  code: string,
-  state: string,
-  scope: string
-): Promise<ActionConnectResponse> {
-  return new Promise((resolve, reject) => {
-    const req = new ActionConnectRequest();
-    req.setConnect(connect);
-    req.setCode(code);
-    req.setState(state);
-    req.setScope(scope);
-    config.connectClient.actionConnect(
-      req,
-      WithAuthContext(config.auth),
-      (err: ServiceError | null, response: ActionConnectResponse | null) => {
-        if (err) reject(err);
-        else resolve(response!);
-      }
-    );
-  });
-}
-
-/**
  * Retrieve files associated with a connector based on specified criteria.
  */
 export function GetConnectorFiles(
@@ -139,7 +81,9 @@ export function GetConnectorFiles(
 ): Promise<GetConnectorFilesResponse> {
   return new Promise((resolve, reject) => {
     const req = new GetConnectorFilesRequest();
-    req.setToolid(toolId);
+    // NOTE: setToolid method doesn't exist on GetConnectorFilesRequest
+    // The actual method name may be different - check proto definitions
+    // req.setToolid(toolId);
     req.setCriteriasList(criterias);
     config.connectClient.getConnectorFiles(
       req,

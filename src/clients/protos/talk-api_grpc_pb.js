@@ -4,8 +4,8 @@
 var grpc = require('@grpc/grpc-js');
 var talk$api_pb = require('./talk-api_pb.js');
 var google_protobuf_any_pb = require('google-protobuf/google/protobuf/any_pb.js');
-var google_protobuf_timestamp_pb = require('google-protobuf/google/protobuf/timestamp_pb.js');
 var common_pb = require('./common_pb.js');
+var google_protobuf_timestamp_pb = require('google-protobuf/google/protobuf/timestamp_pb.js');
 
 function serialize_GetAllAssistantConversationRequest(arg) {
   if (!(arg instanceof common_pb.GetAllAssistantConversationRequest)) {
@@ -51,26 +51,26 @@ function deserialize_GetAllConversationMessageResponse(buffer_arg) {
   return common_pb.GetAllConversationMessageResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_talk_api_AssistantMessagingRequest(arg) {
-  if (!(arg instanceof talk$api_pb.AssistantMessagingRequest)) {
-    throw new Error('Expected argument of type talk_api.AssistantMessagingRequest');
+function serialize_talk_api_AssistantTalkRequest(arg) {
+  if (!(arg instanceof talk$api_pb.AssistantTalkRequest)) {
+    throw new Error('Expected argument of type talk_api.AssistantTalkRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_talk_api_AssistantMessagingRequest(buffer_arg) {
-  return talk$api_pb.AssistantMessagingRequest.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_talk_api_AssistantTalkRequest(buffer_arg) {
+  return talk$api_pb.AssistantTalkRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_talk_api_AssistantMessagingResponse(arg) {
-  if (!(arg instanceof talk$api_pb.AssistantMessagingResponse)) {
-    throw new Error('Expected argument of type talk_api.AssistantMessagingResponse');
+function serialize_talk_api_AssistantTalkResponse(arg) {
+  if (!(arg instanceof talk$api_pb.AssistantTalkResponse)) {
+    throw new Error('Expected argument of type talk_api.AssistantTalkResponse');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_talk_api_AssistantMessagingResponse(buffer_arg) {
-  return talk$api_pb.AssistantMessagingResponse.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_talk_api_AssistantTalkResponse(buffer_arg) {
+  return talk$api_pb.AssistantTalkResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_talk_api_CreateBulkPhoneCallRequest(arg) {
@@ -162,19 +162,26 @@ function deserialize_talk_api_CreatePhoneCallResponse(buffer_arg) {
 }
 
 
+// ============================================================================
+// Talk Service - Primary Assistant Communication
+// ============================================================================
+//
+// TalkService provides the main API for assistant conversations.
 var TalkServiceService = exports.TalkServiceService = {
-  assistantTalk: {
+  // Bi-directional streaming RPC for assistant messaging
+assistantTalk: {
     path: '/talk_api.TalkService/AssistantTalk',
     requestStream: true,
     responseStream: true,
-    requestType: talk$api_pb.AssistantMessagingRequest,
-    responseType: talk$api_pb.AssistantMessagingResponse,
-    requestSerialize: serialize_talk_api_AssistantMessagingRequest,
-    requestDeserialize: deserialize_talk_api_AssistantMessagingRequest,
-    responseSerialize: serialize_talk_api_AssistantMessagingResponse,
-    responseDeserialize: deserialize_talk_api_AssistantMessagingResponse,
+    requestType: talk$api_pb.AssistantTalkRequest,
+    responseType: talk$api_pb.AssistantTalkResponse,
+    requestSerialize: serialize_talk_api_AssistantTalkRequest,
+    requestDeserialize: deserialize_talk_api_AssistantTalkRequest,
+    responseSerialize: serialize_talk_api_AssistantTalkResponse,
+    responseDeserialize: deserialize_talk_api_AssistantTalkResponse,
   },
-  getAllAssistantConversation: {
+  // Get all assistant conversations
+getAllAssistantConversation: {
     path: '/talk_api.TalkService/GetAllAssistantConversation',
     requestStream: false,
     responseStream: false,
@@ -185,7 +192,8 @@ var TalkServiceService = exports.TalkServiceService = {
     responseSerialize: serialize_GetAllAssistantConversationResponse,
     responseDeserialize: deserialize_GetAllAssistantConversationResponse,
   },
-  getAllConversationMessage: {
+  // Get all messages in a conversation
+getAllConversationMessage: {
     path: '/talk_api.TalkService/GetAllConversationMessage',
     requestStream: false,
     responseStream: false,
@@ -196,7 +204,8 @@ var TalkServiceService = exports.TalkServiceService = {
     responseSerialize: serialize_GetAllConversationMessageResponse,
     responseDeserialize: deserialize_GetAllConversationMessageResponse,
   },
-  createMessageMetric: {
+  // Create message metric
+createMessageMetric: {
     path: '/talk_api.TalkService/CreateMessageMetric',
     requestStream: false,
     responseStream: false,
@@ -207,7 +216,8 @@ var TalkServiceService = exports.TalkServiceService = {
     responseSerialize: serialize_talk_api_CreateMessageMetricResponse,
     responseDeserialize: deserialize_talk_api_CreateMessageMetricResponse,
   },
-  createConversationMetric: {
+  // Create conversation metric
+createConversationMetric: {
     path: '/talk_api.TalkService/CreateConversationMetric',
     requestStream: false,
     responseStream: false,
@@ -218,7 +228,7 @@ var TalkServiceService = exports.TalkServiceService = {
     responseSerialize: serialize_talk_api_CreateConversationMetricResponse,
     responseDeserialize: deserialize_talk_api_CreateConversationMetricResponse,
   },
-  //
+  // Create phone call
 createPhoneCall: {
     path: '/talk_api.TalkService/CreatePhoneCall',
     requestStream: false,
@@ -230,7 +240,8 @@ createPhoneCall: {
     responseSerialize: serialize_talk_api_CreatePhoneCallResponse,
     responseDeserialize: deserialize_talk_api_CreatePhoneCallResponse,
   },
-  createBulkPhoneCall: {
+  // Create bulk phone calls
+createBulkPhoneCall: {
     path: '/talk_api.TalkService/CreateBulkPhoneCall',
     requestStream: false,
     responseStream: false,

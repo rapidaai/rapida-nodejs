@@ -26,7 +26,9 @@
  *  as well as handling assistant provider models and tags.
  */
 
-import { Content, Metadata } from "@/rapida/clients/protos/common_pb";
+// NOTE: Content type not available in common_pb proto definitions
+// import { Content, Metadata } from "@/rapida/clients/protos/common_pb";
+import { Metadata } from "@/rapida/clients/protos/common_pb";
 
 import { ServiceError } from "@grpc/grpc-js";
 import {
@@ -106,8 +108,6 @@ export function GetAssistantDebuggerDeployment(
     );
   });
 }
-
-// ... existing code ...
 
 export function CreateAssistantApiDeployment(
   clientCfg: ConnectionConfig,

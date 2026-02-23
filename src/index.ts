@@ -63,6 +63,8 @@ export {
   HEADER_LATITUDE,
   HEADER_LONGITUDE,
 } from "@/rapida/utils/rapida_header";
+
+/* Client function exports */
 export { IndexKnowledgeDocument } from "@/rapida/clients/document";
 export { GetAllDeployment } from "@/rapida/clients/marketplace";
 export { Invoke } from "@/rapida/clients/invoke";
@@ -89,8 +91,6 @@ export {
 } from "@/rapida/clients/index";
 export {
   GeneralConnect,
-  KnowledgeConnect,
-  ActionConnect,
   GetConnectorFiles,
 } from "@/rapida/clients/connect";
 export {
@@ -101,9 +101,7 @@ export {
 export {
   GetAllAssistant,
   UpdateAssistantVersion,
-  GetAllAssistantProviderModel,
   GetAssistant,
-  CreateAssistantProviderModel,
   CreateAssistant,
   CreateAssistantTag,
   UpdateAssistantDetail,
@@ -162,7 +160,6 @@ export {
   CreateProviderKey,
   DeleteProviderKey,
   AllOrganizationCredential,
-  CreateToolCredential,
 } from "@/rapida/clients/vault";
 export {
   AssistantTalk,
@@ -193,145 +190,12 @@ export {
   CreateProjectCredential,
 } from "@/rapida/clients/project";
 
-export {
-  AssistantKnowledge,
-  CreateAssistantKnowledgeRequest,
-  UpdateAssistantKnowledgeRequest,
-  GetAssistantKnowledgeRequest,
-  DeleteAssistantKnowledgeRequest,
-  GetAssistantKnowledgeResponse,
-  GetAllAssistantKnowledgeRequest,
-  GetAllAssistantKnowledgeResponse,
-} from "@/rapida/clients/protos/assistant-knowledge_pb";
-export {
-  GetAllDeploymentRequest,
-  SearchableDeployment,
-  GetAllDeploymentResponse,
-} from "@/rapida/clients/protos/marketplace-api_pb";
+export { CreatePhoneCall, CreateBulkPhoneCall } from "./clients/call";
 
-export {
-  AuditLog,
-  GetAllAuditLogRequest,
-  GetAllAuditLogResponse,
-  GetAuditLogRequest,
-  GetAuditLogResponse,
-  CreateMetadataRequest,
-  CreateMetadataResponse,
-} from "@/rapida/clients/protos/audit-logging-api_pb";
+/* ========================================================================== */
+/* Proto Message Exports - Common Messages                                    */
+/* ========================================================================== */
 
-export {
-  GetAllModelProviderRequest,
-  GetAllModelProviderResponse,
-  ToolProvider,
-  GetAllToolProviderRequest,
-  GetAllToolProviderResponse,
-} from "@/rapida/clients/protos/provider-api_pb";
-export {
-  VaultCredential,
-  CreateProviderCredentialRequest,
-  CreateToolCredentialRequest,
-  DeleteCredentialRequest,
-  GetAllOrganizationCredentialResponse,
-  GetProviderCredentialRequest,
-  GetCredentialResponse,
-  GetAllOrganizationCredentialRequest,
-} from "@/rapida/clients/protos/vault-api_pb";
-
-export {
-  AssistantDefinition,
-  AssistantMessagingRequest,
-  AssistantConversationConfiguration,
-  AssistantConversationInterruption,
-  AssistantConversationUserMessage,
-  AssistantConversationAssistantMessage,
-  AssistantMessagingResponse,
-  CreateMessageMetricRequest,
-  CreateMessageMetricResponse,
-  CreateConversationMetricRequest,
-  CreateConversationMetricResponse,
-} from "@/rapida/clients/protos/talk-api_pb";
-export {
-  AssistantAnalysis,
-  CreateAssistantAnalysisRequest,
-  UpdateAssistantAnalysisRequest,
-  GetAssistantAnalysisRequest,
-  DeleteAssistantAnalysisRequest,
-  GetAssistantAnalysisResponse,
-  GetAllAssistantAnalysisRequest,
-  GetAllAssistantAnalysisResponse,
-} from "@/rapida/clients/protos/assistant-analysis_pb";
-export {
-  Contact,
-  WelcomeEmailRequest,
-  WelcomeEmailResponse,
-  ResetPasswordEmailRequest,
-  ResetPasswordEmailResponse,
-  InviteMemeberEmailRequest,
-  InviteMemeberEmailResponse,
-} from "@/rapida/clients/protos/sendgrid-api_pb";
-export {
-  EndpointDefinition,
-  InvokeRequest,
-  InvokeResponse,
-  UpdateRequest,
-  UpdateResponse,
-  ProbeRequest,
-  ProbeResponse,
-} from "@/rapida/clients/protos/invoker-api_pb";
-export {
-  AuthenticateRequest,
-  RegisterUserRequest,
-  Token,
-  OrganizationRole,
-  ProjectRole,
-  FeaturePermission,
-  Authentication,
-  ScopedAuthentication,
-  AuthenticationError,
-  AuthenticateResponse,
-  ForgotPasswordRequest,
-  ForgotPasswordResponse,
-  CreatePasswordRequest,
-  CreatePasswordResponse,
-  VerifyTokenRequest,
-  VerifyTokenResponse,
-  AuthorizeRequest,
-  ScopeAuthorizeRequest,
-  ScopedAuthenticationResponse,
-  GetUserRequest,
-  GetUserResponse,
-  UpdateUserRequest,
-  UpdateUserResponse,
-  SocialAuthenticationRequest,
-  GetAllUserRequest,
-  GetAllUserResponse,
-  OrganizationError,
-  CreateOrganizationRequest,
-  UpdateOrganizationRequest,
-  GetOrganizationRequest,
-  GetOrganizationResponse,
-  CreateOrganizationResponse,
-  UpdateOrganizationResponse,
-  UpdateBillingInformationRequest,
-  Project,
-  CreateProjectRequest,
-  CreateProjectResponse,
-  UpdateProjectRequest,
-  UpdateProjectResponse,
-  GetProjectRequest,
-  GetProjectResponse,
-  GetAllProjectRequest,
-  GetAllProjectResponse,
-  AddUsersToProjectRequest,
-  ArchiveProjectRequest,
-  ArchiveProjectResponse,
-  AddUsersToProjectResponse,
-  ProjectCredential,
-  CreateProjectCredentialRequest,
-  GetAllProjectCredentialRequest,
-  CreateProjectCredentialResponse,
-  GetAllProjectCredentialResponse,
-} from "@/rapida/clients/protos/web-api_pb";
 export {
   FieldSelector,
   Criteria,
@@ -344,18 +208,15 @@ export {
   Metadata,
   Argument,
   Variable,
-  Provider,
   Tag,
   Organization,
   Metric,
-  Content,
   Message as ProtoMessage,
   ToolCall,
   FunctionCall,
   Knowledge,
   TextPrompt,
   TextChatCompletePrompt,
-  AssistantMessageStage,
   AssistantConversationMessage,
   AssistantConversationContext,
   AssistantConversation,
@@ -363,7 +224,128 @@ export {
   GetAllAssistantConversationResponse,
   GetAllConversationMessageRequest,
   GetAllConversationMessageResponse,
+  SystemMessage,
+  UserMessage,
+  ToolMessage,
+  Telemetry,
+  AssistantConversationRecording,
+  AssistantConversationTelephonyEvent,
 } from "@/rapida/clients/protos/common_pb";
+
+/* ========================================================================== */
+/* Proto Message Exports - AgentKit                                           */
+/* ========================================================================== */
+
+export {
+  TalkInput,
+  TalkOutput,
+} from "@/rapida/clients/protos/agentkit_pb";
+
+/* ========================================================================== */
+/* Proto Message Exports - Assistant API                                     */
+/* ========================================================================== */
+
+export {
+  Assistant,
+  CreateAssistantRequest,
+  CreateAssistantTagRequest,
+  GetAssistantRequest,
+  DeleteAssistantRequest,
+  GetAssistantResponse,
+  GetAllAssistantRequest,
+  GetAllAssistantResponse,
+  GetAllAssistantMessageRequest,
+  GetAllAssistantMessageResponse,
+  GetAllMessageRequest,
+  GetAllMessageResponse,
+  UpdateAssistantDetailRequest,
+  GetAssistantConversationRequest,
+  GetAssistantConversationResponse,
+} from "@/rapida/clients/protos/assistant-api_pb";
+
+/* ========================================================================== */
+/* Proto Message Exports - Assistant Analysis                                */
+/* ========================================================================== */
+
+export {
+  AssistantAnalysis,
+  CreateAssistantAnalysisRequest,
+  UpdateAssistantAnalysisRequest,
+  GetAssistantAnalysisRequest,
+  DeleteAssistantAnalysisRequest,
+  GetAssistantAnalysisResponse,
+  GetAllAssistantAnalysisRequest,
+  GetAllAssistantAnalysisResponse,
+} from "@/rapida/clients/protos/assistant-analysis_pb";
+
+/* ========================================================================== */
+/* Proto Message Exports - Assistant Deployment                              */
+/* ========================================================================== */
+
+export {
+  DeploymentAudioProvider,
+  AssistantWebpluginDeployment,
+  AssistantPhoneDeployment,
+  AssistantWhatsappDeployment,
+  AssistantDebuggerDeployment,
+  AssistantApiDeployment,
+  GetAssistantDeploymentRequest,
+  CreateAssistantDeploymentRequest,
+  GetAssistantApiDeploymentResponse,
+  GetAssistantDebuggerDeploymentResponse,
+  GetAssistantPhoneDeploymentResponse,
+  GetAssistantWebpluginDeploymentResponse,
+  GetAssistantWhatsappDeploymentResponse,
+} from "@/rapida/clients/protos/assistant-deployment_pb";
+
+/* ========================================================================== */
+/* Proto Message Exports - Assistant Knowledge                               */
+/* ========================================================================== */
+
+export {
+  AssistantKnowledge,
+  CreateAssistantKnowledgeRequest,
+  UpdateAssistantKnowledgeRequest,
+  GetAssistantKnowledgeRequest,
+  DeleteAssistantKnowledgeRequest,
+  GetAssistantKnowledgeResponse,
+  GetAllAssistantKnowledgeRequest,
+  GetAllAssistantKnowledgeResponse,
+} from "@/rapida/clients/protos/assistant-knowledge_pb";
+
+/* ========================================================================== */
+/* Proto Message Exports - Assistant Provider                                */
+/* ========================================================================== */
+
+export {
+  AssistantProviderModel,
+  AssistantProviderAgentkit,
+  AssistantProviderWebsocket,
+} from "@/rapida/clients/protos/assistant-provider_pb";
+
+/* ========================================================================== */
+/* Proto Message Exports - Assistant Tool                                    */
+/* ========================================================================== */
+
+export {
+  AssistantTool,
+  CreateAssistantToolRequest,
+  UpdateAssistantToolRequest,
+  GetAssistantToolRequest,
+  DeleteAssistantToolRequest,
+  GetAssistantToolResponse,
+  GetAllAssistantToolRequest,
+  GetAllAssistantToolResponse,
+  AssistantToolLog,
+  GetAllAssistantToolLogRequest,
+  GetAllAssistantToolLogResponse,
+  GetAssistantToolLogRequest,
+  GetAssistantToolLogResponse,
+} from "@/rapida/clients/protos/assistant-tool_pb";
+
+/* ========================================================================== */
+/* Proto Message Exports - Assistant Webhook                                 */
+/* ========================================================================== */
 
 export {
   AssistantWebhook,
@@ -380,16 +362,44 @@ export {
   GetAssistantWebhookLogResponse,
   GetAllAssistantWebhookLogResponse,
 } from "@/rapida/clients/protos/assistant-webhook_pb";
+
+/* ========================================================================== */
+/* Proto Message Exports - Audit Logging API                                 */
+/* ========================================================================== */
+
 export {
-  KnowledgeConnectRequest,
-  KnowledgeConnectResponse,
+  AuditLog,
+  GetAllAuditLogRequest,
+  GetAllAuditLogResponse,
+  GetAuditLogRequest,
+  GetAuditLogResponse,
+  CreateMetadataRequest,
+  CreateMetadataResponse,
+} from "@/rapida/clients/protos/audit-logging-api_pb";
+
+/* ========================================================================== */
+/* Proto Message Exports - Connect API                                       */
+/* ========================================================================== */
+
+export {
   GeneralConnectRequest,
   GeneralConnectResponse,
-  ActionConnectRequest,
-  ActionConnectResponse,
   GetConnectorFilesRequest,
   GetConnectorFilesResponse,
 } from "@/rapida/clients/protos/connect-api_pb";
+
+/* ========================================================================== */
+/* Proto Message Exports - Document API                                      */
+/* ========================================================================== */
+
+export {
+  IndexKnowledgeDocumentRequest,
+  IndexKnowledgeDocumentResponse,
+} from "@/rapida/clients/protos/document-api_pb";
+
+/* ========================================================================== */
+/* Proto Message Exports - Endpoint API                                      */
+/* ========================================================================== */
 
 export {
   EndpointAttribute,
@@ -424,16 +434,11 @@ export {
   GetEndpointLogRequest,
   GetEndpointLogResponse,
 } from "@/rapida/clients/protos/endpoint-api_pb";
-export {
-  AssistantTool,
-  CreateAssistantToolRequest,
-  UpdateAssistantToolRequest,
-  GetAssistantToolRequest,
-  DeleteAssistantToolRequest,
-  GetAssistantToolResponse,
-  GetAllAssistantToolRequest,
-  GetAllAssistantToolResponse,
-} from "@/rapida/clients/protos/assistant-tool_pb";
+
+/* ========================================================================== */
+/* Proto Message Exports - Integration API                                   */
+/* ========================================================================== */
+
 export {
   Credential,
   ToolDefinition,
@@ -454,15 +459,24 @@ export {
   GetModerationRequest,
   GetModerationResponse,
 } from "@/rapida/clients/protos/integration-api_pb";
+
+/* ========================================================================== */
+/* Proto Message Exports - Invoker API                                       */
+/* ========================================================================== */
+
 export {
-  DeploymentAudioProvider,
-  AssistantWebpluginDeployment,
-  AssistantPhoneDeployment,
-  AssistantWhatsappDeployment,
-  AssistantDebuggerDeployment,
-  AssistantApiDeployment,
-  GetAssistantDeploymentRequest,
-} from "@/rapida/clients/protos/assistant-deployment_pb";
+  EndpointDefinition,
+  InvokeRequest,
+  InvokeResponse,
+  UpdateRequest,
+  UpdateResponse,
+  ProbeRequest,
+  ProbeResponse,
+} from "@/rapida/clients/protos/invoker-api_pb";
+
+/* ========================================================================== */
+/* Proto Message Exports - Knowledge API                                     */
+/* ========================================================================== */
 
 export {
   CreateKnowledgeRequest,
@@ -483,35 +497,142 @@ export {
   UpdateKnowledgeDetailRequest,
   UpdateKnowledgeDocumentSegmentRequest,
   DeleteKnowledgeDocumentSegmentRequest,
+  KnowledgeLog,
+  GetKnowledgeLogRequest,
+  GetKnowledgeLogResponse,
+  GetAllKnowledgeLogRequest,
+  GetAllKnowledgeLogResponse,
 } from "@/rapida/clients/protos/knowledge-api_pb";
-export {
-  Assistant,
-  AssistantProviderModel,
-  CreateAssistantRequest,
-  CreateAssistantProviderModelRequest,
-  GetAssistantProviderModelResponse,
-  CreateAssistantTagRequest,
-  GetAssistantRequest,
-  DeleteAssistantRequest,
-  GetAssistantResponse,
-  GetAllAssistantRequest,
-  GetAllAssistantResponse,
-  GetAllAssistantProviderModelRequest,
-  GetAllAssistantProviderModelResponse,
-  GetAllAssistantMessageRequest,
-  GetAllAssistantMessageResponse,
-  GetAllMessageRequest,
-  GetAllMessageResponse,
-  UpdateAssistantVersionRequest,
-  UpdateAssistantDetailRequest,
-  GetAssistantConversationRequest,
-  GetAssistantConversationResponse,
-} from "@/rapida/clients/protos/assistant-api_pb";
 
-export { CreatePhoneCall, CreateBulkPhoneCall } from "./clients/call";
+/* ========================================================================== */
+/* Proto Message Exports - Notification API                                  */
+/* ========================================================================== */
+
 export {
-  CreateBulkPhoneCallRequest,
-  CreateBulkPhoneCallResponse,
+  NotificationSetting,
+  NotificationSettingResponse,
+  GetNotificationSettingRequest,
+  UpdateNotificationSettingRequest,
+} from "@/rapida/clients/protos/notification-api_pb";
+
+/* ========================================================================== */
+/* Proto Message Exports - Talk API                                          */
+/* ========================================================================== */
+
+export {
+  CreateMessageMetricRequest,
+  CreateMessageMetricResponse,
+  CreateConversationMetricRequest,
+  CreateConversationMetricResponse,
   CreatePhoneCallRequest,
   CreatePhoneCallResponse,
+  CreateBulkPhoneCallRequest,
+  CreateBulkPhoneCallResponse,
+  AssistantTalkRequest,
+  AssistantTalkResponse,
+  ConversationMetric,
+  ConversationMetadata,
+  ConversationInitialization,
+  ConversationDisconnection,
+  ConversationUserMessage,
+  ConversationAssistantMessage,
+  ConversationToolCall,
+  ConversationToolResult,
+  ConversationDirective,
+  ConversationInterruption,
+  ConversationModeChange,
+  ConversationError,
+  PhoneIdentity,
+  WebIdentity,
+  AudioConfig,
+  TextConfig,
+  StreamConfig,
 } from "@/rapida/clients/protos/talk-api_pb";
+
+/* ========================================================================== */
+/* Proto Message Exports - Vault API                                         */
+/* ========================================================================== */
+
+export {
+  VaultCredential,
+  CreateProviderCredentialRequest,
+  DeleteCredentialRequest,
+  GetAllOrganizationCredentialResponse,
+  GetCredentialResponse,
+  GetAllOrganizationCredentialRequest,
+  GetCredentialRequest,
+} from "@/rapida/clients/protos/vault-api_pb";
+
+/* ========================================================================== */
+/* Proto Message Exports - Web API                                           */
+/* ========================================================================== */
+
+export {
+  AuthenticateRequest,
+  RegisterUserRequest,
+  Token,
+  OrganizationRole,
+  ProjectRole,
+  FeaturePermission,
+  Authentication,
+  ScopedAuthentication,
+  AuthenticateResponse,
+  ForgotPasswordRequest,
+  ForgotPasswordResponse,
+  CreatePasswordRequest,
+  CreatePasswordResponse,
+  VerifyTokenRequest,
+  VerifyTokenResponse,
+  AuthorizeRequest,
+  ScopeAuthorizeRequest,
+  ScopedAuthenticationResponse,
+  GetUserRequest,
+  GetUserResponse,
+  UpdateUserRequest,
+  UpdateUserResponse,
+  SocialAuthenticationRequest,
+  GetAllUserRequest,
+  GetAllUserResponse,
+  CreateOrganizationRequest,
+  UpdateOrganizationRequest,
+  GetOrganizationRequest,
+  GetOrganizationResponse,
+  CreateOrganizationResponse,
+  UpdateOrganizationResponse,
+  UpdateBillingInformationRequest,
+  Project,
+  CreateProjectRequest,
+  CreateProjectResponse,
+  UpdateProjectRequest,
+  UpdateProjectResponse,
+  GetProjectRequest,
+  GetProjectResponse,
+  GetAllProjectRequest,
+  GetAllProjectResponse,
+  AddUsersToProjectRequest,
+  ArchiveProjectRequest,
+  ArchiveProjectResponse,
+  AddUsersToProjectResponse,
+  ProjectCredential,
+  CreateProjectCredentialRequest,
+  GetAllProjectCredentialRequest,
+  CreateProjectCredentialResponse,
+  GetAllProjectCredentialResponse,
+  ChangePasswordRequest,
+  ChangePasswordResponse,
+} from "@/rapida/clients/protos/web-api_pb";
+
+/* ========================================================================== */
+/* Proto Message Exports - WebRTC                                            */
+/* ========================================================================== */
+
+export {
+  ClientSignaling,
+  ServerSignaling,
+  ICECandidate,
+  ICEServer,
+  WebRTCConfig,
+  WebRTCSDP,
+  WebTalkRequest,
+  WebTalkResponse,
+} from "@/rapida/clients/protos/webrtc_pb";

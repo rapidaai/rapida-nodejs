@@ -48,14 +48,12 @@ import {
   ProjectServiceClient,
 } from "@/rapida/clients/protos/web-api_grpc_pb";
 import { KnowledgeServiceClient } from "@/rapida/clients/protos/knowledge-api_grpc_pb";
-import { MarketplaceServiceClient } from "@/rapida/clients/protos/marketplace-api_grpc_pb";
 import { DocumentServiceClient } from "@/rapida/clients/protos/document-api_grpc_pb";
 import { VaultServiceClient } from "@/rapida/clients/protos/vault-api_grpc_pb";
 import { EndpointServiceClient } from "@/rapida/clients/protos/endpoint-api_grpc_pb";
 import { AuditLoggingServiceClient } from "@/rapida/clients/protos/audit-logging-api_grpc_pb";
 import { AssistantDeploymentServiceClient } from "@/rapida/clients/protos/assistant-deployment_grpc_pb";
 import { ConnectServiceClient } from "@/rapida/clients/protos/connect-api_grpc_pb";
-import { ProviderServiceClient } from "@/rapida/clients/protos/provider-api_grpc_pb";
 
 export class ConnectionConfig {
   /**
@@ -164,10 +162,10 @@ export class ConnectionConfig {
       web?: string;
       endpoint?: string;
     } = {
-      assistant: ASSISTANT_API,
-      web: WEB_API,
-      endpoint: ENDPOINT_API,
-    },
+        assistant: ASSISTANT_API,
+        web: WEB_API,
+        endpoint: ENDPOINT_API,
+      },
     debug: boolean = false
   ) {
     this._endpoint = {
@@ -213,12 +211,7 @@ export class ConnectionConfig {
     );
   }
 
-  get marketplaceClient(): MarketplaceServiceClient {
-    return new MarketplaceServiceClient(
-      this._endpoint.endpoint,
-      this._debug ? credentials.createInsecure() : credentials.createSsl()
-    );
-  }
+
 
   get documentClient(): DocumentServiceClient {
     return new DocumentServiceClient(
@@ -269,12 +262,7 @@ export class ConnectionConfig {
     );
   }
 
-  get providerClient(): ProviderServiceClient {
-    return new ProviderServiceClient(
-      this._endpoint.web,
-      this._debug ? credentials.createInsecure() : credentials.createSsl()
-    );
-  }
+
 
   get authenticationClient(): AuthenticationServiceClient {
     return new AuthenticationServiceClient(
@@ -304,10 +292,10 @@ export class ConnectionConfig {
       web?: string;
       endpoint?: string;
     } = {
-      assistant: ASSISTANT_API,
-      web: WEB_API,
-      endpoint: ENDPOINT_API,
-    },
+        assistant: ASSISTANT_API,
+        web: WEB_API,
+        endpoint: ENDPOINT_API,
+      },
     debug?: boolean
   ): this {
     this._endpoint = {

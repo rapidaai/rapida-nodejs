@@ -8,7 +8,7 @@ import * as common_pb from "./common_pb";
 import * as grpc from "grpc";
 
 interface ITalkServiceService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
-  assistantTalk: grpc.MethodDefinition<talk_api_pb.AssistantMessagingRequest, talk_api_pb.AssistantMessagingResponse>;
+  assistantTalk: grpc.MethodDefinition<talk_api_pb.AssistantTalkRequest, talk_api_pb.AssistantTalkResponse>;
   getAllAssistantConversation: grpc.MethodDefinition<common_pb.GetAllAssistantConversationRequest, common_pb.GetAllAssistantConversationResponse>;
   getAllConversationMessage: grpc.MethodDefinition<common_pb.GetAllConversationMessageRequest, common_pb.GetAllConversationMessageResponse>;
   createMessageMetric: grpc.MethodDefinition<talk_api_pb.CreateMessageMetricRequest, talk_api_pb.CreateMessageMetricResponse>;
@@ -20,7 +20,7 @@ interface ITalkServiceService extends grpc.ServiceDefinition<grpc.UntypedService
 export const TalkServiceService: ITalkServiceService;
 
 export interface ITalkServiceServer extends grpc.UntypedServiceImplementation {
-  assistantTalk: grpc.handleBidiStreamingCall<talk_api_pb.AssistantMessagingRequest, talk_api_pb.AssistantMessagingResponse>;
+  assistantTalk: grpc.handleBidiStreamingCall<talk_api_pb.AssistantTalkRequest, talk_api_pb.AssistantTalkResponse>;
   getAllAssistantConversation: grpc.handleUnaryCall<common_pb.GetAllAssistantConversationRequest, common_pb.GetAllAssistantConversationResponse>;
   getAllConversationMessage: grpc.handleUnaryCall<common_pb.GetAllConversationMessageRequest, common_pb.GetAllConversationMessageResponse>;
   createMessageMetric: grpc.handleUnaryCall<talk_api_pb.CreateMessageMetricRequest, talk_api_pb.CreateMessageMetricResponse>;
@@ -31,8 +31,8 @@ export interface ITalkServiceServer extends grpc.UntypedServiceImplementation {
 
 export class TalkServiceClient extends grpc.Client {
   constructor(address: string, credentials: grpc.ChannelCredentials, options?: object);
-  assistantTalk(metadataOrOptions?: grpc.Metadata | grpc.CallOptions | null): grpc.ClientDuplexStream<talk_api_pb.AssistantMessagingRequest, talk_api_pb.AssistantMessagingResponse>;
-  assistantTalk(metadata?: grpc.Metadata | null, options?: grpc.CallOptions | null): grpc.ClientDuplexStream<talk_api_pb.AssistantMessagingRequest, talk_api_pb.AssistantMessagingResponse>;
+  assistantTalk(metadataOrOptions?: grpc.Metadata | grpc.CallOptions | null): grpc.ClientDuplexStream<talk_api_pb.AssistantTalkRequest, talk_api_pb.AssistantTalkResponse>;
+  assistantTalk(metadata?: grpc.Metadata | null, options?: grpc.CallOptions | null): grpc.ClientDuplexStream<talk_api_pb.AssistantTalkRequest, talk_api_pb.AssistantTalkResponse>;
   getAllAssistantConversation(argument: common_pb.GetAllAssistantConversationRequest, callback: grpc.requestCallback<common_pb.GetAllAssistantConversationResponse>): grpc.ClientUnaryCall;
   getAllAssistantConversation(argument: common_pb.GetAllAssistantConversationRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<common_pb.GetAllAssistantConversationResponse>): grpc.ClientUnaryCall;
   getAllAssistantConversation(argument: common_pb.GetAllAssistantConversationRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<common_pb.GetAllAssistantConversationResponse>): grpc.ClientUnaryCall;

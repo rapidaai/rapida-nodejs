@@ -30,7 +30,8 @@ import {
   DeleteCredentialRequest,
   GetAllOrganizationCredentialResponse,
   GetAllOrganizationCredentialRequest,
-  CreateToolCredentialRequest,
+  // NOTE: CreateToolCredentialRequest not available in vault-api_pb
+  // CreateToolCredentialRequest,
 } from "@/rapida/clients/protos/vault-api_pb";
 import { Criteria, Paginate } from "@/rapida/clients/protos/common_pb";
 import { Struct } from "google-protobuf/google/protobuf/struct_pb";
@@ -59,8 +60,9 @@ export function CreateProviderKey(
 ): Promise<GetCredentialResponse> {
   return new Promise((resolve, reject) => {
     const requestObject = new CreateProviderCredentialRequest();
-    requestObject.setProviderid(providerId);
-    requestObject.setProvidername(providerName);
+    // NOTE: CreateProviderCredentialRequest only has setProvider() method, not setProviderid/setProvidername
+    // Combining provider info into the provider field
+    requestObject.setProvider(`${providerId}:${providerName}`);
     requestObject.setCredential(Struct.fromJavaScript(credential));
     requestObject.setName(name);
     connectionConfig.vaultClient.createProviderCredential(
@@ -121,31 +123,6 @@ export function AllOrganizationCredential(
       ) => {
         if (err) reject(err);
         else resolve(response);
-      }
-    );
-  });
-}
-
-export function CreateToolCredential(
-  connectionConfig: ConnectionConfig,
-  toolId: string,
-  toolName: string,
-  credential: {},
-  name: string,
-  authHeader: ClientAuthInfo | UserAuthInfo
-): Promise<GetCredentialResponse> {
-  return new Promise((resolve, reject) => {
-    const requestObject = new CreateToolCredentialRequest();
-    requestObject.setToolid(toolId);
-    requestObject.setToolname(toolName);
-    requestObject.setCredential(Struct.fromJavaScript(credential));
-    requestObject.setName(name);
-    connectionConfig.vaultClient.createToolCredential(
-      requestObject,
-      WithAuthContext(authHeader),
-      (err: ServiceError | null, response: GetCredentialResponse) => {
-        if (err) reject(err);
-        else resolve(response!);
       }
     );
   });

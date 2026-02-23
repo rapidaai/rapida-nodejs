@@ -41,20 +41,15 @@ import {
   GetAllAssistantRequest,
   GetAllAssistantResponse,
   CreateAssistantRequest,
-  GetAllAssistantProviderModelRequest,
-  UpdateAssistantVersionRequest,
   GetAssistantRequest,
   GetAssistantResponse,
   CreateAssistantTagRequest,
-  CreateAssistantProviderModelRequest,
-  GetAllAssistantProviderModelResponse,
   UpdateAssistantDetailRequest,
   GetAllAssistantMessageRequest,
   GetAllAssistantMessageResponse,
   GetAssistantConversationResponse,
   GetAssistantConversationRequest,
   DeleteAssistantRequest,
-  GetAssistantProviderModelResponse,
   GetAllMessageRequest,
   GetAllMessageResponse,
 } from "@/rapida/clients/protos/assistant-api_pb";
@@ -78,6 +73,10 @@ import {
   GetAllAssistantToolRequest,
   DeleteAssistantToolRequest,
 } from "@/rapida/clients/protos/assistant-tool_pb";
+
+import {
+  UpdateAssistantVersionRequest,
+} from "@/rapida/clients/protos/assistant-provider_pb";
 
 import {
   GetAssistantKnowledgeResponse,
@@ -109,9 +108,7 @@ import {
   WithAuthContext,
 } from "@/rapida/clients";
 import { GetAllAssistantConversationRequest } from "@/rapida/clients/protos/common_pb";
-import { Struct } from "google-protobuf/google/protobuf/struct_pb";
 import { ConnectionConfig } from "@/rapida/connections/connection-config";
-// ... existing imports ...
 
 export function GetAllAssistant(
   config: ConnectionConfig,
@@ -147,25 +144,6 @@ export function UpdateAssistantVersion(
   });
 }
 
-export function GetAllAssistantProviderModel(
-  config: ConnectionConfig,
-  req: GetAllAssistantProviderModelRequest,
-  auth?: UserAuthInfo | ClientAuthInfo
-): Promise<GetAllAssistantProviderModelResponse> {
-  return new Promise((resolve, reject) => {
-    config.assistantClient.getAllAssistantProviderModel(
-      req,
-      WithAuthContext(auth || config.auth),
-      (
-        err: ServiceError | null,
-        response: GetAllAssistantProviderModelResponse | null
-      ) => {
-        if (err) reject(err);
-        else resolve(response!);
-      }
-    );
-  });
-}
 
 export function GetAssistant(
   config: ConnectionConfig,
@@ -184,25 +162,7 @@ export function GetAssistant(
   });
 }
 
-export function CreateAssistantProviderModel(
-  config: ConnectionConfig,
-  req: CreateAssistantProviderModelRequest,
-  auth?: UserAuthInfo | ClientAuthInfo
-): Promise<GetAssistantProviderModelResponse> {
-  return new Promise((resolve, reject) => {
-    config.assistantClient.createAssistantProviderModel(
-      req,
-      WithAuthContext(auth || config.auth),
-      (
-        err: ServiceError | null,
-        response: GetAssistantProviderModelResponse | null
-      ) => {
-        if (err) reject(err);
-        else resolve(response!);
-      }
-    );
-  });
-}
+
 
 export function CreateAssistant(
   config: ConnectionConfig,

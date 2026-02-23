@@ -180,7 +180,7 @@ var OpenAiServiceService = exports.OpenAiServiceService = {
   },
   streamChat: {
     path: '/integration_api.OpenAiService/StreamChat',
-    requestStream: false,
+    requestStream: true,
     responseStream: true,
     requestType: integration$api_pb.ChatRequest,
     responseType: integration$api_pb.ChatResponse,
@@ -239,7 +239,7 @@ var AzureServiceService = exports.AzureServiceService = {
   },
   streamChat: {
     path: '/integration_api.AzureService/StreamChat',
-    requestStream: false,
+    requestStream: true,
     responseStream: true,
     requestType: integration$api_pb.ChatRequest,
     responseType: integration$api_pb.ChatResponse,
@@ -273,9 +273,9 @@ var AzureServiceService = exports.AzureServiceService = {
 };
 
 exports.AzureServiceClient = grpc.makeGenericClientConstructor(AzureServiceService, 'AzureService');
-var GoogleServiceService = exports.GoogleServiceService = {
+var GeminiServiceService = exports.GeminiServiceService = {
   embedding: {
-    path: '/integration_api.GoogleService/Embedding',
+    path: '/integration_api.GeminiService/Embedding',
     requestStream: false,
     responseStream: false,
     requestType: integration$api_pb.EmbeddingRequest,
@@ -286,7 +286,7 @@ var GoogleServiceService = exports.GoogleServiceService = {
     responseDeserialize: deserialize_integration_api_EmbeddingResponse,
   },
   chat: {
-    path: '/integration_api.GoogleService/Chat',
+    path: '/integration_api.GeminiService/Chat',
     requestStream: false,
     responseStream: false,
     requestType: integration$api_pb.ChatRequest,
@@ -297,8 +297,8 @@ var GoogleServiceService = exports.GoogleServiceService = {
     responseDeserialize: deserialize_integration_api_ChatResponse,
   },
   streamChat: {
-    path: '/integration_api.GoogleService/StreamChat',
-    requestStream: false,
+    path: '/integration_api.GeminiService/StreamChat',
+    requestStream: true,
     responseStream: true,
     requestType: integration$api_pb.ChatRequest,
     responseType: integration$api_pb.ChatResponse,
@@ -308,7 +308,7 @@ var GoogleServiceService = exports.GoogleServiceService = {
     responseDeserialize: deserialize_integration_api_ChatResponse,
   },
   verifyCredential: {
-    path: '/integration_api.GoogleService/VerifyCredential',
+    path: '/integration_api.GeminiService/VerifyCredential',
     requestStream: false,
     responseStream: false,
     requestType: integration$api_pb.VerifyCredentialRequest,
@@ -320,7 +320,55 @@ var GoogleServiceService = exports.GoogleServiceService = {
   },
 };
 
-exports.GoogleServiceClient = grpc.makeGenericClientConstructor(GoogleServiceService, 'GoogleService');
+exports.GeminiServiceClient = grpc.makeGenericClientConstructor(GeminiServiceService, 'GeminiService');
+var VertexAiServiceService = exports.VertexAiServiceService = {
+  embedding: {
+    path: '/integration_api.VertexAiService/Embedding',
+    requestStream: false,
+    responseStream: false,
+    requestType: integration$api_pb.EmbeddingRequest,
+    responseType: integration$api_pb.EmbeddingResponse,
+    requestSerialize: serialize_integration_api_EmbeddingRequest,
+    requestDeserialize: deserialize_integration_api_EmbeddingRequest,
+    responseSerialize: serialize_integration_api_EmbeddingResponse,
+    responseDeserialize: deserialize_integration_api_EmbeddingResponse,
+  },
+  chat: {
+    path: '/integration_api.VertexAiService/Chat',
+    requestStream: false,
+    responseStream: false,
+    requestType: integration$api_pb.ChatRequest,
+    responseType: integration$api_pb.ChatResponse,
+    requestSerialize: serialize_integration_api_ChatRequest,
+    requestDeserialize: deserialize_integration_api_ChatRequest,
+    responseSerialize: serialize_integration_api_ChatResponse,
+    responseDeserialize: deserialize_integration_api_ChatResponse,
+  },
+  streamChat: {
+    path: '/integration_api.VertexAiService/StreamChat',
+    requestStream: true,
+    responseStream: true,
+    requestType: integration$api_pb.ChatRequest,
+    responseType: integration$api_pb.ChatResponse,
+    requestSerialize: serialize_integration_api_ChatRequest,
+    requestDeserialize: deserialize_integration_api_ChatRequest,
+    responseSerialize: serialize_integration_api_ChatResponse,
+    responseDeserialize: deserialize_integration_api_ChatResponse,
+  },
+  verifyCredential: {
+    path: '/integration_api.VertexAiService/VerifyCredential',
+    requestStream: false,
+    responseStream: false,
+    requestType: integration$api_pb.VerifyCredentialRequest,
+    responseType: integration$api_pb.VerifyCredentialResponse,
+    requestSerialize: serialize_integration_api_VerifyCredentialRequest,
+    requestDeserialize: deserialize_integration_api_VerifyCredentialRequest,
+    responseSerialize: serialize_integration_api_VerifyCredentialResponse,
+    responseDeserialize: deserialize_integration_api_VerifyCredentialResponse,
+  },
+};
+
+exports.VertexAiServiceClient = grpc.makeGenericClientConstructor(VertexAiServiceService, 'VertexAiService');
 var ReplicateServiceService = exports.ReplicateServiceService = {
   chat: {
     path: '/integration_api.ReplicateService/Chat',
@@ -335,7 +383,7 @@ var ReplicateServiceService = exports.ReplicateServiceService = {
   },
   streamChat: {
     path: '/integration_api.ReplicateService/StreamChat',
-    requestStream: false,
+    requestStream: true,
     responseStream: true,
     requestType: integration$api_pb.ChatRequest,
     responseType: integration$api_pb.ChatResponse,
@@ -372,7 +420,7 @@ var AnthropicServiceService = exports.AnthropicServiceService = {
   },
   streamChat: {
     path: '/integration_api.AnthropicService/StreamChat',
-    requestStream: false,
+    requestStream: true,
     responseStream: true,
     requestType: integration$api_pb.ChatRequest,
     responseType: integration$api_pb.ChatResponse,
@@ -431,7 +479,7 @@ var CohereServiceService = exports.CohereServiceService = {
   },
   streamChat: {
     path: '/integration_api.CohereService/StreamChat',
-    requestStream: false,
+    requestStream: true,
     responseStream: true,
     requestType: integration$api_pb.ChatRequest,
     responseType: integration$api_pb.ChatResponse,
@@ -494,7 +542,7 @@ var MistralServiceService = exports.MistralServiceService = {
   },
   streamChat: {
     path: '/integration_api.MistralService/StreamChat',
-    requestStream: false,
+    requestStream: true,
     responseStream: true,
     requestType: integration$api_pb.ChatRequest,
     responseType: integration$api_pb.ChatResponse,

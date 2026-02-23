@@ -1028,7 +1028,6 @@ proto.endpoint_api.EndpointProviderModelAttribute.toObject = function(includeIns
   var f, obj = {
     description: jspb.Message.getFieldWithDefault(msg, 1, ""),
     chatcompleteprompt: (f = msg.getChatcompleteprompt()) && common_pb.TextChatCompletePrompt.toObject(includeInstance, f),
-    modelproviderid: jspb.Message.getFieldWithDefault(msg, 6, "0"),
     modelprovidername: jspb.Message.getFieldWithDefault(msg, 7, ""),
     endpointmodeloptionsList: jspb.Message.toObjectList(msg.getEndpointmodeloptionsList(),
     common_pb.Metadata.toObject, includeInstance)
@@ -1076,10 +1075,6 @@ proto.endpoint_api.EndpointProviderModelAttribute.deserializeBinaryFromReader = 
       var value = new common_pb.TextChatCompletePrompt;
       reader.readMessage(value,common_pb.TextChatCompletePrompt.deserializeBinaryFromReader);
       msg.setChatcompleteprompt(value);
-      break;
-    case 6:
-      var value = /** @type {string} */ (reader.readUint64String());
-      msg.setModelproviderid(value);
       break;
     case 7:
       var value = /** @type {string} */ (reader.readString());
@@ -1132,13 +1127,6 @@ proto.endpoint_api.EndpointProviderModelAttribute.serializeBinaryToWriter = func
       2,
       f,
       common_pb.TextChatCompletePrompt.serializeBinaryToWriter
-    );
-  }
-  f = message.getModelproviderid();
-  if (parseInt(f, 10) !== 0) {
-    writer.writeUint64String(
-      6,
-      f
     );
   }
   f = message.getModelprovidername();
@@ -1211,24 +1199,6 @@ proto.endpoint_api.EndpointProviderModelAttribute.prototype.clearChatcompletepro
  */
 proto.endpoint_api.EndpointProviderModelAttribute.prototype.hasChatcompleteprompt = function() {
   return jspb.Message.getField(this, 2) != null;
-};
-
-
-/**
- * optional uint64 modelProviderId = 6;
- * @return {string}
- */
-proto.endpoint_api.EndpointProviderModelAttribute.prototype.getModelproviderid = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, "0"));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.endpoint_api.EndpointProviderModelAttribute} returns this
- */
-proto.endpoint_api.EndpointProviderModelAttribute.prototype.setModelproviderid = function(value) {
-  return jspb.Message.setProto3StringIntField(this, 6, value);
 };
 
 
@@ -1951,7 +1921,6 @@ proto.endpoint_api.EndpointProviderModel.toObject = function(includeInstance, ms
   var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, "0"),
     chatcompleteprompt: (f = msg.getChatcompleteprompt()) && common_pb.TextChatCompletePrompt.toObject(includeInstance, f),
-    modelproviderid: jspb.Message.getFieldWithDefault(msg, 3, "0"),
     modelprovidername: jspb.Message.getFieldWithDefault(msg, 4, ""),
     endpointmodeloptionsList: jspb.Message.toObjectList(msg.getEndpointmodeloptionsList(),
     common_pb.Metadata.toObject, includeInstance),
@@ -2008,10 +1977,6 @@ proto.endpoint_api.EndpointProviderModel.deserializeBinaryFromReader = function(
       var value = new common_pb.TextChatCompletePrompt;
       reader.readMessage(value,common_pb.TextChatCompletePrompt.deserializeBinaryFromReader);
       msg.setChatcompleteprompt(value);
-      break;
-    case 3:
-      var value = /** @type {string} */ (reader.readUint64String());
-      msg.setModelproviderid(value);
       break;
     case 4:
       var value = /** @type {string} */ (reader.readString());
@@ -2104,13 +2069,6 @@ proto.endpoint_api.EndpointProviderModel.serializeBinaryToWriter = function(mess
       2,
       f,
       common_pb.TextChatCompletePrompt.serializeBinaryToWriter
-    );
-  }
-  f = message.getModelproviderid();
-  if (parseInt(f, 10) !== 0) {
-    writer.writeUint64String(
-      3,
-      f
     );
   }
   f = message.getModelprovidername();
@@ -2250,24 +2208,6 @@ proto.endpoint_api.EndpointProviderModel.prototype.clearChatcompleteprompt = fun
  */
 proto.endpoint_api.EndpointProviderModel.prototype.hasChatcompleteprompt = function() {
   return jspb.Message.getField(this, 2) != null;
-};
-
-
-/**
- * optional uint64 modelProviderId = 3;
- * @return {string}
- */
-proto.endpoint_api.EndpointProviderModel.prototype.getModelproviderid = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, "0"));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.endpoint_api.EndpointProviderModel} returns this
- */
-proto.endpoint_api.EndpointProviderModel.prototype.setModelproviderid = function(value) {
-  return jspb.Message.setProto3StringIntField(this, 3, value);
 };
 
 

@@ -94,6 +94,28 @@ function deserialize_web_api_AuthorizeRequest(buffer_arg) {
   return web$api_pb.AuthorizeRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_web_api_ChangePasswordRequest(arg) {
+  if (!(arg instanceof web$api_pb.ChangePasswordRequest)) {
+    throw new Error('Expected argument of type web_api.ChangePasswordRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_web_api_ChangePasswordRequest(buffer_arg) {
+  return web$api_pb.ChangePasswordRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_web_api_ChangePasswordResponse(arg) {
+  if (!(arg instanceof web$api_pb.ChangePasswordResponse)) {
+    throw new Error('Expected argument of type web_api.ChangePasswordResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_web_api_ChangePasswordResponse(buffer_arg) {
+  return web$api_pb.ChangePasswordResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_web_api_CreateOrganizationRequest(arg) {
   if (!(arg instanceof web$api_pb.CreateOrganizationRequest)) {
     throw new Error('Expected argument of type web_api.CreateOrganizationRequest');
@@ -558,6 +580,17 @@ verifyToken: {
     requestDeserialize: deserialize_web_api_CreatePasswordRequest,
     responseSerialize: serialize_web_api_CreatePasswordResponse,
     responseDeserialize: deserialize_web_api_CreatePasswordResponse,
+  },
+  changePassword: {
+    path: '/web_api.AuthenticationService/ChangePassword',
+    requestStream: false,
+    responseStream: false,
+    requestType: web$api_pb.ChangePasswordRequest,
+    responseType: web$api_pb.ChangePasswordResponse,
+    requestSerialize: serialize_web_api_ChangePasswordRequest,
+    requestDeserialize: deserialize_web_api_ChangePasswordRequest,
+    responseSerialize: serialize_web_api_ChangePasswordResponse,
+    responseDeserialize: deserialize_web_api_ChangePasswordResponse,
   },
   //
 getUser: {

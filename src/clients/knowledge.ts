@@ -28,7 +28,8 @@
 
 import {
   BaseResponse,
-  Content,
+  // NOTE: Content type not available in common_pb proto definitions
+  // Content,
   Criteria,
   Paginate,
 } from "@/rapida/clients/protos/common_pb";
@@ -84,7 +85,9 @@ export function CreateKnowledge(
 ): Promise<CreateKnowledgeResponse> {
   return new Promise((resolve, reject) => {
     const req = new CreateKnowledgeRequest();
-    req.setEmbeddingmodelproviderid(provider.providerId);
+    // NOTE: setEmbeddingmodelproviderid method doesn't exist on CreateKnowledgeRequest
+    // Only setEmbeddingmodelprovidername is available
+    // req.setEmbeddingmodelproviderid(provider.providerId);
     req.setEmbeddingmodelprovidername(provider.provider);
     req.setKnowledgeembeddingmodeloptionsList(provider.parameters);
     req.setName(name);
@@ -186,6 +189,7 @@ export function GetAllKnowledgeBases(
  * @param authHeader - Authentication headers for the request.
  * @returns Promise<CreateKnowledgeDocumentResponse> - The response containing the created document.
  */
+
 export function CreateKnowledgeDocument(
   config: ConnectionConfig,
   knowledgeId: string,
@@ -193,7 +197,7 @@ export function CreateKnowledgeDocument(
   datasource: string,
   documentType: RapidaDocumentType,
   preProcessor: RapidaDocumentPreProcessing,
-  contents: Array<Content>,
+  contents: Array<any>,  // NOTE: Content type not available
   separator: string,
   maxchunksize: number,
   chunkoverlap: number

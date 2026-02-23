@@ -10,6 +10,7 @@ var assistant$tool_pb = require('./assistant-tool_pb.js');
 var assistant$analysis_pb = require('./assistant-analysis_pb.js');
 var assistant$webhook_pb = require('./assistant-webhook_pb.js');
 var assistant$knowledge_pb = require('./assistant-knowledge_pb.js');
+var assistant$provider_pb = require('./assistant-provider_pb.js');
 
 function serialize_GetAllAssistantConversationRequest(arg) {
   if (!(arg instanceof common_pb.GetAllAssistantConversationRequest)) {
@@ -77,15 +78,15 @@ function deserialize_assistant_api_CreateAssistantKnowledgeRequest(buffer_arg) {
   return assistant$knowledge_pb.CreateAssistantKnowledgeRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_assistant_api_CreateAssistantProviderModelRequest(arg) {
-  if (!(arg instanceof assistant$api_pb.CreateAssistantProviderModelRequest)) {
-    throw new Error('Expected argument of type assistant_api.CreateAssistantProviderModelRequest');
+function serialize_assistant_api_CreateAssistantProviderRequest(arg) {
+  if (!(arg instanceof assistant$provider_pb.CreateAssistantProviderRequest)) {
+    throw new Error('Expected argument of type assistant_api.CreateAssistantProviderRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_assistant_api_CreateAssistantProviderModelRequest(buffer_arg) {
-  return assistant$api_pb.CreateAssistantProviderModelRequest.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_assistant_api_CreateAssistantProviderRequest(buffer_arg) {
+  return assistant$provider_pb.CreateAssistantProviderRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_assistant_api_CreateAssistantRequest(arg) {
@@ -253,26 +254,26 @@ function deserialize_assistant_api_GetAllAssistantMessageResponse(buffer_arg) {
   return assistant$api_pb.GetAllAssistantMessageResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_assistant_api_GetAllAssistantProviderModelRequest(arg) {
-  if (!(arg instanceof assistant$api_pb.GetAllAssistantProviderModelRequest)) {
-    throw new Error('Expected argument of type assistant_api.GetAllAssistantProviderModelRequest');
+function serialize_assistant_api_GetAllAssistantProviderRequest(arg) {
+  if (!(arg instanceof assistant$provider_pb.GetAllAssistantProviderRequest)) {
+    throw new Error('Expected argument of type assistant_api.GetAllAssistantProviderRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_assistant_api_GetAllAssistantProviderModelRequest(buffer_arg) {
-  return assistant$api_pb.GetAllAssistantProviderModelRequest.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_assistant_api_GetAllAssistantProviderRequest(buffer_arg) {
+  return assistant$provider_pb.GetAllAssistantProviderRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_assistant_api_GetAllAssistantProviderModelResponse(arg) {
-  if (!(arg instanceof assistant$api_pb.GetAllAssistantProviderModelResponse)) {
-    throw new Error('Expected argument of type assistant_api.GetAllAssistantProviderModelResponse');
+function serialize_assistant_api_GetAllAssistantProviderResponse(arg) {
+  if (!(arg instanceof assistant$provider_pb.GetAllAssistantProviderResponse)) {
+    throw new Error('Expected argument of type assistant_api.GetAllAssistantProviderResponse');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_assistant_api_GetAllAssistantProviderModelResponse(buffer_arg) {
-  return assistant$api_pb.GetAllAssistantProviderModelResponse.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_assistant_api_GetAllAssistantProviderResponse(buffer_arg) {
+  return assistant$provider_pb.GetAllAssistantProviderResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_assistant_api_GetAllAssistantRequest(arg) {
@@ -295,6 +296,28 @@ function serialize_assistant_api_GetAllAssistantResponse(arg) {
 
 function deserialize_assistant_api_GetAllAssistantResponse(buffer_arg) {
   return assistant$api_pb.GetAllAssistantResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_GetAllAssistantTelemetryRequest(arg) {
+  if (!(arg instanceof assistant$api_pb.GetAllAssistantTelemetryRequest)) {
+    throw new Error('Expected argument of type assistant_api.GetAllAssistantTelemetryRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAllAssistantTelemetryRequest(buffer_arg) {
+  return assistant$api_pb.GetAllAssistantTelemetryRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_GetAllAssistantTelemetryResponse(arg) {
+  if (!(arg instanceof assistant$api_pb.GetAllAssistantTelemetryResponse)) {
+    throw new Error('Expected argument of type assistant_api.GetAllAssistantTelemetryResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAllAssistantTelemetryResponse(buffer_arg) {
+  return assistant$api_pb.GetAllAssistantTelemetryResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_assistant_api_GetAllAssistantToolLogRequest(arg) {
@@ -473,15 +496,15 @@ function deserialize_assistant_api_GetAssistantKnowledgeResponse(buffer_arg) {
   return assistant$knowledge_pb.GetAssistantKnowledgeResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_assistant_api_GetAssistantProviderModelResponse(arg) {
-  if (!(arg instanceof assistant$api_pb.GetAssistantProviderModelResponse)) {
-    throw new Error('Expected argument of type assistant_api.GetAssistantProviderModelResponse');
+function serialize_assistant_api_GetAssistantProviderResponse(arg) {
+  if (!(arg instanceof assistant$provider_pb.GetAssistantProviderResponse)) {
+    throw new Error('Expected argument of type assistant_api.GetAssistantProviderResponse');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_assistant_api_GetAssistantProviderModelResponse(buffer_arg) {
-  return assistant$api_pb.GetAssistantProviderModelResponse.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_assistant_api_GetAssistantProviderResponse(buffer_arg) {
+  return assistant$provider_pb.GetAssistantProviderResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_assistant_api_GetAssistantRequest(arg) {
@@ -639,14 +662,14 @@ function deserialize_assistant_api_UpdateAssistantToolRequest(buffer_arg) {
 }
 
 function serialize_assistant_api_UpdateAssistantVersionRequest(arg) {
-  if (!(arg instanceof assistant$api_pb.UpdateAssistantVersionRequest)) {
+  if (!(arg instanceof assistant$provider_pb.UpdateAssistantVersionRequest)) {
     throw new Error('Expected argument of type assistant_api.UpdateAssistantVersionRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_assistant_api_UpdateAssistantVersionRequest(buffer_arg) {
-  return assistant$api_pb.UpdateAssistantVersionRequest.deserializeBinary(new Uint8Array(buffer_arg));
+  return assistant$provider_pb.UpdateAssistantVersionRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_assistant_api_UpdateAssistantWebhookRequest(arg) {
@@ -706,27 +729,27 @@ var AssistantServiceService = exports.AssistantServiceService = {
     responseSerialize: serialize_assistant_api_GetAssistantResponse,
     responseDeserialize: deserialize_assistant_api_GetAssistantResponse,
   },
-  getAllAssistantProviderModel: {
-    path: '/assistant_api.AssistantService/GetAllAssistantProviderModel',
+  getAllAssistantProvider: {
+    path: '/assistant_api.AssistantService/GetAllAssistantProvider',
     requestStream: false,
     responseStream: false,
-    requestType: assistant$api_pb.GetAllAssistantProviderModelRequest,
-    responseType: assistant$api_pb.GetAllAssistantProviderModelResponse,
-    requestSerialize: serialize_assistant_api_GetAllAssistantProviderModelRequest,
-    requestDeserialize: deserialize_assistant_api_GetAllAssistantProviderModelRequest,
-    responseSerialize: serialize_assistant_api_GetAllAssistantProviderModelResponse,
-    responseDeserialize: deserialize_assistant_api_GetAllAssistantProviderModelResponse,
+    requestType: assistant$provider_pb.GetAllAssistantProviderRequest,
+    responseType: assistant$provider_pb.GetAllAssistantProviderResponse,
+    requestSerialize: serialize_assistant_api_GetAllAssistantProviderRequest,
+    requestDeserialize: deserialize_assistant_api_GetAllAssistantProviderRequest,
+    responseSerialize: serialize_assistant_api_GetAllAssistantProviderResponse,
+    responseDeserialize: deserialize_assistant_api_GetAllAssistantProviderResponse,
   },
-  createAssistantProviderModel: {
-    path: '/assistant_api.AssistantService/CreateAssistantProviderModel',
+  createAssistantProvider: {
+    path: '/assistant_api.AssistantService/CreateAssistantProvider',
     requestStream: false,
     responseStream: false,
-    requestType: assistant$api_pb.CreateAssistantProviderModelRequest,
-    responseType: assistant$api_pb.GetAssistantProviderModelResponse,
-    requestSerialize: serialize_assistant_api_CreateAssistantProviderModelRequest,
-    requestDeserialize: deserialize_assistant_api_CreateAssistantProviderModelRequest,
-    responseSerialize: serialize_assistant_api_GetAssistantProviderModelResponse,
-    responseDeserialize: deserialize_assistant_api_GetAssistantProviderModelResponse,
+    requestType: assistant$provider_pb.CreateAssistantProviderRequest,
+    responseType: assistant$provider_pb.GetAssistantProviderResponse,
+    requestSerialize: serialize_assistant_api_CreateAssistantProviderRequest,
+    requestDeserialize: deserialize_assistant_api_CreateAssistantProviderRequest,
+    responseSerialize: serialize_assistant_api_GetAssistantProviderResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantProviderResponse,
   },
   createAssistantTag: {
     path: '/assistant_api.AssistantService/CreateAssistantTag',
@@ -743,7 +766,7 @@ var AssistantServiceService = exports.AssistantServiceService = {
     path: '/assistant_api.AssistantService/UpdateAssistantVersion',
     requestStream: false,
     responseStream: false,
-    requestType: assistant$api_pb.UpdateAssistantVersionRequest,
+    requestType: assistant$provider_pb.UpdateAssistantVersionRequest,
     responseType: assistant$api_pb.GetAssistantResponse,
     requestSerialize: serialize_assistant_api_UpdateAssistantVersionRequest,
     requestDeserialize: deserialize_assistant_api_UpdateAssistantVersionRequest,
@@ -793,6 +816,17 @@ var AssistantServiceService = exports.AssistantServiceService = {
     requestDeserialize: deserialize_assistant_api_GetAllMessageRequest,
     responseSerialize: serialize_assistant_api_GetAllMessageResponse,
     responseDeserialize: deserialize_assistant_api_GetAllMessageResponse,
+  },
+  getAllAssistantTelemetry: {
+    path: '/assistant_api.AssistantService/GetAllAssistantTelemetry',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$api_pb.GetAllAssistantTelemetryRequest,
+    responseType: assistant$api_pb.GetAllAssistantTelemetryResponse,
+    requestSerialize: serialize_assistant_api_GetAllAssistantTelemetryRequest,
+    requestDeserialize: deserialize_assistant_api_GetAllAssistantTelemetryRequest,
+    responseSerialize: serialize_assistant_api_GetAllAssistantTelemetryResponse,
+    responseDeserialize: deserialize_assistant_api_GetAllAssistantTelemetryResponse,
   },
   getAllAssistantConversation: {
     path: '/assistant_api.AssistantService/GetAllAssistantConversation',

@@ -18,17 +18,6 @@ function deserialize_vault_api_CreateProviderCredentialRequest(buffer_arg) {
   return vault$api_pb.CreateProviderCredentialRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_vault_api_CreateToolCredentialRequest(arg) {
-  if (!(arg instanceof vault$api_pb.CreateToolCredentialRequest)) {
-    throw new Error('Expected argument of type vault_api.CreateToolCredentialRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_vault_api_CreateToolCredentialRequest(buffer_arg) {
-  return vault$api_pb.CreateToolCredentialRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_vault_api_DeleteCredentialRequest(arg) {
   if (!(arg instanceof vault$api_pb.DeleteCredentialRequest)) {
     throw new Error('Expected argument of type vault_api.DeleteCredentialRequest');
@@ -84,17 +73,6 @@ function deserialize_vault_api_GetCredentialResponse(buffer_arg) {
   return vault$api_pb.GetCredentialResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_vault_api_GetProviderCredentialRequest(arg) {
-  if (!(arg instanceof vault$api_pb.GetProviderCredentialRequest)) {
-    throw new Error('Expected argument of type vault_api.GetProviderCredentialRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_vault_api_GetProviderCredentialRequest(buffer_arg) {
-  return vault$api_pb.GetProviderCredentialRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 
 var VaultServiceService = exports.VaultServiceService = {
   createProviderCredential: {
@@ -105,17 +83,6 @@ var VaultServiceService = exports.VaultServiceService = {
     responseType: vault$api_pb.GetCredentialResponse,
     requestSerialize: serialize_vault_api_CreateProviderCredentialRequest,
     requestDeserialize: deserialize_vault_api_CreateProviderCredentialRequest,
-    responseSerialize: serialize_vault_api_GetCredentialResponse,
-    responseDeserialize: deserialize_vault_api_GetCredentialResponse,
-  },
-  createToolCredential: {
-    path: '/vault_api.VaultService/CreateToolCredential',
-    requestStream: false,
-    responseStream: false,
-    requestType: vault$api_pb.CreateToolCredentialRequest,
-    responseType: vault$api_pb.GetCredentialResponse,
-    requestSerialize: serialize_vault_api_CreateToolCredentialRequest,
-    requestDeserialize: deserialize_vault_api_CreateToolCredentialRequest,
     responseSerialize: serialize_vault_api_GetCredentialResponse,
     responseDeserialize: deserialize_vault_api_GetCredentialResponse,
   },
@@ -138,17 +105,6 @@ var VaultServiceService = exports.VaultServiceService = {
     responseType: vault$api_pb.GetCredentialResponse,
     requestSerialize: serialize_vault_api_DeleteCredentialRequest,
     requestDeserialize: deserialize_vault_api_DeleteCredentialRequest,
-    responseSerialize: serialize_vault_api_GetCredentialResponse,
-    responseDeserialize: deserialize_vault_api_GetCredentialResponse,
-  },
-  getProviderCredential: {
-    path: '/vault_api.VaultService/GetProviderCredential',
-    requestStream: false,
-    responseStream: false,
-    requestType: vault$api_pb.GetProviderCredentialRequest,
-    responseType: vault$api_pb.GetCredentialResponse,
-    requestSerialize: serialize_vault_api_GetProviderCredentialRequest,
-    requestDeserialize: deserialize_vault_api_GetProviderCredentialRequest,
     responseSerialize: serialize_vault_api_GetCredentialResponse,
     responseDeserialize: deserialize_vault_api_GetCredentialResponse,
   },

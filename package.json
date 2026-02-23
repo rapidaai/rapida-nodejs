@@ -1,6 +1,6 @@
 {
     "name": "@rapidaai/nodejs",
-    "version": "1.0.17",
+    "version": "1.0.18",
     "description": "NodeJS sdk for rapidaai platform",
     "main": "dist/index.cjs",
     "module": "dist/index.js",

@@ -22,7 +22,8 @@
  *  Author: Prashant <prashant@rapida.ai>
  *
  */
-import { Content } from "@/rapida/clients/protos/common_pb";
+// NOTE: Content type not available in common_pb proto definitions
+// import { Content } from "@/rapida/clients/protos/common_pb";
 
 export enum ResponseContentType {
   TEXT_CONTENT = "text",
@@ -72,41 +73,32 @@ export const MULTI_MEDIA_CONTENT_FORMAT_RAW: ResponseContentFormat = "raw";
 export const MULTI_MEDIA_CONTENT_FORMAT_URL: ResponseContentFormat = "url";
 
 /**
- *
+ * @deprecated Content type not available in proto definitions
  * @param str
  * @returns
  */
 export const toTextContent = (
   str: string,
   format?: ResponseContentFormat
-): Content => {
-  const cnt = new Content();
-  if (format) cnt.setContentformat(format);
-  else cnt.setContentformat(TEXT_CONTENT_FORMAT_RAW);
-  cnt.setContenttype(ResponseContentType.TEXT_CONTENT);
-  cnt.setContent(new TextEncoder().encode(str));
-  return cnt;
+): any => {
+  throw new Error("toTextContent not implemented: Content type not available in proto definitions");
 };
 
-export const toStreamAudioContent = (raw: Uint8Array | string): Content => {
-  const cnt = new Content();
-  cnt.setContentformat(AUDIO_CONTENT_FORMAT_CHUNK);
-  cnt.setContenttype(ResponseContentType.AUDIO_CONTENT);
-  cnt.setContent(raw);
-  return cnt;
+/**
+ * @deprecated Content type not available in proto definitions
+ * @param raw
+ * @returns
+ */
+export const toStreamAudioContent = (raw: Uint8Array | string): any => {
+  throw new Error("toStreamAudioContent not implemented: Content type not available in proto definitions");
 };
 
-export const ToContentText = (cnt?: Content[]): string => {
-  if (!cnt) return "";
-
-  return cnt
-    .filter((x) => x.getContenttype() === "text")
-    .map((x) => {
-      try {
-        return new TextDecoder().decode(x.getContent() as Uint8Array);
-      } catch (error) {
-        return "";
-      }
-    })
-    .join(" ");
+/**
+ * @deprecated Content type not available in proto definitions
+ * @param cnt
+ * @returns
+ */
+export const ToContentText = (cnt?: any[]): string => {
+  throw new Error("ToContentText not implemented: Content type not available in proto definitions");
 };
+
