@@ -66,7 +66,8 @@ export {
 
 /* Client function exports */
 export { IndexKnowledgeDocument } from "@/rapida/clients/document";
-export { GetAllDeployment } from "@/rapida/clients/marketplace";
+// NOTE: GetAllDeployment not available - marketplace-api proto definitions don't exist
+// export { GetAllDeployment } from "@/rapida/clients/marketplace";
 export { Invoke } from "@/rapida/clients/invoke";
 export {
   AuthenticateUser,
@@ -82,7 +83,8 @@ export {
   Linkedin,
   Github,
 } from "@/rapida/clients/auth";
-export { GetAllProvider, GetAllToolProvider } from "@/rapida/clients/provider";
+// NOTE: GetAllProvider, GetAllToolProvider not available - provider-api proto definitions don't exist
+// export { GetAllProvider, GetAllToolProvider } from "@/rapida/clients/provider";
 export {
   WithPlatform,
   WithAuthContext,
