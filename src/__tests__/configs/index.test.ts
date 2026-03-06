@@ -16,15 +16,15 @@ import {
 describe('configs', () => {
   describe('Production API endpoints', () => {
     it('should have correct ASSISTANT_API endpoint', () => {
-      expect(ASSISTANT_API).toBe('workflow-01.rapida.ai');
+      expect(ASSISTANT_API).toBe('assistant-01.in.rapida.ai');
     });
 
     it('should have correct ENDPOINT_API endpoint', () => {
-      expect(ENDPOINT_API).toBe('endpoint-01.rapida.ai');
+      expect(ENDPOINT_API).toBe('endpoint-01.in.rapida.ai');
     });
 
     it('should have correct WEB_API endpoint', () => {
-      expect(WEB_API).toBe('web-01.rapida.ai');
+      expect(WEB_API).toBe('api-01.in.rapida.ai');
     });
   });
 

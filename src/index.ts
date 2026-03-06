@@ -229,7 +229,6 @@ export {
   SystemMessage,
   UserMessage,
   ToolMessage,
-  Telemetry,
   AssistantConversationRecording,
   AssistantConversationTelephonyEvent,
 } from "@/rapida/clients/protos/common_pb";

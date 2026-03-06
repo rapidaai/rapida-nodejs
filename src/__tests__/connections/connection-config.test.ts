@@ -169,10 +169,6 @@ describe('ConnectionConfig', () => {
       expect(config.deploymentClient).toBeDefined();
     });
 
-    it('should return marketplaceClient', () => {
-      expect(config.marketplaceClient).toBeDefined();
-    });
-
     it('should return documentClient', () => {
       expect(config.documentClient).toBeDefined();
     });
@@ -199,10 +195,6 @@ describe('ConnectionConfig', () => {
 
     it('should return connectClient', () => {
       expect(config.connectClient).toBeDefined();
-    });
-
-    it('should return providerClient', () => {
-      expect(config.providerClient).toBeDefined();
     });
 
     it('should return authenticationClient', () => {

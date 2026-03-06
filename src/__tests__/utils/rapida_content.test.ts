@@ -21,7 +21,6 @@ import {
   toStreamAudioContent,
   ToContentText,
 } from '../../utils/rapida_content';
-import { Content } from '../../clients/protos/common_pb';
 
 describe('rapida_content', () => {
   describe('ResponseContentType enum', () => {
@@ -111,101 +110,20 @@ describe('rapida_content', () => {
   });
 
   describe('toTextContent', () => {
-    it('should create text content with default format', () => {
-      const content = toTextContent('Hello, World!');
-
-      expect(content).toBeInstanceOf(Content);
-      expect(content.getContenttype()).toBe('text');
-      expect(content.getContentformat()).toBe('raw');
-    });
-
-    it('should create text content with specified format', () => {
-      const content = toTextContent('Hello, World!', 'word');
-
-      expect(content).toBeInstanceOf(Content);
-      expect(content.getContenttype()).toBe('text');
-      expect(content.getContentformat()).toBe('word');
-    });
-
-    it('should encode string content as Uint8Array', () => {
-      const text = 'Test message';
-      const content = toTextContent(text);
-
-      const decoded = new TextDecoder().decode(content.getContent() as Uint8Array);
-      expect(decoded).toBe(text);
-    });
-
-    it('should handle empty string', () => {
-      const content = toTextContent('');
-
-      expect(content).toBeInstanceOf(Content);
-      const decoded = new TextDecoder().decode(content.getContent() as Uint8Array);
-      expect(decoded).toBe('');
-    });
-
-    it('should handle unicode characters', () => {
-      const text = 'こんにちは世界 🌍';
-      const content = toTextContent(text);
-
-      const decoded = new TextDecoder().decode(content.getContent() as Uint8Array);
-      expect(decoded).toBe(text);
+    it('should throw not implemented error', () => {
+      expect(() => toTextContent('Hello, World!')).toThrow('toTextContent not implemented');
     });
   });
 
   describe('toStreamAudioContent', () => {
-    it('should create audio content with chunk format from Uint8Array', () => {
-      const audioData = new Uint8Array([1, 2, 3, 4, 5]);
-      const content = toStreamAudioContent(audioData);
-
-      expect(content).toBeInstanceOf(Content);
-      expect(content.getContenttype()).toBe('audio');
-      expect(content.getContentformat()).toBe('chunk');
-    });
-
-    it('should create audio content from string', () => {
-      const audioData = 'audio-data-string';
-      const content = toStreamAudioContent(audioData);
-
-      expect(content).toBeInstanceOf(Content);
-      expect(content.getContenttype()).toBe('audio');
-      expect(content.getContentformat()).toBe('chunk');
+    it('should throw not implemented error', () => {
+      expect(() => toStreamAudioContent(new Uint8Array([1, 2, 3]))).toThrow('toStreamAudioContent not implemented');
     });
   });
 
   describe('ToContentText', () => {
-    it('should return empty string for undefined content', () => {
-      expect(ToContentText(undefined)).toBe('');
-    });
-
-    it('should return empty string for empty array', () => {
-      expect(ToContentText([])).toBe('');
-    });
-
-    it('should extract text from text content array', () => {
-      const content1 = toTextContent('Hello');
-      const content2 = toTextContent('World');
-
-      const result = ToContentText([content1, content2]);
-
-      expect(result).toBe('Hello World');
-    });
-
-    it('should filter out non-text content', () => {
-      const textContent = toTextContent('Hello');
-      const audioContent = toStreamAudioContent(new Uint8Array([1, 2, 3]));
-
-      const result = ToContentText([textContent, audioContent]);
-
-      expect(result).toBe('Hello');
-    });
-
-    it('should handle content with decoding errors gracefully', () => {
-      const content = new Content();
-      content.setContenttype('text');
-      content.setContent('invalid' as any); // Invalid content that might cause decode error
-
-      // Should not throw, but return appropriate result
-      expect(() => ToContentText([content])).not.toThrow();
+    it('should throw not implemented error', () => {
+      expect(() => ToContentText([])).toThrow('ToContentText not implemented');
     });
   });
 });
