@@ -24,9 +24,10 @@
  *  This module provides functions for managing projects through the ProjectService.
  */
 
-export const ASSISTANT_API = "workflow-01.rapida.ai";
-export const ENDPOINT_API = "endpoint-01.rapida.ai";
-export const WEB_API = "web-01.rapida.ai";
+export const ASSISTANT_API = "assistant-01.in.rapida.ai";
+export const ENDPOINT_API = "endpoint-01.in.rapida.ai";
+export const WEB_API = "api-01.in.rapida.ai";
+
 
 export const LOCAL_ASSISTANT_API = "localhost:9007";
 export const LOCAL_ENDPOINT_API = "localhost:9005";
