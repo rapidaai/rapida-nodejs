@@ -18,29 +18,16 @@ export class AssistantWebhook extends jspb.Message {
   getDescription(): string;
   setDescription(value: string): void;
 
-  getHttpmethod(): string;
-  setHttpmethod(value: string): void;
+  getProvider(): string;
+  setProvider(value: string): void;
 
-  getHttpurl(): string;
-  setHttpurl(value: string): void;
-
-  getHttpheadersMap(): jspb.Map<string, string>;
-  clearHttpheadersMap(): void;
-  getHttpbodyMap(): jspb.Map<string, string>;
-  clearHttpbodyMap(): void;
-  getTimeoutsecond(): number;
-  setTimeoutsecond(value: number): void;
+  clearOptionsList(): void;
+  getOptionsList(): Array<common_pb.Metadata>;
+  setOptionsList(value: Array<common_pb.Metadata>): void;
+  addOptions(value?: common_pb.Metadata, index?: number): common_pb.Metadata;
 
   getExecutionpriority(): number;
   setExecutionpriority(value: number): void;
-
-  clearRetrystatuscodesList(): void;
-  getRetrystatuscodesList(): Array<string>;
-  setRetrystatuscodesList(value: Array<string>): void;
-  addRetrystatuscodes(value: string, index?: number): string;
-
-  getRetrycount(): number;
-  setRetrycount(value: number): void;
 
   getAssistantid(): string;
   setAssistantid(value: string): void;
@@ -89,14 +76,9 @@ export namespace AssistantWebhook {
     id: string,
     assistanteventsList: Array<string>,
     description: string,
-    httpmethod: string,
-    httpurl: string,
-    httpheadersMap: Array<[string, string]>,
-    httpbodyMap: Array<[string, string]>,
-    timeoutsecond: number,
+    provider: string,
+    optionsList: Array<common_pb.Metadata.AsObject>,
     executionpriority: number,
-    retrystatuscodesList: Array<string>,
-    retrycount: number,
     assistantid: string,
     status: string,
     createdby: string,
@@ -108,12 +90,12 @@ export namespace AssistantWebhook {
   }
 }
 
-export class AssistantWebhookLog extends jspb.Message {
+export class AssistantHTTPLog extends jspb.Message {
   getId(): string;
   setId(value: string): void;
 
-  getWebhookid(): string;
-  setWebhookid(value: string): void;
+  getSourcerefid(): string;
+  setSourcerefid(value: string): void;
 
   hasRequest(): boolean;
   clearRequest(): void;
@@ -153,8 +135,8 @@ export class AssistantWebhookLog extends jspb.Message {
   getAssetprefix(): string;
   setAssetprefix(value: string): void;
 
-  getEvent(): string;
-  setEvent(value: string): void;
+  getSourceevent(): string;
+  setSourceevent(value: string): void;
 
   getResponsestatus(): string;
   setResponsestatus(value: string): void;
@@ -171,20 +153,29 @@ export class AssistantWebhookLog extends jspb.Message {
   getHttpurl(): string;
   setHttpurl(value: string): void;
 
+  getSource(): string;
+  setSource(value: string): void;
+
+  getContextid(): string;
+  setContextid(value: string): void;
+
+  getErrormessage(): string;
+  setErrormessage(value: string): void;
+
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): AssistantWebhookLog.AsObject;
-  static toObject(includeInstance: boolean, msg: AssistantWebhookLog): AssistantWebhookLog.AsObject;
+  toObject(includeInstance?: boolean): AssistantHTTPLog.AsObject;
+  static toObject(includeInstance: boolean, msg: AssistantHTTPLog): AssistantHTTPLog.AsObject;
   static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
   static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: AssistantWebhookLog, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): AssistantWebhookLog;
-  static deserializeBinaryFromReader(message: AssistantWebhookLog, reader: jspb.BinaryReader): AssistantWebhookLog;
+  static serializeBinaryToWriter(message: AssistantHTTPLog, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): AssistantHTTPLog;
+  static deserializeBinaryFromReader(message: AssistantHTTPLog, reader: jspb.BinaryReader): AssistantHTTPLog;
 }
 
-export namespace AssistantWebhookLog {
+export namespace AssistantHTTPLog {
   export type AsObject = {
     id: string,
-    webhookid: string,
+    sourcerefid: string,
     request?: google_protobuf_struct_pb.Struct.AsObject,
     response?: google_protobuf_struct_pb.Struct.AsObject,
     status: string,
@@ -195,12 +186,15 @@ export namespace AssistantWebhookLog {
     organizationid: string,
     assistantconversationid: string,
     assetprefix: string,
-    event: string,
+    sourceevent: string,
     responsestatus: string,
     timetaken: string,
     retrycount: number,
     httpmethod: string,
     httpurl: string,
+    source: string,
+    contextid: string,
+    errormessage: string,
   }
 }
 
@@ -213,26 +207,13 @@ export class CreateAssistantWebhookRequest extends jspb.Message {
   getDescription(): string;
   setDescription(value: string): void;
 
-  getHttpmethod(): string;
-  setHttpmethod(value: string): void;
+  getProvider(): string;
+  setProvider(value: string): void;
 
-  getHttpurl(): string;
-  setHttpurl(value: string): void;
-
-  getHttpheadersMap(): jspb.Map<string, string>;
-  clearHttpheadersMap(): void;
-  getHttpbodyMap(): jspb.Map<string, string>;
-  clearHttpbodyMap(): void;
-  getTimeoutsecond(): number;
-  setTimeoutsecond(value: number): void;
-
-  clearRetrystatuscodesList(): void;
-  getRetrystatuscodesList(): Array<string>;
-  setRetrystatuscodesList(value: Array<string>): void;
-  addRetrystatuscodes(value: string, index?: number): string;
-
-  getMaxretrycount(): number;
-  setMaxretrycount(value: number): void;
+  clearOptionsList(): void;
+  getOptionsList(): Array<common_pb.Metadata>;
+  setOptionsList(value: Array<common_pb.Metadata>): void;
+  addOptions(value?: common_pb.Metadata, index?: number): common_pb.Metadata;
 
   getAssistantid(): string;
   setAssistantid(value: string): void;
@@ -254,13 +235,8 @@ export namespace CreateAssistantWebhookRequest {
   export type AsObject = {
     assistanteventsList: Array<string>,
     description: string,
-    httpmethod: string,
-    httpurl: string,
-    httpheadersMap: Array<[string, string]>,
-    httpbodyMap: Array<[string, string]>,
-    timeoutsecond: number,
-    retrystatuscodesList: Array<string>,
-    maxretrycount: number,
+    provider: string,
+    optionsList: Array<common_pb.Metadata.AsObject>,
     assistantid: string,
     executionpriority: number,
   }
@@ -278,26 +254,13 @@ export class UpdateAssistantWebhookRequest extends jspb.Message {
   getDescription(): string;
   setDescription(value: string): void;
 
-  getHttpmethod(): string;
-  setHttpmethod(value: string): void;
+  getProvider(): string;
+  setProvider(value: string): void;
 
-  getHttpurl(): string;
-  setHttpurl(value: string): void;
-
-  getHttpheadersMap(): jspb.Map<string, string>;
-  clearHttpheadersMap(): void;
-  getHttpbodyMap(): jspb.Map<string, string>;
-  clearHttpbodyMap(): void;
-  getTimeoutsecond(): number;
-  setTimeoutsecond(value: number): void;
-
-  clearRetrystatuscodesList(): void;
-  getRetrystatuscodesList(): Array<string>;
-  setRetrystatuscodesList(value: Array<string>): void;
-  addRetrystatuscodes(value: string, index?: number): string;
-
-  getMaxretrycount(): number;
-  setMaxretrycount(value: number): void;
+  clearOptionsList(): void;
+  getOptionsList(): Array<common_pb.Metadata>;
+  setOptionsList(value: Array<common_pb.Metadata>): void;
+  addOptions(value?: common_pb.Metadata, index?: number): common_pb.Metadata;
 
   getAssistantid(): string;
   setAssistantid(value: string): void;
@@ -320,13 +283,8 @@ export namespace UpdateAssistantWebhookRequest {
     id: string,
     assistanteventsList: Array<string>,
     description: string,
-    httpmethod: string,
-    httpurl: string,
-    httpheadersMap: Array<[string, string]>,
-    httpbodyMap: Array<[string, string]>,
-    timeoutsecond: number,
-    retrystatuscodesList: Array<string>,
-    maxretrycount: number,
+    provider: string,
+    optionsList: Array<common_pb.Metadata.AsObject>,
     assistantid: string,
     executionpriority: number,
   }
@@ -494,7 +452,7 @@ export namespace GetAllAssistantWebhookResponse {
   }
 }
 
-export class GetAllAssistantWebhookLogRequest extends jspb.Message {
+export class GetAllAssistantHTTPLogRequest extends jspb.Message {
   getProjectid(): string;
   setProjectid(value: string): void;
 
@@ -514,16 +472,16 @@ export class GetAllAssistantWebhookLogRequest extends jspb.Message {
   setOrder(value?: common_pb.Ordering): void;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): GetAllAssistantWebhookLogRequest.AsObject;
-  static toObject(includeInstance: boolean, msg: GetAllAssistantWebhookLogRequest): GetAllAssistantWebhookLogRequest.AsObject;
+  toObject(includeInstance?: boolean): GetAllAssistantHTTPLogRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: GetAllAssistantHTTPLogRequest): GetAllAssistantHTTPLogRequest.AsObject;
   static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
   static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: GetAllAssistantWebhookLogRequest, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): GetAllAssistantWebhookLogRequest;
-  static deserializeBinaryFromReader(message: GetAllAssistantWebhookLogRequest, reader: jspb.BinaryReader): GetAllAssistantWebhookLogRequest;
+  static serializeBinaryToWriter(message: GetAllAssistantHTTPLogRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetAllAssistantHTTPLogRequest;
+  static deserializeBinaryFromReader(message: GetAllAssistantHTTPLogRequest, reader: jspb.BinaryReader): GetAllAssistantHTTPLogRequest;
 }
 
-export namespace GetAllAssistantWebhookLogRequest {
+export namespace GetAllAssistantHTTPLogRequest {
   export type AsObject = {
     projectid: string,
     paginate?: common_pb.Paginate.AsObject,
@@ -532,7 +490,7 @@ export namespace GetAllAssistantWebhookLogRequest {
   }
 }
 
-export class GetAssistantWebhookLogRequest extends jspb.Message {
+export class GetAssistantHTTPLogRequest extends jspb.Message {
   getProjectid(): string;
   setProjectid(value: string): void;
 
@@ -540,23 +498,23 @@ export class GetAssistantWebhookLogRequest extends jspb.Message {
   setId(value: string): void;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): GetAssistantWebhookLogRequest.AsObject;
-  static toObject(includeInstance: boolean, msg: GetAssistantWebhookLogRequest): GetAssistantWebhookLogRequest.AsObject;
+  toObject(includeInstance?: boolean): GetAssistantHTTPLogRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: GetAssistantHTTPLogRequest): GetAssistantHTTPLogRequest.AsObject;
   static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
   static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: GetAssistantWebhookLogRequest, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): GetAssistantWebhookLogRequest;
-  static deserializeBinaryFromReader(message: GetAssistantWebhookLogRequest, reader: jspb.BinaryReader): GetAssistantWebhookLogRequest;
+  static serializeBinaryToWriter(message: GetAssistantHTTPLogRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetAssistantHTTPLogRequest;
+  static deserializeBinaryFromReader(message: GetAssistantHTTPLogRequest, reader: jspb.BinaryReader): GetAssistantHTTPLogRequest;
 }
 
-export namespace GetAssistantWebhookLogRequest {
+export namespace GetAssistantHTTPLogRequest {
   export type AsObject = {
     projectid: string,
     id: string,
   }
 }
 
-export class GetAssistantWebhookLogResponse extends jspb.Message {
+export class GetAssistantHTTPLogResponse extends jspb.Message {
   getCode(): number;
   setCode(value: number): void;
 
@@ -565,8 +523,8 @@ export class GetAssistantWebhookLogResponse extends jspb.Message {
 
   hasData(): boolean;
   clearData(): void;
-  getData(): AssistantWebhookLog | undefined;
-  setData(value?: AssistantWebhookLog): void;
+  getData(): AssistantHTTPLog | undefined;
+  setData(value?: AssistantHTTPLog): void;
 
   hasError(): boolean;
   clearError(): void;
@@ -574,25 +532,25 @@ export class GetAssistantWebhookLogResponse extends jspb.Message {
   setError(value?: common_pb.Error): void;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): GetAssistantWebhookLogResponse.AsObject;
-  static toObject(includeInstance: boolean, msg: GetAssistantWebhookLogResponse): GetAssistantWebhookLogResponse.AsObject;
+  toObject(includeInstance?: boolean): GetAssistantHTTPLogResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: GetAssistantHTTPLogResponse): GetAssistantHTTPLogResponse.AsObject;
   static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
   static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: GetAssistantWebhookLogResponse, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): GetAssistantWebhookLogResponse;
-  static deserializeBinaryFromReader(message: GetAssistantWebhookLogResponse, reader: jspb.BinaryReader): GetAssistantWebhookLogResponse;
+  static serializeBinaryToWriter(message: GetAssistantHTTPLogResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetAssistantHTTPLogResponse;
+  static deserializeBinaryFromReader(message: GetAssistantHTTPLogResponse, reader: jspb.BinaryReader): GetAssistantHTTPLogResponse;
 }
 
-export namespace GetAssistantWebhookLogResponse {
+export namespace GetAssistantHTTPLogResponse {
   export type AsObject = {
     code: number,
     success: boolean,
-    data?: AssistantWebhookLog.AsObject,
+    data?: AssistantHTTPLog.AsObject,
     error?: common_pb.Error.AsObject,
   }
 }
 
-export class GetAllAssistantWebhookLogResponse extends jspb.Message {
+export class GetAllAssistantHTTPLogResponse extends jspb.Message {
   getCode(): number;
   setCode(value: number): void;
 
@@ -600,9 +558,9 @@ export class GetAllAssistantWebhookLogResponse extends jspb.Message {
   setSuccess(value: boolean): void;
 
   clearDataList(): void;
-  getDataList(): Array<AssistantWebhookLog>;
-  setDataList(value: Array<AssistantWebhookLog>): void;
-  addData(value?: AssistantWebhookLog, index?: number): AssistantWebhookLog;
+  getDataList(): Array<AssistantHTTPLog>;
+  setDataList(value: Array<AssistantHTTPLog>): void;
+  addData(value?: AssistantHTTPLog, index?: number): AssistantHTTPLog;
 
   hasError(): boolean;
   clearError(): void;
@@ -615,22 +573,46 @@ export class GetAllAssistantWebhookLogResponse extends jspb.Message {
   setPaginated(value?: common_pb.Paginated): void;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): GetAllAssistantWebhookLogResponse.AsObject;
-  static toObject(includeInstance: boolean, msg: GetAllAssistantWebhookLogResponse): GetAllAssistantWebhookLogResponse.AsObject;
+  toObject(includeInstance?: boolean): GetAllAssistantHTTPLogResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: GetAllAssistantHTTPLogResponse): GetAllAssistantHTTPLogResponse.AsObject;
   static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
   static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: GetAllAssistantWebhookLogResponse, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): GetAllAssistantWebhookLogResponse;
-  static deserializeBinaryFromReader(message: GetAllAssistantWebhookLogResponse, reader: jspb.BinaryReader): GetAllAssistantWebhookLogResponse;
+  static serializeBinaryToWriter(message: GetAllAssistantHTTPLogResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetAllAssistantHTTPLogResponse;
+  static deserializeBinaryFromReader(message: GetAllAssistantHTTPLogResponse, reader: jspb.BinaryReader): GetAllAssistantHTTPLogResponse;
 }
 
-export namespace GetAllAssistantWebhookLogResponse {
+export namespace GetAllAssistantHTTPLogResponse {
   export type AsObject = {
     code: number,
     success: boolean,
-    dataList: Array<AssistantWebhookLog.AsObject>,
+    dataList: Array<AssistantHTTPLog.AsObject>,
     error?: common_pb.Error.AsObject,
     paginated?: common_pb.Paginated.AsObject,
+  }
+}
+
+export class RetryAssistantHTTPLogRequest extends jspb.Message {
+  getProjectid(): string;
+  setProjectid(value: string): void;
+
+  getId(): string;
+  setId(value: string): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): RetryAssistantHTTPLogRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: RetryAssistantHTTPLogRequest): RetryAssistantHTTPLogRequest.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: RetryAssistantHTTPLogRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): RetryAssistantHTTPLogRequest;
+  static deserializeBinaryFromReader(message: RetryAssistantHTTPLogRequest, reader: jspb.BinaryReader): RetryAssistantHTTPLogRequest;
+}
+
+export namespace RetryAssistantHTTPLogRequest {
+  export type AsObject = {
+    projectid: string,
+    id: string,
   }
 }
 

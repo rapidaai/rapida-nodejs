@@ -44,7 +44,7 @@ goog.exportSymbol('proto.assistant_api.UpdateAssistantAnalysisRequest', null, gl
  * @constructor
  */
 proto.assistant_api.AssistantAnalysis = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.assistant_api.AssistantAnalysis.repeatedFields_, null);
 };
 goog.inherits(proto.assistant_api.AssistantAnalysis, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -65,7 +65,7 @@ if (goog.DEBUG && !COMPILED) {
  * @constructor
  */
 proto.assistant_api.CreateAssistantAnalysisRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.assistant_api.CreateAssistantAnalysisRequest.repeatedFields_, null);
 };
 goog.inherits(proto.assistant_api.CreateAssistantAnalysisRequest, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -86,7 +86,7 @@ if (goog.DEBUG && !COMPILED) {
  * @constructor
  */
 proto.assistant_api.UpdateAssistantAnalysisRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.assistant_api.UpdateAssistantAnalysisRequest.repeatedFields_, null);
 };
 goog.inherits(proto.assistant_api.UpdateAssistantAnalysisRequest, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -202,6 +202,13 @@ if (goog.DEBUG && !COMPILED) {
   proto.assistant_api.GetAllAssistantAnalysisResponse.displayName = 'proto.assistant_api.GetAllAssistantAnalysisResponse';
 }
 
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.assistant_api.AssistantAnalysis.repeatedFields_ = [7];
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -236,9 +243,9 @@ proto.assistant_api.AssistantAnalysis.toObject = function(includeInstance, msg) 
     id: jspb.Message.getFieldWithDefault(msg, 1, "0"),
     name: jspb.Message.getFieldWithDefault(msg, 2, ""),
     description: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    endpointid: jspb.Message.getFieldWithDefault(msg, 4, "0"),
-    endpointversion: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    endpointparametersMap: (f = msg.getEndpointparametersMap()) ? f.toObject(includeInstance, undefined) : [],
+    provider: jspb.Message.getFieldWithDefault(msg, 21, ""),
+    optionsList: jspb.Message.toObjectList(msg.getOptionsList(),
+    common_pb.Metadata.toObject, includeInstance),
     assistantid: jspb.Message.getFieldWithDefault(msg, 10, "0"),
     status: jspb.Message.getFieldWithDefault(msg, 12, ""),
     createdby: jspb.Message.getFieldWithDefault(msg, 13, "0"),
@@ -296,19 +303,14 @@ proto.assistant_api.AssistantAnalysis.deserializeBinaryFromReader = function(msg
       var value = /** @type {string} */ (reader.readString());
       msg.setDescription(value);
       break;
-    case 4:
-      var value = /** @type {string} */ (reader.readUint64String());
-      msg.setEndpointid(value);
-      break;
-    case 5:
+    case 21:
       var value = /** @type {string} */ (reader.readString());
-      msg.setEndpointversion(value);
+      msg.setProvider(value);
       break;
     case 7:
-      var value = msg.getEndpointparametersMap();
-      reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readString, null, "", "");
-         });
+      var value = new common_pb.Metadata;
+      reader.readMessage(value,common_pb.Metadata.deserializeBinaryFromReader);
+      msg.addOptions(value);
       break;
     case 10:
       var value = /** @type {string} */ (reader.readUint64String());
@@ -400,23 +402,20 @@ proto.assistant_api.AssistantAnalysis.serializeBinaryToWriter = function(message
       f
     );
   }
-  f = message.getEndpointid();
-  if (parseInt(f, 10) !== 0) {
-    writer.writeUint64String(
-      4,
-      f
-    );
-  }
-  f = message.getEndpointversion();
+  f = message.getProvider();
   if (f.length > 0) {
     writer.writeString(
-      5,
+      21,
       f
     );
   }
-  f = message.getEndpointparametersMap(true);
-  if (f && f.getLength() > 0) {
-    f.serializeBinary(7, writer, jspb.BinaryWriter.prototype.writeString, jspb.BinaryWriter.prototype.writeString);
+  f = message.getOptionsList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      7,
+      f,
+      common_pb.Metadata.serializeBinaryToWriter
+    );
   }
   f = message.getAssistantid();
   if (parseInt(f, 10) !== 0) {
@@ -543,11 +542,11 @@ proto.assistant_api.AssistantAnalysis.prototype.setDescription = function(value)
 
 
 /**
- * optional uint64 endpointId = 4;
+ * optional string provider = 21;
  * @return {string}
  */
-proto.assistant_api.AssistantAnalysis.prototype.getEndpointid = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, "0"));
+proto.assistant_api.AssistantAnalysis.prototype.getProvider = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 21, ""));
 };
 
 
@@ -555,49 +554,47 @@ proto.assistant_api.AssistantAnalysis.prototype.getEndpointid = function() {
  * @param {string} value
  * @return {!proto.assistant_api.AssistantAnalysis} returns this
  */
-proto.assistant_api.AssistantAnalysis.prototype.setEndpointid = function(value) {
-  return jspb.Message.setProto3StringIntField(this, 4, value);
+proto.assistant_api.AssistantAnalysis.prototype.setProvider = function(value) {
+  return jspb.Message.setProto3StringField(this, 21, value);
 };
 
 
 /**
- * optional string endpointVersion = 5;
- * @return {string}
+ * repeated Metadata options = 7;
+ * @return {!Array<!proto.Metadata>}
  */
-proto.assistant_api.AssistantAnalysis.prototype.getEndpointversion = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+proto.assistant_api.AssistantAnalysis.prototype.getOptionsList = function() {
+  return /** @type{!Array<!proto.Metadata>} */ (
+    jspb.Message.getRepeatedWrapperField(this, common_pb.Metadata, 7));
 };
 
 
 /**
- * @param {string} value
+ * @param {!Array<!proto.Metadata>} value
+ * @return {!proto.assistant_api.AssistantAnalysis} returns this
+*/
+proto.assistant_api.AssistantAnalysis.prototype.setOptionsList = function(value) {
+  return jspb.Message.setRepeatedWrapperField(this, 7, value);
+};
+
+
+/**
+ * @param {!proto.Metadata=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.Metadata}
+ */
+proto.assistant_api.AssistantAnalysis.prototype.addOptions = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 7, opt_value, proto.Metadata, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
  * @return {!proto.assistant_api.AssistantAnalysis} returns this
  */
-proto.assistant_api.AssistantAnalysis.prototype.setEndpointversion = function(value) {
-  return jspb.Message.setProto3StringField(this, 5, value);
+proto.assistant_api.AssistantAnalysis.prototype.clearOptionsList = function() {
+  return this.setOptionsList([]);
 };
-
-
-/**
- * map<string, string> endpointParameters = 7;
- * @param {boolean=} opt_noLazyCreate Do not create the map if
- * empty, instead returning `undefined`
- * @return {!jspb.Map<string,string>}
- */
-proto.assistant_api.AssistantAnalysis.prototype.getEndpointparametersMap = function(opt_noLazyCreate) {
-  return /** @type {!jspb.Map<string,string>} */ (
-      jspb.Message.getMapField(this, 7, opt_noLazyCreate,
-      null));
-};
-
-
-/**
- * Clears values from the map. The map will be non-null.
- * @return {!proto.assistant_api.AssistantAnalysis} returns this
- */
-proto.assistant_api.AssistantAnalysis.prototype.clearEndpointparametersMap = function() {
-  this.getEndpointparametersMap().clear();
-  return this;};
 
 
 /**
@@ -839,6 +836,13 @@ proto.assistant_api.AssistantAnalysis.prototype.setExecutionpriority = function(
 
 
 
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.assistant_api.CreateAssistantAnalysisRequest.repeatedFields_ = [7];
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -872,9 +876,9 @@ proto.assistant_api.CreateAssistantAnalysisRequest.toObject = function(includeIn
   var f, obj = {
     name: jspb.Message.getFieldWithDefault(msg, 2, ""),
     description: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    endpointid: jspb.Message.getFieldWithDefault(msg, 4, "0"),
-    endpointversion: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    endpointparametersMap: (f = msg.getEndpointparametersMap()) ? f.toObject(includeInstance, undefined) : [],
+    provider: jspb.Message.getFieldWithDefault(msg, 21, ""),
+    optionsList: jspb.Message.toObjectList(msg.getOptionsList(),
+    common_pb.Metadata.toObject, includeInstance),
     assistantid: jspb.Message.getFieldWithDefault(msg, 10, "0"),
     executionpriority: jspb.Message.getFieldWithDefault(msg, 20, 0)
   };
@@ -921,19 +925,14 @@ proto.assistant_api.CreateAssistantAnalysisRequest.deserializeBinaryFromReader =
       var value = /** @type {string} */ (reader.readString());
       msg.setDescription(value);
       break;
-    case 4:
-      var value = /** @type {string} */ (reader.readUint64String());
-      msg.setEndpointid(value);
-      break;
-    case 5:
+    case 21:
       var value = /** @type {string} */ (reader.readString());
-      msg.setEndpointversion(value);
+      msg.setProvider(value);
       break;
     case 7:
-      var value = msg.getEndpointparametersMap();
-      reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readString, null, "", "");
-         });
+      var value = new common_pb.Metadata;
+      reader.readMessage(value,common_pb.Metadata.deserializeBinaryFromReader);
+      msg.addOptions(value);
       break;
     case 10:
       var value = /** @type {string} */ (reader.readUint64String());
@@ -986,23 +985,20 @@ proto.assistant_api.CreateAssistantAnalysisRequest.serializeBinaryToWriter = fun
       f
     );
   }
-  f = message.getEndpointid();
-  if (parseInt(f, 10) !== 0) {
-    writer.writeUint64String(
-      4,
-      f
-    );
-  }
-  f = message.getEndpointversion();
+  f = message.getProvider();
   if (f.length > 0) {
     writer.writeString(
-      5,
+      21,
       f
     );
   }
-  f = message.getEndpointparametersMap(true);
-  if (f && f.getLength() > 0) {
-    f.serializeBinary(7, writer, jspb.BinaryWriter.prototype.writeString, jspb.BinaryWriter.prototype.writeString);
+  f = message.getOptionsList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      7,
+      f,
+      common_pb.Metadata.serializeBinaryToWriter
+    );
   }
   f = message.getAssistantid();
   if (parseInt(f, 10) !== 0) {
@@ -1058,11 +1054,11 @@ proto.assistant_api.CreateAssistantAnalysisRequest.prototype.setDescription = fu
 
 
 /**
- * optional uint64 endpointId = 4;
+ * optional string provider = 21;
  * @return {string}
  */
-proto.assistant_api.CreateAssistantAnalysisRequest.prototype.getEndpointid = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, "0"));
+proto.assistant_api.CreateAssistantAnalysisRequest.prototype.getProvider = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 21, ""));
 };
 
 
@@ -1070,49 +1066,47 @@ proto.assistant_api.CreateAssistantAnalysisRequest.prototype.getEndpointid = fun
  * @param {string} value
  * @return {!proto.assistant_api.CreateAssistantAnalysisRequest} returns this
  */
-proto.assistant_api.CreateAssistantAnalysisRequest.prototype.setEndpointid = function(value) {
-  return jspb.Message.setProto3StringIntField(this, 4, value);
+proto.assistant_api.CreateAssistantAnalysisRequest.prototype.setProvider = function(value) {
+  return jspb.Message.setProto3StringField(this, 21, value);
 };
 
 
 /**
- * optional string endpointVersion = 5;
- * @return {string}
+ * repeated Metadata options = 7;
+ * @return {!Array<!proto.Metadata>}
  */
-proto.assistant_api.CreateAssistantAnalysisRequest.prototype.getEndpointversion = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+proto.assistant_api.CreateAssistantAnalysisRequest.prototype.getOptionsList = function() {
+  return /** @type{!Array<!proto.Metadata>} */ (
+    jspb.Message.getRepeatedWrapperField(this, common_pb.Metadata, 7));
 };
 
 
 /**
- * @param {string} value
+ * @param {!Array<!proto.Metadata>} value
+ * @return {!proto.assistant_api.CreateAssistantAnalysisRequest} returns this
+*/
+proto.assistant_api.CreateAssistantAnalysisRequest.prototype.setOptionsList = function(value) {
+  return jspb.Message.setRepeatedWrapperField(this, 7, value);
+};
+
+
+/**
+ * @param {!proto.Metadata=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.Metadata}
+ */
+proto.assistant_api.CreateAssistantAnalysisRequest.prototype.addOptions = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 7, opt_value, proto.Metadata, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
  * @return {!proto.assistant_api.CreateAssistantAnalysisRequest} returns this
  */
-proto.assistant_api.CreateAssistantAnalysisRequest.prototype.setEndpointversion = function(value) {
-  return jspb.Message.setProto3StringField(this, 5, value);
+proto.assistant_api.CreateAssistantAnalysisRequest.prototype.clearOptionsList = function() {
+  return this.setOptionsList([]);
 };
-
-
-/**
- * map<string, string> endpointParameters = 7;
- * @param {boolean=} opt_noLazyCreate Do not create the map if
- * empty, instead returning `undefined`
- * @return {!jspb.Map<string,string>}
- */
-proto.assistant_api.CreateAssistantAnalysisRequest.prototype.getEndpointparametersMap = function(opt_noLazyCreate) {
-  return /** @type {!jspb.Map<string,string>} */ (
-      jspb.Message.getMapField(this, 7, opt_noLazyCreate,
-      null));
-};
-
-
-/**
- * Clears values from the map. The map will be non-null.
- * @return {!proto.assistant_api.CreateAssistantAnalysisRequest} returns this
- */
-proto.assistant_api.CreateAssistantAnalysisRequest.prototype.clearEndpointparametersMap = function() {
-  this.getEndpointparametersMap().clear();
-  return this;};
 
 
 /**
@@ -1152,6 +1146,13 @@ proto.assistant_api.CreateAssistantAnalysisRequest.prototype.setExecutionpriorit
 
 
 
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.assistant_api.UpdateAssistantAnalysisRequest.repeatedFields_ = [7];
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -1186,9 +1187,9 @@ proto.assistant_api.UpdateAssistantAnalysisRequest.toObject = function(includeIn
     id: jspb.Message.getFieldWithDefault(msg, 1, "0"),
     name: jspb.Message.getFieldWithDefault(msg, 2, ""),
     description: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    endpointid: jspb.Message.getFieldWithDefault(msg, 4, "0"),
-    endpointversion: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    endpointparametersMap: (f = msg.getEndpointparametersMap()) ? f.toObject(includeInstance, undefined) : [],
+    provider: jspb.Message.getFieldWithDefault(msg, 21, ""),
+    optionsList: jspb.Message.toObjectList(msg.getOptionsList(),
+    common_pb.Metadata.toObject, includeInstance),
     assistantid: jspb.Message.getFieldWithDefault(msg, 10, "0"),
     executionpriority: jspb.Message.getFieldWithDefault(msg, 20, 0)
   };
@@ -1239,19 +1240,14 @@ proto.assistant_api.UpdateAssistantAnalysisRequest.deserializeBinaryFromReader =
       var value = /** @type {string} */ (reader.readString());
       msg.setDescription(value);
       break;
-    case 4:
-      var value = /** @type {string} */ (reader.readUint64String());
-      msg.setEndpointid(value);
-      break;
-    case 5:
+    case 21:
       var value = /** @type {string} */ (reader.readString());
-      msg.setEndpointversion(value);
+      msg.setProvider(value);
       break;
     case 7:
-      var value = msg.getEndpointparametersMap();
-      reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readString, null, "", "");
-         });
+      var value = new common_pb.Metadata;
+      reader.readMessage(value,common_pb.Metadata.deserializeBinaryFromReader);
+      msg.addOptions(value);
       break;
     case 10:
       var value = /** @type {string} */ (reader.readUint64String());
@@ -1311,23 +1307,20 @@ proto.assistant_api.UpdateAssistantAnalysisRequest.serializeBinaryToWriter = fun
       f
     );
   }
-  f = message.getEndpointid();
-  if (parseInt(f, 10) !== 0) {
-    writer.writeUint64String(
-      4,
-      f
-    );
-  }
-  f = message.getEndpointversion();
+  f = message.getProvider();
   if (f.length > 0) {
     writer.writeString(
-      5,
+      21,
       f
     );
   }
-  f = message.getEndpointparametersMap(true);
-  if (f && f.getLength() > 0) {
-    f.serializeBinary(7, writer, jspb.BinaryWriter.prototype.writeString, jspb.BinaryWriter.prototype.writeString);
+  f = message.getOptionsList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      7,
+      f,
+      common_pb.Metadata.serializeBinaryToWriter
+    );
   }
   f = message.getAssistantid();
   if (parseInt(f, 10) !== 0) {
@@ -1401,11 +1394,11 @@ proto.assistant_api.UpdateAssistantAnalysisRequest.prototype.setDescription = fu
 
 
 /**
- * optional uint64 endpointId = 4;
+ * optional string provider = 21;
  * @return {string}
  */
-proto.assistant_api.UpdateAssistantAnalysisRequest.prototype.getEndpointid = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, "0"));
+proto.assistant_api.UpdateAssistantAnalysisRequest.prototype.getProvider = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 21, ""));
 };
 
 
@@ -1413,49 +1406,47 @@ proto.assistant_api.UpdateAssistantAnalysisRequest.prototype.getEndpointid = fun
  * @param {string} value
  * @return {!proto.assistant_api.UpdateAssistantAnalysisRequest} returns this
  */
-proto.assistant_api.UpdateAssistantAnalysisRequest.prototype.setEndpointid = function(value) {
-  return jspb.Message.setProto3StringIntField(this, 4, value);
+proto.assistant_api.UpdateAssistantAnalysisRequest.prototype.setProvider = function(value) {
+  return jspb.Message.setProto3StringField(this, 21, value);
 };
 
 
 /**
- * optional string endpointVersion = 5;
- * @return {string}
+ * repeated Metadata options = 7;
+ * @return {!Array<!proto.Metadata>}
  */
-proto.assistant_api.UpdateAssistantAnalysisRequest.prototype.getEndpointversion = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+proto.assistant_api.UpdateAssistantAnalysisRequest.prototype.getOptionsList = function() {
+  return /** @type{!Array<!proto.Metadata>} */ (
+    jspb.Message.getRepeatedWrapperField(this, common_pb.Metadata, 7));
 };
 
 
 /**
- * @param {string} value
+ * @param {!Array<!proto.Metadata>} value
+ * @return {!proto.assistant_api.UpdateAssistantAnalysisRequest} returns this
+*/
+proto.assistant_api.UpdateAssistantAnalysisRequest.prototype.setOptionsList = function(value) {
+  return jspb.Message.setRepeatedWrapperField(this, 7, value);
+};
+
+
+/**
+ * @param {!proto.Metadata=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.Metadata}
+ */
+proto.assistant_api.UpdateAssistantAnalysisRequest.prototype.addOptions = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 7, opt_value, proto.Metadata, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
  * @return {!proto.assistant_api.UpdateAssistantAnalysisRequest} returns this
  */
-proto.assistant_api.UpdateAssistantAnalysisRequest.prototype.setEndpointversion = function(value) {
-  return jspb.Message.setProto3StringField(this, 5, value);
+proto.assistant_api.UpdateAssistantAnalysisRequest.prototype.clearOptionsList = function() {
+  return this.setOptionsList([]);
 };
-
-
-/**
- * map<string, string> endpointParameters = 7;
- * @param {boolean=} opt_noLazyCreate Do not create the map if
- * empty, instead returning `undefined`
- * @return {!jspb.Map<string,string>}
- */
-proto.assistant_api.UpdateAssistantAnalysisRequest.prototype.getEndpointparametersMap = function(opt_noLazyCreate) {
-  return /** @type {!jspb.Map<string,string>} */ (
-      jspb.Message.getMapField(this, 7, opt_noLazyCreate,
-      null));
-};
-
-
-/**
- * Clears values from the map. The map will be non-null.
- * @return {!proto.assistant_api.UpdateAssistantAnalysisRequest} returns this
- */
-proto.assistant_api.UpdateAssistantAnalysisRequest.prototype.clearEndpointparametersMap = function() {
-  this.getEndpointparametersMap().clear();
-  return this;};
 
 
 /**

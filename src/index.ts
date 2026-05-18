@@ -123,8 +123,8 @@ export {
   UpdateAnalysis,
   GetAssistantAnalysis,
   DeleteAssistantAnalysis,
-  GetAllWebhookLog,
-  GetWebhookLog,
+  GetAllHTTPLog,
+  GetHTTPLog,
   GetAllAssistantTool,
   CreateAssistantTool,
   UpdateAssistantTool,
@@ -350,7 +350,7 @@ export {
 
 export {
   AssistantWebhook,
-  AssistantWebhookLog,
+  AssistantHTTPLog,
   CreateAssistantWebhookRequest,
   UpdateAssistantWebhookRequest,
   GetAssistantWebhookRequest,
@@ -358,10 +358,10 @@ export {
   GetAssistantWebhookResponse,
   GetAllAssistantWebhookRequest,
   GetAllAssistantWebhookResponse,
-  GetAllAssistantWebhookLogRequest,
-  GetAssistantWebhookLogRequest,
-  GetAssistantWebhookLogResponse,
-  GetAllAssistantWebhookLogResponse,
+  GetAllAssistantHTTPLogRequest,
+  GetAssistantHTTPLogRequest,
+  GetAssistantHTTPLogResponse,
+  GetAllAssistantHTTPLogResponse,
 } from "@/rapida/clients/protos/assistant-webhook_pb";
 
 /* ========================================================================== */
@@ -538,8 +538,7 @@ export {
   ConversationUserMessage,
   ConversationAssistantMessage,
   ConversationToolCall,
-  ConversationToolResult,
-  ConversationDirective,
+  ConversationToolCallResult,
   ConversationInterruption,
   ConversationModeChange,
   ConversationError,

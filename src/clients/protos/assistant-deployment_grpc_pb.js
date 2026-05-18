@@ -17,6 +17,72 @@ function deserialize_assistant_api_CreateAssistantDeploymentRequest(buffer_arg) 
   return assistant$deployment_pb.CreateAssistantDeploymentRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_assistant_api_GetAllAssistantApiDeploymentResponse(arg) {
+  if (!(arg instanceof assistant$deployment_pb.GetAllAssistantApiDeploymentResponse)) {
+    throw new Error('Expected argument of type assistant_api.GetAllAssistantApiDeploymentResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAllAssistantApiDeploymentResponse(buffer_arg) {
+  return assistant$deployment_pb.GetAllAssistantApiDeploymentResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_GetAllAssistantDebuggerDeploymentResponse(arg) {
+  if (!(arg instanceof assistant$deployment_pb.GetAllAssistantDebuggerDeploymentResponse)) {
+    throw new Error('Expected argument of type assistant_api.GetAllAssistantDebuggerDeploymentResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAllAssistantDebuggerDeploymentResponse(buffer_arg) {
+  return assistant$deployment_pb.GetAllAssistantDebuggerDeploymentResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_GetAllAssistantDeploymentRequest(arg) {
+  if (!(arg instanceof assistant$deployment_pb.GetAllAssistantDeploymentRequest)) {
+    throw new Error('Expected argument of type assistant_api.GetAllAssistantDeploymentRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAllAssistantDeploymentRequest(buffer_arg) {
+  return assistant$deployment_pb.GetAllAssistantDeploymentRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_GetAllAssistantPhoneDeploymentResponse(arg) {
+  if (!(arg instanceof assistant$deployment_pb.GetAllAssistantPhoneDeploymentResponse)) {
+    throw new Error('Expected argument of type assistant_api.GetAllAssistantPhoneDeploymentResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAllAssistantPhoneDeploymentResponse(buffer_arg) {
+  return assistant$deployment_pb.GetAllAssistantPhoneDeploymentResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_GetAllAssistantWebpluginDeploymentResponse(arg) {
+  if (!(arg instanceof assistant$deployment_pb.GetAllAssistantWebpluginDeploymentResponse)) {
+    throw new Error('Expected argument of type assistant_api.GetAllAssistantWebpluginDeploymentResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAllAssistantWebpluginDeploymentResponse(buffer_arg) {
+  return assistant$deployment_pb.GetAllAssistantWebpluginDeploymentResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_GetAllAssistantWhatsappDeploymentResponse(arg) {
+  if (!(arg instanceof assistant$deployment_pb.GetAllAssistantWhatsappDeploymentResponse)) {
+    throw new Error('Expected argument of type assistant_api.GetAllAssistantWhatsappDeploymentResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAllAssistantWhatsappDeploymentResponse(buffer_arg) {
+  return assistant$deployment_pb.GetAllAssistantWhatsappDeploymentResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_assistant_api_GetAssistantApiDeploymentResponse(arg) {
   if (!(arg instanceof assistant$deployment_pb.GetAssistantApiDeploymentResponse)) {
     throw new Error('Expected argument of type assistant_api.GetAssistantApiDeploymentResponse');
@@ -107,6 +173,28 @@ var AssistantDeploymentServiceService = exports.AssistantDeploymentServiceServic
     responseSerialize: serialize_assistant_api_GetAssistantApiDeploymentResponse,
     responseDeserialize: deserialize_assistant_api_GetAssistantApiDeploymentResponse,
   },
+  getAllAssistantApiDeployment: {
+    path: '/assistant_api.AssistantDeploymentService/GetAllAssistantApiDeployment',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$deployment_pb.GetAllAssistantDeploymentRequest,
+    responseType: assistant$deployment_pb.GetAllAssistantApiDeploymentResponse,
+    requestSerialize: serialize_assistant_api_GetAllAssistantDeploymentRequest,
+    requestDeserialize: deserialize_assistant_api_GetAllAssistantDeploymentRequest,
+    responseSerialize: serialize_assistant_api_GetAllAssistantApiDeploymentResponse,
+    responseDeserialize: deserialize_assistant_api_GetAllAssistantApiDeploymentResponse,
+  },
+  disableAssistantApiDeployment: {
+    path: '/assistant_api.AssistantDeploymentService/DisableAssistantApiDeployment',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$deployment_pb.GetAssistantDeploymentRequest,
+    responseType: assistant$deployment_pb.GetAssistantApiDeploymentResponse,
+    requestSerialize: serialize_assistant_api_GetAssistantDeploymentRequest,
+    requestDeserialize: deserialize_assistant_api_GetAssistantDeploymentRequest,
+    responseSerialize: serialize_assistant_api_GetAssistantApiDeploymentResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantApiDeploymentResponse,
+  },
   createAssistantWebpluginDeployment: {
     path: '/assistant_api.AssistantDeploymentService/CreateAssistantWebpluginDeployment',
     requestStream: false,
@@ -120,6 +208,28 @@ var AssistantDeploymentServiceService = exports.AssistantDeploymentServiceServic
   },
   getAssistantWebpluginDeployment: {
     path: '/assistant_api.AssistantDeploymentService/GetAssistantWebpluginDeployment',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$deployment_pb.GetAssistantDeploymentRequest,
+    responseType: assistant$deployment_pb.GetAssistantWebpluginDeploymentResponse,
+    requestSerialize: serialize_assistant_api_GetAssistantDeploymentRequest,
+    requestDeserialize: deserialize_assistant_api_GetAssistantDeploymentRequest,
+    responseSerialize: serialize_assistant_api_GetAssistantWebpluginDeploymentResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantWebpluginDeploymentResponse,
+  },
+  getAllAssistantWebpluginDeployment: {
+    path: '/assistant_api.AssistantDeploymentService/GetAllAssistantWebpluginDeployment',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$deployment_pb.GetAllAssistantDeploymentRequest,
+    responseType: assistant$deployment_pb.GetAllAssistantWebpluginDeploymentResponse,
+    requestSerialize: serialize_assistant_api_GetAllAssistantDeploymentRequest,
+    requestDeserialize: deserialize_assistant_api_GetAllAssistantDeploymentRequest,
+    responseSerialize: serialize_assistant_api_GetAllAssistantWebpluginDeploymentResponse,
+    responseDeserialize: deserialize_assistant_api_GetAllAssistantWebpluginDeploymentResponse,
+  },
+  disableAssistantWebpluginDeployment: {
+    path: '/assistant_api.AssistantDeploymentService/DisableAssistantWebpluginDeployment',
     requestStream: false,
     responseStream: false,
     requestType: assistant$deployment_pb.GetAssistantDeploymentRequest,
@@ -151,6 +261,28 @@ var AssistantDeploymentServiceService = exports.AssistantDeploymentServiceServic
     responseSerialize: serialize_assistant_api_GetAssistantDebuggerDeploymentResponse,
     responseDeserialize: deserialize_assistant_api_GetAssistantDebuggerDeploymentResponse,
   },
+  getAllAssistantDebuggerDeployment: {
+    path: '/assistant_api.AssistantDeploymentService/GetAllAssistantDebuggerDeployment',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$deployment_pb.GetAllAssistantDeploymentRequest,
+    responseType: assistant$deployment_pb.GetAllAssistantDebuggerDeploymentResponse,
+    requestSerialize: serialize_assistant_api_GetAllAssistantDeploymentRequest,
+    requestDeserialize: deserialize_assistant_api_GetAllAssistantDeploymentRequest,
+    responseSerialize: serialize_assistant_api_GetAllAssistantDebuggerDeploymentResponse,
+    responseDeserialize: deserialize_assistant_api_GetAllAssistantDebuggerDeploymentResponse,
+  },
+  disableAssistantDebuggerDeployment: {
+    path: '/assistant_api.AssistantDeploymentService/DisableAssistantDebuggerDeployment',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$deployment_pb.GetAssistantDeploymentRequest,
+    responseType: assistant$deployment_pb.GetAssistantDebuggerDeploymentResponse,
+    requestSerialize: serialize_assistant_api_GetAssistantDeploymentRequest,
+    requestDeserialize: deserialize_assistant_api_GetAssistantDeploymentRequest,
+    responseSerialize: serialize_assistant_api_GetAssistantDebuggerDeploymentResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantDebuggerDeploymentResponse,
+  },
   createAssistantWhatsappDeployment: {
     path: '/assistant_api.AssistantDeploymentService/CreateAssistantWhatsappDeployment',
     requestStream: false,
@@ -173,6 +305,28 @@ var AssistantDeploymentServiceService = exports.AssistantDeploymentServiceServic
     responseSerialize: serialize_assistant_api_GetAssistantWhatsappDeploymentResponse,
     responseDeserialize: deserialize_assistant_api_GetAssistantWhatsappDeploymentResponse,
   },
+  getAllAssistantWhatsappDeployment: {
+    path: '/assistant_api.AssistantDeploymentService/GetAllAssistantWhatsappDeployment',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$deployment_pb.GetAllAssistantDeploymentRequest,
+    responseType: assistant$deployment_pb.GetAllAssistantWhatsappDeploymentResponse,
+    requestSerialize: serialize_assistant_api_GetAllAssistantDeploymentRequest,
+    requestDeserialize: deserialize_assistant_api_GetAllAssistantDeploymentRequest,
+    responseSerialize: serialize_assistant_api_GetAllAssistantWhatsappDeploymentResponse,
+    responseDeserialize: deserialize_assistant_api_GetAllAssistantWhatsappDeploymentResponse,
+  },
+  disableAssistantWhatsappDeployment: {
+    path: '/assistant_api.AssistantDeploymentService/DisableAssistantWhatsappDeployment',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$deployment_pb.GetAssistantDeploymentRequest,
+    responseType: assistant$deployment_pb.GetAssistantWhatsappDeploymentResponse,
+    requestSerialize: serialize_assistant_api_GetAssistantDeploymentRequest,
+    requestDeserialize: deserialize_assistant_api_GetAssistantDeploymentRequest,
+    responseSerialize: serialize_assistant_api_GetAssistantWhatsappDeploymentResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantWhatsappDeploymentResponse,
+  },
   createAssistantPhoneDeployment: {
     path: '/assistant_api.AssistantDeploymentService/CreateAssistantPhoneDeployment',
     requestStream: false,
@@ -186,6 +340,28 @@ var AssistantDeploymentServiceService = exports.AssistantDeploymentServiceServic
   },
   getAssistantPhoneDeployment: {
     path: '/assistant_api.AssistantDeploymentService/GetAssistantPhoneDeployment',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$deployment_pb.GetAssistantDeploymentRequest,
+    responseType: assistant$deployment_pb.GetAssistantPhoneDeploymentResponse,
+    requestSerialize: serialize_assistant_api_GetAssistantDeploymentRequest,
+    requestDeserialize: deserialize_assistant_api_GetAssistantDeploymentRequest,
+    responseSerialize: serialize_assistant_api_GetAssistantPhoneDeploymentResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantPhoneDeploymentResponse,
+  },
+  getAllAssistantPhoneDeployment: {
+    path: '/assistant_api.AssistantDeploymentService/GetAllAssistantPhoneDeployment',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$deployment_pb.GetAllAssistantDeploymentRequest,
+    responseType: assistant$deployment_pb.GetAllAssistantPhoneDeploymentResponse,
+    requestSerialize: serialize_assistant_api_GetAllAssistantDeploymentRequest,
+    requestDeserialize: deserialize_assistant_api_GetAllAssistantDeploymentRequest,
+    responseSerialize: serialize_assistant_api_GetAllAssistantPhoneDeploymentResponse,
+    responseDeserialize: deserialize_assistant_api_GetAllAssistantPhoneDeploymentResponse,
+  },
+  disableAssistantPhoneDeployment: {
+    path: '/assistant_api.AssistantDeploymentService/DisableAssistantPhoneDeployment',
     requestStream: false,
     responseStream: false,
     requestType: assistant$deployment_pb.GetAssistantDeploymentRequest,

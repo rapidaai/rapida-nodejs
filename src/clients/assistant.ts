@@ -90,13 +90,13 @@ import {
 
 import {
   DeleteAssistantWebhookRequest,
-  GetAssistantWebhookLogRequest,
-  GetAllAssistantWebhookLogRequest,
-  GetAssistantWebhookLogResponse,
+  GetAssistantHTTPLogRequest,
+  GetAllAssistantHTTPLogRequest,
+  GetAssistantHTTPLogResponse,
   GetAssistantWebhookResponse,
   CreateAssistantWebhookRequest,
   UpdateAssistantWebhookRequest,
-  GetAllAssistantWebhookLogResponse,
+  GetAllAssistantHTTPLogResponse,
   GetAssistantWebhookRequest,
   GetAllAssistantWebhookRequest,
   GetAllAssistantWebhookResponse,
@@ -531,18 +531,18 @@ export function DeleteAssistantAnalysis(
   });
 }
 
-export function GetAllWebhookLog(
+export function GetAllHTTPLog(
   config: ConnectionConfig,
-  req: GetAllAssistantWebhookLogRequest,
+  req: GetAllAssistantHTTPLogRequest,
   auth?: UserAuthInfo | ClientAuthInfo
-): Promise<GetAllAssistantWebhookLogResponse> {
+): Promise<GetAllAssistantHTTPLogResponse> {
   return new Promise((resolve, reject) => {
-    config.assistantClient.getAllAssistantWebhookLog(
+    config.assistantClient.getAllAssistantHTTPLog(
       req,
       WithAuthContext(auth || config.auth),
       (
         err: ServiceError | null,
-        response: GetAllAssistantWebhookLogResponse | null
+        response: GetAllAssistantHTTPLogResponse | null
       ) => {
         if (err) reject(err);
         else resolve(response!);
@@ -551,18 +551,18 @@ export function GetAllWebhookLog(
   });
 }
 
-export function GetWebhookLog(
+export function GetHTTPLog(
   config: ConnectionConfig,
-  req: GetAssistantWebhookLogRequest,
+  req: GetAssistantHTTPLogRequest,
   auth?: UserAuthInfo | ClientAuthInfo
-): Promise<GetAssistantWebhookLogResponse> {
+): Promise<GetAssistantHTTPLogResponse> {
   return new Promise((resolve, reject) => {
-    config.assistantClient.getAssistantWebhookLog(
+    config.assistantClient.getAssistantHTTPLog(
       req,
       WithAuthContext(auth || config.auth),
       (
         err: ServiceError | null,
-        response: GetAssistantWebhookLogResponse | null
+        response: GetAssistantHTTPLogResponse | null
       ) => {
         if (err) reject(err);
         else resolve(response!);
