@@ -231,6 +231,7 @@ export {
   ToolMessage,
   AssistantConversationRecording,
   AssistantConversationTelephonyEvent,
+  AssistantDefinition,
 } from "@/rapida/clients/protos/common_pb";
 
 /* ========================================================================== */
