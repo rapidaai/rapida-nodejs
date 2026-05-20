@@ -1,6 +1,6 @@
 {
     "name": "@rapidaai/nodejs",
-    "version": "1.0.21",
+    "version": "1.0.22",
     "description": "NodeJS sdk for rapidaai platform",
     "main": "dist/index.cjs",
     "module": "dist/index.js",
@@ -9,13 +9,17 @@
         "import": "./dist/index.js",
         "require": "./dist/index.cjs"
     },
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.org/"
+    },
     "files": [
         "dist"
     ],
     "scripts": {
         "build": "tsup",
         "clean": "rimraf dist",
-        "prepare": "npm run build",
+        "prepublishOnly": "npm run build",
         "test": "jest",
         "test:watch": "jest --watch",
         "test:coverage": "jest --coverage"
