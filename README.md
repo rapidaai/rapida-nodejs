@@ -63,6 +63,147 @@ The SDK provides clients for the following Rapida services:
 - **Notification Client** - Notification management
 - **Invocation Client** - Custom endpoint invocation
 
+## AgentKit
+
+AgentKit lets you host a custom voice AI agent behind the `AgentKit.Talk` bidirectional gRPC stream. The SDK handles the gRPC server, optional token authentication, optional TLS, and response/request helper methods. Your agent owns the LLM integration, tool execution, and conversation logic.
+
+### Basic AgentKit Server
+
+```typescript
+import {
+  AgentKitAgent,
+  AgentKitServer,
+  TalkInput,
+  TalkOutput,
+} from '@rapidaai/nodejs';
+import type { ServerDuplexStream } from '@grpc/grpc-js';
+
+class MyAgent extends AgentKitAgent {
+  talk(call: ServerDuplexStream<TalkInput, TalkOutput>): void {
+    call.on('data', (request: TalkInput) => {
+      if (this.isInitializationRequest(request)) {
+        call.write(this.initializationResponse(request.getInitialization()!));
+        return;
+      }
+
+      if (this.isConfigurationRequest(request)) {
+        call.write(this.configurationResponse(request.getConfiguration()));
+        return;
+      }
+
+      if (this.isTextMessage(request)) {
+        const messageId = this.getMessageId(request)!;
+        const text = this.getUserText(request);
+
+        call.write(this.assistantResponse(messageId, `Received: ${text}`, false));
+        call.write(this.assistantResponse(messageId, 'Done', true));
+      }
+    });
+
+    call.on('end', () => call.end());
+  }
+}
+
+const server = new AgentKitServer({
+  agent: new MyAgent(),
+  port: 50051,
+});
+
+await server.start();
+console.log(`AgentKit server listening on ${server.address}`);
+```
+
+### Conversation Flow
+
+The expected stream flow is:
+
+1. Rapida sends `ConversationInitialization`.
+2. The agent responds with `initializationResponse(request.getInitialization()!)`.
+3. Rapida may send `ConversationConfiguration`.
+4. The agent responds with `configurationResponse()`, which is a `code=200` acknowledgement without a data payload.
+5. Rapida sends `ConversationUserMessage`.
+6. The agent writes assistant responses, tool calls, tool results, transfer actions, terminate actions, or errors.
+
+### Response Helpers
+
+`AgentKitAgent` provides helpers for building `TalkOutput` messages:
+
+- `response(...)`: Builds a generic `TalkOutput`.
+- `initializationResponse(initialization)`: Acknowledges initialization.
+- `configurationResponse(configuration?)`: Acknowledges configuration.
+- `assistantResponse(messageId, content, completed?)`: Sends assistant text.
+- `errorResponse(code, message)`: Sends an error response.
+- `toolCall(messageId, toolId, name, args?)`: Emits a tool call.
+- `toolCallResult(messageId, toolId, name, result, success?)`: Emits a tool result.
+- `transferCall(messageId, args?)`: Emits a transfer conversation action.
+- `terminateCall(messageId, args?)`: Emits an end conversation action.
+
+### Request Helpers
+
+`AgentKitAgent` also provides helpers for inspecting `TalkInput` messages:
+
+- `isInitializationRequest(request)`
+- `isConfigurationRequest(request)`
+- `isMessageRequest(request)`
+- `isTextMessage(request)`
+- `isAudioMessage(request)`
+- `getUserText(request)`
+- `getMessageId(request)`
+- `getConversationId(request)`
+- `getAssistantId(request)`
+
+### Auth and TLS
+
+Token auth checks incoming gRPC metadata. By default it reads the `authorization` metadata key.
+
+```typescript
+const server = new AgentKitServer({
+  agent: new MyAgent(),
+  port: 50051,
+  authConfig: {
+    enabled: true,
+    token: process.env.AGENTKIT_TOKEN,
+  },
+});
+
+await server.start();
+```
+
+You can also provide a custom validator:
+
+```typescript
+const server = new AgentKitServer({
+  agent: new MyAgent(),
+  authConfig: {
+    enabled: true,
+    headerKey: 'x-agent-token',
+    validator: (token, metadata) => token === process.env.AGENTKIT_TOKEN,
+  },
+});
+```
+
+For TLS:
+
+```typescript
+const server = new AgentKitServer({
+  agent: new MyAgent(),
+  sslConfig: {
+    certPath: 'server.crt',
+    keyPath: 'server.key',
+    caCertPath: 'ca.crt', // optional, enables client certificate validation
+  },
+});
+
+await server.start();
+```
+
+To stop the server:
+
+```typescript
+await server.stop();
+console.log(server.isRunning); // false
+```
+
 ## API Reference
 
 ### Connection Configuration

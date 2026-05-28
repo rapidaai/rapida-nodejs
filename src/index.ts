@@ -35,6 +35,13 @@ export { ToContentText } from "./utils/rapida_content";
 export { ConnectionConfig } from "./connections/connection-config";
 export * from "@/rapida/utils/rapida_value";
 export * from "@/rapida/utils/rapida_source";
+export {
+  AgentKitAgent,
+  AgentKitServer,
+  AuthConfig,
+  AuthorizationInterceptor,
+  SSLConfig,
+} from "@/rapida/agentkit";
 
 export {
   HEADER_ENVIRONMENT_KEY,
