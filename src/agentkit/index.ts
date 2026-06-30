@@ -36,6 +36,8 @@ const AGENTKIT_HEALTH_CHECK_PATH = "/grpc.health.v1.Health/Check";
 const DEFAULT_AGENTKIT_HTTP_HEALTH_HOST = "0.0.0.0";
 const DEFAULT_AGENTKIT_HTTP_HEALTH_PORT = 8080;
 const DEFAULT_AGENTKIT_HTTP_HEALTH_PATH = "/healthz";
+const AGENTKIT_TOOL_NAME_END_CONVERSATION = "end_conversation";
+const AGENTKIT_TOOL_NAME_TRANSFER_CONVERSATION = "transfer_conversation";
 
 /**
  * Standard gRPC health-check status values.
@@ -668,6 +670,7 @@ export class AgentKitAgent implements AgentKitServiceImplementation {
   transferCall(msgId: string, args?: StringMap | null): TalkOutput {
     const toolCall = new ConversationToolCall();
     toolCall.setId(String(msgId));
+    toolCall.setName(AGENTKIT_TOOL_NAME_TRANSFER_CONVERSATION);
     toolCall.setAction(ToolCallAction.TOOL_CALL_ACTION_TRANSFER_CONVERSATION);
     this.setMapValues(toolCall.getArgsMap(), this.stringifyMap(args));
     return this.response({ toolCall });
@@ -679,6 +682,7 @@ export class AgentKitAgent implements AgentKitServiceImplementation {
   terminateCall(msgId: string, args?: StringMap | null): TalkOutput {
     const toolCall = new ConversationToolCall();
     toolCall.setId(String(msgId));
+    toolCall.setName(AGENTKIT_TOOL_NAME_END_CONVERSATION);
     toolCall.setAction(ToolCallAction.TOOL_CALL_ACTION_END_CONVERSATION);
     this.setMapValues(toolCall.getArgsMap(), this.stringifyMap(args));
     return this.response({ toolCall });

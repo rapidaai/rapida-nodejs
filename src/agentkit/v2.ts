@@ -32,6 +32,9 @@ const { AgentKitService } = require("../clients/protos/agentkit_grpc_pb") as {
   AgentKitService: unknown;
 };
 
+const AGENTKIT_TOOL_NAME_END_CONVERSATION = "end_conversation";
+const AGENTKIT_TOOL_NAME_TRANSFER_CONVERSATION = "transfer_conversation";
+
 /**
  * Raw gRPC bidirectional stream used by the AgentKit `Talk` RPC.
  *
@@ -142,7 +145,7 @@ export interface AgentToolCall {
   id: string;
   /** Stable tool-call ID used to pair a call with its result. */
   toolId: string;
-  /** Tool name. Special actions may leave this empty. */
+  /** Tool name. Special actions use reserved names such as `end_conversation`. */
   name: string;
   /** Generated `ToolCallAction` enum value. */
   action: AgentToolCallAction;
@@ -180,30 +183,59 @@ export type AgentMessagePayload =
       completed?: boolean;
     };
 
-/** Payload for emitting a tool call from the AgentKit server to Rapida. */
+/**
+ * Payload for emitting a normal tool call from the AgentKit server to Rapida.
+ *
+ * Action defaults to `TOOL_CALL_ACTION_UNSPECIFIED`. Use `transfer(...)` or
+ * `endConversation(...)` for built-in action packets.
+ */
 export interface AgentToolCallPayload {
   /** Message ID this tool call belongs to. Defaults to empty string. */
   id?: string;
   /** Stable tool-call ID. Rapida uses this to pair result/log events. */
-  toolId?: string;
-  /** Tool name. Leave empty only for special action packets. */
-  name?: string;
-  /** Optional special action, such as transfer or end conversation. */
+  toolId: string;
+  /** Tool name shown in Rapida tool logs. */
+  toolName: string;
+  /** Optional action. Defaults to `TOOL_CALL_ACTION_UNSPECIFIED`. */
   action?: AgentToolCallAction;
   /** Values are stringified into the proto `args` map. */
   args?: AgentStringMap | null;
 }
 
-/** Payload for emitting a tool-call result from AgentKit server to Rapida. */
-export interface AgentToolCallResultPayload {
+/**
+ * Payload for completing a normal tool call from AgentKit server to Rapida.
+ *
+ * The result must use the same `toolId` and `toolName` as the call packet.
+ */
+export interface AgentToolResultPayload {
   id?: string;
-  toolId?: string;
-  name?: string;
+  toolId: string;
+  toolName: string;
+  /** Optional action. Defaults to `TOOL_CALL_ACTION_UNSPECIFIED`. */
   action?: AgentToolCallAction;
   /** Object values become map entries; primitives are stored under `result`. */
   result?: unknown;
   /** When false, `success=false` is added to the result map if not present. */
   success?: boolean;
+}
+
+interface AgentToolActionPayload {
+  id?: string;
+  toolId?: string;
+  toolName?: string;
+  defaultToolName: string;
+  action: AgentToolCallAction;
+  args?: AgentStringMap | null;
+}
+
+/** Optional packet identity for transfer/end-conversation action helpers. */
+export interface AgentToolActionOptions {
+  /** Message ID. Defaults to the active user message ID while handling a user turn. */
+  id?: string;
+  /** Tool-call ID. Defaults to a generated `agentkit-tool-*` ID. */
+  toolId?: string;
+  /** Tool name. Defaults to the reserved action name. */
+  toolName?: string;
 }
 
 /** Payload for emitting an AgentKit error packet. */
@@ -346,7 +378,7 @@ export class AgentConversation {
   /**
    * Writes a raw `TalkOutput` packet to the stream.
    *
-   * Prefer the higher-level helpers (`reply`, `callTool`, `error`, etc.) unless
+   * Prefer the higher-level helpers (`reply`, `toolCall`, `error`, etc.) unless
    * you are building a packet manually.
    */
   send(packet: TalkOutput): Promise<void> {
@@ -392,12 +424,12 @@ export class AgentConversation {
   }
 
   /** Emits a tool call packet to Rapida. */
-  callTool(payload: AgentToolCallPayload): Promise<void> {
+  toolCall(payload: AgentToolCallPayload): Promise<void> {
     return this.send(this.runner.toolCallMessage(payload));
   }
 
-  /** Emits a tool-call result packet to Rapida. */
-  sendToolResult(payload: AgentToolCallResultPayload): Promise<void> {
+  /** Completes a previously emitted tool call in Rapida. */
+  toolResult(payload: AgentToolResultPayload): Promise<void> {
     return this.send(this.runner.toolCallResultMessage(payload));
   }
 
@@ -412,21 +444,31 @@ export class AgentConversation {
   }
 
   /** Requests conversation transfer through the tool-call action channel. */
-  transfer(args?: AgentStringMap | null): Promise<void> {
-    return this.callTool({
-      id: this.activeMessageId,
-      action: ToolCallAction.TOOL_CALL_ACTION_TRANSFER_CONVERSATION,
-      args,
-    });
+  transfer(
+    args?: AgentStringMap | null,
+    options: AgentToolActionOptions = {}
+  ): Promise<void> {
+    return this.send(
+      this.runner.transferMessage(
+        options.id || this.activeMessageId,
+        args,
+        options
+      )
+    );
   }
 
   /** Requests conversation termination through the tool-call action channel. */
-  endConversation(args?: AgentStringMap | null): Promise<void> {
-    return this.callTool({
-      id: this.activeMessageId,
-      action: ToolCallAction.TOOL_CALL_ACTION_END_CONVERSATION,
-      args,
-    });
+  endConversation(
+    args?: AgentStringMap | null,
+    options: AgentToolActionOptions = {}
+  ): Promise<void> {
+    return this.send(
+      this.runner.endConversationMessage(
+        options.id || this.activeMessageId,
+        args,
+        options
+      )
+    );
   }
 
   /** Emits a non-stream-level AgentKit error packet. */
@@ -557,13 +599,13 @@ export class Agent {
   }
 
   /** Emits a tool call to Rapida. */
-  callTool(payload: AgentToolCallPayload): Promise<void> {
-    return this.conversation.callTool(payload);
+  toolCall(payload: AgentToolCallPayload): Promise<void> {
+    return this.conversation.toolCall(payload);
   }
 
-  /** Emits a tool-call result to Rapida. */
-  sendToolResult(payload: AgentToolCallResultPayload): Promise<void> {
-    return this.conversation.sendToolResult(payload);
+  /** Completes a previously emitted tool call in Rapida. */
+  toolResult(payload: AgentToolResultPayload): Promise<void> {
+    return this.conversation.toolResult(payload);
   }
 
   /** Sends an interruption packet. */
@@ -572,13 +614,19 @@ export class Agent {
   }
 
   /** Requests conversation transfer. */
-  transfer(args?: AgentStringMap | null): Promise<void> {
-    return this.conversation.transfer(args);
+  transfer(
+    args?: AgentStringMap | null,
+    options?: AgentToolActionOptions
+  ): Promise<void> {
+    return this.conversation.transfer(args, options);
   }
 
   /** Requests conversation termination. */
-  endConversation(args?: AgentStringMap | null): Promise<void> {
-    return this.conversation.endConversation(args);
+  endConversation(
+    args?: AgentStringMap | null,
+    options?: AgentToolActionOptions
+  ): Promise<void> {
+    return this.conversation.endConversation(args, options);
   }
 
   /** Emits an AgentKit error packet. */
@@ -890,29 +938,71 @@ export class AgentRunner<T extends Agent = Agent> {
   toolCallMessage(payload: AgentToolCallPayload): TalkOutput {
     const toolCall = new ConversationToolCall();
     toolCall.setId(payload.id || "");
-    toolCall.setToolid(payload.toolId || "");
-    toolCall.setName(payload.name || "");
-    if (payload.action !== undefined) {
-      toolCall.setAction(payload.action);
-    }
+    toolCall.setToolid(payload.toolId);
+    toolCall.setName(payload.toolName);
+    toolCall.setAction(
+      payload.action ?? ToolCallAction.TOOL_CALL_ACTION_UNSPECIFIED
+    );
     this.setMapValues(toolCall.getArgsMap(), this.stringifyMap(payload.args));
     return this.response({ toolCall });
   }
 
   /** Builds a tool-call result output packet. */
-  toolCallResultMessage(payload: AgentToolCallResultPayload): TalkOutput {
+  toolCallResultMessage(payload: AgentToolResultPayload): TalkOutput {
     const toolCallResult = new ConversationToolCallResult();
     toolCallResult.setId(payload.id || "");
-    toolCallResult.setToolid(payload.toolId || "");
-    toolCallResult.setName(payload.name || "");
-    if (payload.action !== undefined) {
-      toolCallResult.setAction(payload.action);
-    }
+    toolCallResult.setToolid(payload.toolId);
+    toolCallResult.setName(payload.toolName);
+    toolCallResult.setAction(
+      payload.action ?? ToolCallAction.TOOL_CALL_ACTION_UNSPECIFIED
+    );
     this.setMapValues(
       toolCallResult.getResultMap(),
       this.stringifyResult(payload.result, payload.success ?? true)
     );
     return this.response({ toolCallResult });
+  }
+
+  /** Builds a transfer conversation action packet. */
+  transferMessage(
+    id?: string,
+    args?: AgentStringMap | null,
+    options: AgentToolActionOptions = {}
+  ): TalkOutput {
+    return this.toolActionMessage({
+      id,
+      toolId: options.toolId,
+      toolName: options.toolName,
+      defaultToolName: AGENTKIT_TOOL_NAME_TRANSFER_CONVERSATION,
+      action: ToolCallAction.TOOL_CALL_ACTION_TRANSFER_CONVERSATION,
+      args,
+    });
+  }
+
+  /** Builds an end conversation action packet. */
+  endConversationMessage(
+    id?: string,
+    args?: AgentStringMap | null,
+    options: AgentToolActionOptions = {}
+  ): TalkOutput {
+    return this.toolActionMessage({
+      id,
+      toolId: options.toolId,
+      toolName: options.toolName,
+      defaultToolName: AGENTKIT_TOOL_NAME_END_CONVERSATION,
+      action: ToolCallAction.TOOL_CALL_ACTION_END_CONVERSATION,
+      args,
+    });
+  }
+
+  private toolActionMessage(payload: AgentToolActionPayload): TalkOutput {
+    const toolCall = new ConversationToolCall();
+    toolCall.setId(payload.id || "");
+    toolCall.setToolid(payload.toolId || `agentkit-tool-${randomUUID()}`);
+    toolCall.setName(payload.toolName || payload.defaultToolName);
+    toolCall.setAction(payload.action);
+    this.setMapValues(toolCall.getArgsMap(), this.stringifyMap(payload.args));
+    return this.response({ toolCall });
   }
 
   /** Builds a non-success AgentKit error output packet. */

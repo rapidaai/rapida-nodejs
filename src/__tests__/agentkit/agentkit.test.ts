@@ -159,9 +159,11 @@ describe("AgentKitAgent", () => {
     expect(transfer.getToolcall()?.getAction()).toBe(
       ToolCallAction.TOOL_CALL_ACTION_TRANSFER_CONVERSATION
     );
+    expect(transfer.getToolcall()?.getName()).toBe("transfer_conversation");
     expect(terminate.getToolcall()?.getAction()).toBe(
       ToolCallAction.TOOL_CALL_ACTION_END_CONVERSATION
     );
+    expect(terminate.getToolcall()?.getName()).toBe("end_conversation");
   });
 
   it("detects request types and extracts identifiers", () => {

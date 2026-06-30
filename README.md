@@ -238,11 +238,11 @@ Convenience methods available on every `Agent` instance:
 - `reply(message)`
 - `sendAssistant(message)`
 - `sendUser(message)`
-- `callTool(payload)`
-- `sendToolResult(payload)`
+- `toolCall(payload)`
+- `toolResult(payload)`
 - `interrupt(id?)`
-- `transfer(args?)`
-- `endConversation(args?)`
+- `transfer(args?, options?)`
+- `endConversation(args?, options?)`
 - `error(payload)`
 - `observability(record)`
 - `log(payload)`

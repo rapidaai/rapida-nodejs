@@ -196,13 +196,13 @@ describe("AgentRunner", () => {
     const tool = runner.toolCallMessage({
       id: "m-1",
       toolId: "tool-1",
-      name: "search",
+      toolName: "search",
       args: { query: "rapida", limit: 5 },
     });
     const result = runner.toolCallResultMessage({
       id: "m-1",
       toolId: "tool-1",
-      name: "search",
+      toolName: "search",
       result: "done",
       success: false,
     });
@@ -217,9 +217,15 @@ describe("AgentRunner", () => {
     expect(user.getUser()?.getText()).toBe("from assistant");
 
     expect(tool.getDataCase()).toBe(TalkOutput.DataCase.TOOLCALL);
+    expect(tool.getToolcall()?.getAction()).toBe(
+      ToolCallAction.TOOL_CALL_ACTION_UNSPECIFIED
+    );
     expect(tool.getToolcall()?.getArgsMap().get("limit")).toBe("5");
 
     expect(result.getDataCase()).toBe(TalkOutput.DataCase.TOOLCALLRESULT);
+    expect(result.getToolcallresult()?.getAction()).toBe(
+      ToolCallAction.TOOL_CALL_ACTION_UNSPECIFIED
+    );
     expect(result.getToolcallresult()?.getResultMap().get("success")).toBe(
       "false"
     );
@@ -227,6 +233,29 @@ describe("AgentRunner", () => {
     expect(error.getDataCase()).toBe(TalkOutput.DataCase.ERROR);
     expect(error.getSuccess()).toBe(false);
     expect(error.getError()?.getErrormessage()).toBe("failed");
+  });
+
+  it("allows explicit actions on general tool packets", () => {
+    const tool = runner.toolCallMessage({
+      id: "m-1",
+      toolId: "tool-1",
+      toolName: "custom_transfer_log",
+      action: ToolCallAction.TOOL_CALL_ACTION_TRANSFER_CONVERSATION,
+    });
+    const result = runner.toolCallResultMessage({
+      id: "m-1",
+      toolId: "tool-1",
+      toolName: "custom_transfer_log",
+      action: ToolCallAction.TOOL_CALL_ACTION_TRANSFER_CONVERSATION,
+      result: { status: "completed" },
+    });
+
+    expect(tool.getToolcall()?.getAction()).toBe(
+      ToolCallAction.TOOL_CALL_ACTION_TRANSFER_CONVERSATION
+    );
+    expect(result.getToolcallresult()?.getAction()).toBe(
+      ToolCallAction.TOOL_CALL_ACTION_TRANSFER_CONVERSATION
+    );
   });
 
   it("builds observability log, event and metric output packets", () => {
@@ -276,6 +305,51 @@ describe("AgentRunner", () => {
       "custom.latency_ms"
     );
     expect(metric.getObservability()?.getMetric()?.getValue()).toBe("42");
+  });
+
+  it("names transfer and end-conversation action tool calls", async () => {
+    class ActionAgent extends Agent {
+      async onUser(user: AgentUserMessage) {
+        if (user.text === "transfer") {
+          await this.transfer(
+            { to: "+15550001234" },
+            { toolId: "", toolName: "" }
+          );
+          return;
+        }
+        await this.endConversation(
+          { reason: "done" },
+          { toolId: "end-tool-1", toolName: "custom_end_conversation" }
+        );
+      }
+    }
+
+    const call = new FakeAgentKitCall();
+    Agent.runner(ActionAgent).talk(call as any);
+
+    call.emit("data", inputWithInitialization());
+    call.emit("data", inputWithUser("m-transfer", "transfer"));
+    call.emit("data", inputWithUser("m-end", "disconnect"));
+    await flushStream();
+
+    const toolCalls = call.write.mock.calls
+      .map(([packet]) => packet as TalkOutput)
+      .filter((packet) => packet.getDataCase() === TalkOutput.DataCase.TOOLCALL)
+      .map((packet) => packet.getToolcall());
+
+    expect(toolCalls).toHaveLength(2);
+    expect(toolCalls[0]?.getId()).toBe("m-transfer");
+    expect(toolCalls[0]?.getToolid()).toMatch(/^agentkit-tool-/);
+    expect(toolCalls[0]?.getName()).toBe("transfer_conversation");
+    expect(toolCalls[0]?.getAction()).toBe(
+      ToolCallAction.TOOL_CALL_ACTION_TRANSFER_CONVERSATION
+    );
+    expect(toolCalls[1]?.getId()).toBe("m-end");
+    expect(toolCalls[1]?.getToolid()).toBe("end-tool-1");
+    expect(toolCalls[1]?.getName()).toBe("custom_end_conversation");
+    expect(toolCalls[1]?.getAction()).toBe(
+      ToolCallAction.TOOL_CALL_ACTION_END_CONVERSATION
+    );
   });
 
   it("creates one Agent instance per talk stream", async () => {
