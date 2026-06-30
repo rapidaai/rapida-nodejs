@@ -328,7 +328,7 @@ describe("AgentRunner", () => {
     expect(secondReply!.getAssistant()?.getText()).toBe("reply:beta");
   });
 
-  it("lets agents push logs, events and metrics with conversation context", async () => {
+  it("lets agents push logs, events and metrics with payload attributes", async () => {
     class TelemetryAgent extends Agent {
       async onUser(user: AgentUserMessage) {
         await this.log({
@@ -367,7 +367,12 @@ describe("AgentRunner", () => {
       observabilityPackets[0].getObservability()?.getLog()?.getContextMap().get(
         "contextId"
       )
-    ).toBe("ctx-telemetry");
+    ).toBeUndefined();
+    expect(
+      observabilityPackets[0].getObservability()?.getLog()?.getAttributesMap().get(
+        "messageId"
+      )
+    ).toBe("m-1");
     expect(
       observabilityPackets[1].getObservability()?.getEvent()?.getEvent()
     ).toBe("example.user_handled");
@@ -383,14 +388,7 @@ describe("AgentRunner", () => {
       }
     }
 
-    const talk = Agent.runner({
-      default: InstrumentedAgent,
-      instrumentation: {
-        scope: "agentkit.test",
-        component: "test-agent",
-        attributes: { sdk: "nodejs" },
-      },
-    }).talk;
+    const talk = Agent.runner(InstrumentedAgent).talk;
     const call = new FakeAgentKitCall();
 
     talk(call as any);
@@ -428,9 +426,9 @@ describe("AgentRunner", () => {
       observabilityPackets[0]
         .getObservability()
         ?.getEvent()
-        ?.getContextMap()
+        ?.getAttributesMap()
         .get("assistantId")
-    ).toBe("asst-auto");
+    ).toBeUndefined();
   });
 
   it("routes conversations by assistant ID and version", async () => {

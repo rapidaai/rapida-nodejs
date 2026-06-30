@@ -193,22 +193,9 @@ const server = new AgentKitServer({
 });
 ```
 
-Or attach app-level scope and dimensions to automatic SDK records:
-
-```typescript
-const server = new AgentKitServer({
-  agent: Agent.runner({
-    default: SupportAgent,
-    instrumentation: {
-      scope: 'agentkit.production',
-      component: 'support-agent',
-      attributes: {
-        region: 'us-east',
-      },
-    },
-  }),
-});
-```
+The AgentKit server enriches observability records with platform correlation
+fields such as project ID, organization ID, scope, scope attributes, and
+conversation context.
 
 Agents can also push explicit logs, events, and metrics:
 
@@ -449,17 +436,6 @@ The SDK is built in three formats:
 - **DTS** - `dist/index.d.ts` / `dist/index.d.mts` - TypeScript type definitions
 
 All formats are automatically selected based on your module resolution in `package.json`.
-
-## Known Limitations
-
-The following features are not yet available in the proto definitions and will return "not implemented" errors:
-
-- `GetAllDeployment()` - Marketplace API proto definitions not available
-- `GetAllProvider()`, `GetAllToolProvider()` - Provider API proto definitions not available
-- `CreateToolCredential()` - Tool credential management not yet implemented
-- Content type utilities - Core Content proto type not available in common_pb
-
-These will be implemented once the corresponding proto definitions are generated and available.
 
 ## Development
 

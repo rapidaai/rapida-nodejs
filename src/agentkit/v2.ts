@@ -219,17 +219,13 @@ export interface AgentErrorPayload {
 /**
  * Shared fields accepted by log/event/metric helpers.
  *
- * `context` is intended for correlation fields such as conversation ID, while
- * `attributes` carries record-specific dimensions.
+ * The AgentKit server owns platform correlation fields such as project ID,
+ * organization ID, scope, scope attributes, and context. SDK callers only send
+ * record-specific attributes and payload details.
  */
 export interface AgentObservabilityPayload {
   id?: string;
-  projectId?: string;
-  organizationId?: string;
-  scope?: string;
-  scopeAttributes?: AgentStringMap | null;
   attributes?: AgentStringMap | null;
-  context?: AgentStringMap | null;
   occurredAt?: Date;
 }
 
@@ -260,12 +256,6 @@ export interface AgentMetricPayload extends AgentObservabilityPayload {
  */
 export interface AgentInstrumentationOptions {
   enabled?: boolean;
-  projectId?: string;
-  organizationId?: string;
-  scope?: string;
-  component?: string;
-  attributes?: AgentStringMap | null;
-  context?: AgentStringMap | null;
 }
 
 /**
@@ -320,13 +310,10 @@ export type AgentRunnerInput<T extends Agent = Agent> =
   | AgentClass<T>
   | AgentRunnerOptions<T>;
 
+const AGENTKIT_COMPONENT = "agentkit-sdk";
+
 type AgentObservabilityProtoBase = {
-  setProjectid(value: string): void;
-  setOrganizationid(value: string): void;
-  setScope(value: string): void;
-  getScopeattributesMap(): { set(key: string, value: string): unknown };
   getAttributesMap(): { set(key: string, value: string): unknown };
-  getContextMap(): { set(key: string, value: string): unknown };
   setOccurredat(value?: Timestamp): void;
 };
 
@@ -454,17 +441,17 @@ export class AgentConversation {
 
   /** Emits an observability log record to Rapida. */
   log(payload: AgentLogPayload): Promise<void> {
-    return this.observability(this.runner.logRecord(payload, this));
+    return this.observability(this.runner.logRecord(payload));
   }
 
   /** Emits an observability event record to Rapida. */
   event(payload: AgentEventPayload): Promise<void> {
-    return this.observability(this.runner.eventRecord(payload, this));
+    return this.observability(this.runner.eventRecord(payload));
   }
 
   /** Emits an observability metric record to Rapida. */
   metric(payload: AgentMetricPayload): Promise<void> {
-    return this.observability(this.runner.metricRecord(payload, this));
+    return this.observability(this.runner.metricRecord(payload));
   }
 
   /**
@@ -673,10 +660,7 @@ export class AgentRunner<T extends Agent = Agent> {
   /** Instance-level service definition for consumers that prefer object access. */
   readonly service = AgentKitService;
   private readonly options: AgentRunnerOptions<T>;
-  private readonly instrumentation: Required<
-    Pick<AgentInstrumentationOptions, "enabled" | "scope" | "component">
-  > &
-    Omit<AgentInstrumentationOptions, "enabled" | "scope" | "component">;
+  private readonly instrumentation: Required<AgentInstrumentationOptions>;
 
   /**
    * Creates a runner from a single agent class or a routing configuration.
@@ -952,16 +936,13 @@ export class AgentRunner<T extends Agent = Agent> {
   }
 
   /** Builds an observability log record. */
-  logRecord(
-    payload: AgentLogPayload,
-    conversation?: AgentConversation
-  ): ObservabilityRecord {
+  logRecord(payload: AgentLogPayload): ObservabilityRecord {
     const log = new ObservabilityLogRecord();
     log.setId(payload.id || this.newTelemetryId());
     log.setKind(ObservabilityRecordKind.OBSERVABILITY_RECORD_KIND_LOG);
     log.setLevel(payload.level || "info");
     log.setMessage(payload.message);
-    this.applyObservabilityBase(log, payload, conversation);
+    this.applyObservabilityBase(log, payload);
 
     const record = new ObservabilityRecord();
     record.setLog(log);
@@ -969,16 +950,13 @@ export class AgentRunner<T extends Agent = Agent> {
   }
 
   /** Builds an observability event record. */
-  eventRecord(
-    payload: AgentEventPayload,
-    conversation?: AgentConversation
-  ): ObservabilityRecord {
+  eventRecord(payload: AgentEventPayload): ObservabilityRecord {
     const event = new ObservabilityEventRecord();
     event.setId(payload.id || this.newTelemetryId());
     event.setKind(ObservabilityRecordKind.OBSERVABILITY_RECORD_KIND_EVENT);
     event.setEvent(payload.event);
-    event.setComponent(payload.component || this.instrumentation.component);
-    this.applyObservabilityBase(event, payload, conversation);
+    event.setComponent(payload.component || AGENTKIT_COMPONENT);
+    this.applyObservabilityBase(event, payload);
 
     const record = new ObservabilityRecord();
     record.setEvent(event);
@@ -986,17 +964,14 @@ export class AgentRunner<T extends Agent = Agent> {
   }
 
   /** Builds an observability metric record. */
-  metricRecord(
-    payload: AgentMetricPayload,
-    conversation?: AgentConversation
-  ): ObservabilityRecord {
+  metricRecord(payload: AgentMetricPayload): ObservabilityRecord {
     const metric = new ObservabilityMetricRecord();
     metric.setId(payload.id || this.newTelemetryId());
     metric.setKind(ObservabilityRecordKind.OBSERVABILITY_RECORD_KIND_METRIC);
     metric.setName(payload.name);
     metric.setValue(String(payload.value));
     metric.setDescription(payload.description || "");
-    this.applyObservabilityBase(metric, payload, conversation);
+    this.applyObservabilityBase(metric, payload);
 
     const record = new ObservabilityRecord();
     record.setMetric(metric);
@@ -1266,8 +1241,7 @@ export class AgentRunner<T extends Agent = Agent> {
         {
           event,
           attributes,
-        },
-        conversation
+        }
       )
     );
   }
@@ -1282,7 +1256,7 @@ export class AgentRunner<T extends Agent = Agent> {
 
     await this.safeObservability(
       conversation,
-      this.metricRecord(payload, conversation)
+      this.metricRecord(payload)
     );
   }
 
@@ -1294,7 +1268,7 @@ export class AgentRunner<T extends Agent = Agent> {
       return;
     }
 
-    await this.safeObservability(conversation, this.logRecord(payload, conversation));
+    await this.safeObservability(conversation, this.logRecord(payload));
   }
 
   private async safeObservability(
@@ -1310,79 +1284,33 @@ export class AgentRunner<T extends Agent = Agent> {
 
   private normalizeInstrumentation(
     instrumentation?: boolean | AgentInstrumentationOptions
-  ): Required<Pick<AgentInstrumentationOptions, "enabled" | "scope" | "component">> &
-    Omit<AgentInstrumentationOptions, "enabled" | "scope" | "component"> {
+  ): Required<AgentInstrumentationOptions> {
     if (instrumentation === false) {
       return {
         enabled: false,
-        scope: "agentkit.nodejs",
-        component: "agentkit-sdk",
       };
     }
 
     if (instrumentation === true || instrumentation === undefined) {
       return {
         enabled: true,
-        scope: "agentkit.nodejs",
-        component: "agentkit-sdk",
       };
     }
 
     return {
-      ...instrumentation,
       enabled: instrumentation.enabled ?? true,
-      scope: instrumentation.scope || "agentkit.nodejs",
-      component: instrumentation.component || "agentkit-sdk",
     };
   }
 
   private applyObservabilityBase(
     record: AgentObservabilityProtoBase,
-    payload: AgentObservabilityPayload,
-    conversation?: AgentConversation
+    payload: AgentObservabilityPayload
   ): void {
-    record.setProjectid(
-      payload.projectId || this.instrumentation.projectId || ""
-    );
-    record.setOrganizationid(
-      payload.organizationId || this.instrumentation.organizationId || ""
-    );
-    record.setScope(payload.scope || this.instrumentation.scope);
     record.setOccurredat(this.timestampFromDate(payload.occurredAt || new Date()));
-
-    this.setMapValues(
-      record.getScopeattributesMap(),
-      this.stringifyMap(payload.scopeAttributes)
-    );
     this.setMapValues(
       record.getAttributesMap(),
-      this.stringifyMap({
-        ...(this.instrumentation.attributes || {}),
-        ...(payload.attributes || {}),
-      })
+      this.stringifyMap(payload.attributes)
     );
-    this.setMapValues(
-      record.getContextMap(),
-      this.stringifyMap({
-        ...(this.instrumentation.context || {}),
-        ...this.conversationContext(conversation),
-        ...(payload.context || {}),
-      })
-    );
-  }
-
-  private conversationContext(
-    conversation?: AgentConversation
-  ): Record<string, string> {
-    if (!conversation) {
-      return {};
-    }
-
-    return {
-      contextId: conversation.contextId,
-      assistantId: conversation.assistantId || "",
-      assistantVersion: conversation.assistantVersion || "",
-    };
   }
 
   private timestampFromDate(date: Date): Timestamp {
