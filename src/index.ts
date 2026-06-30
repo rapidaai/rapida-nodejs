@@ -37,9 +37,19 @@ export * from "@/rapida/utils/rapida_value";
 export * from "@/rapida/utils/rapida_source";
 export {
   AgentKitAgent,
+  AgentKitHealthCheckHandler,
+  AgentKitHealthCheckRequest,
+  AgentKitHealthCheckResponse,
+  AgentKitHealthService,
+  AgentKitHealthServingStatus,
+  AgentKitHTTPHealthCheckOptions,
+  AgentKitMiddleware,
+  AgentKitMiddlewareContext,
+  AgentKitMiddlewareFunction,
+  AgentKitMiddlewareInterceptor,
+  AgentKitMiddlewareResult,
   AgentKitServer,
-  AuthConfig,
-  AuthorizationInterceptor,
+  Middleware,
   SSLConfig,
 } from "@/rapida/agentkit";
 export * from "@/rapida/agentkit/v2";

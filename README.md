@@ -65,7 +65,7 @@ The SDK provides clients for the following Rapida services:
 
 ## AgentKit
 
-AgentKit lets you host a custom voice AI agent behind the `AgentKit.Talk` bidirectional gRPC stream. The SDK handles the gRPC server, optional token authentication, optional TLS, and response/request helper methods. Your agent owns the LLM integration, tool execution, and conversation logic.
+AgentKit lets you host a custom voice AI agent behind the `AgentKit.Talk` bidirectional gRPC stream. The SDK handles the gRPC server, optional middleware, optional TLS, and response/request helper methods. Your agent owns the LLM integration, tool execution, and conversation logic.
 
 ### AgentKit V2
 
@@ -74,6 +74,7 @@ AgentKit v2 creates one `Agent` instance per conversation. Application code does
 ```typescript
 import {
   Agent,
+  AgentKitHealthServingStatus,
   AgentKitServer,
 } from '@rapidaai/nodejs';
 
@@ -99,6 +100,75 @@ const server = new AgentKitServer({
 });
 
 await server.start();
+```
+
+AgentKit servers register the standard `grpc.health.v1.Health/Check` service
+on the same gRPC port by default. This works with Kubernetes gRPC probes:
+
+```yaml
+readinessProbe:
+  grpc:
+    port: 50051
+  initialDelaySeconds: 5
+  periodSeconds: 10
+
+livenessProbe:
+  grpc:
+    port: 50051
+  initialDelaySeconds: 10
+  periodSeconds: 20
+```
+
+The health service is registered on the same server and bypasses application
+middleware automatically, so cluster probes do not need AgentKit credentials.
+Disable the health service only if you register your own:
+
+```typescript
+const server = new AgentKitServer({
+  agent: Agent.runner(SupportAgent),
+  port: 50051,
+  healthCheck: false,
+});
+```
+
+When the process is alive but should be removed from service endpoints, mark it
+not serving:
+
+```typescript
+server.setHealthStatus(AgentKitHealthServingStatus.NOT_SERVING);
+```
+
+Kubernetes `httpGet` probes cannot share the AgentKit gRPC port in `grpc-js`.
+Use the gRPC probe above for same-port health checks. If your platform requires
+HTTP probes, provide `httpHealthCheck` to expose a separate HTTP endpoint:
+
+```typescript
+const server = new AgentKitServer({
+  agent: Agent.runner(SupportAgent),
+  port: 50051,
+  httpHealthCheck: {
+    port: 8080,
+    path: '/healthz',
+  },
+});
+```
+
+```yaml
+ports:
+  - name: grpc
+    containerPort: 50051
+  - name: health
+    containerPort: 8080
+
+readinessProbe:
+  httpGet:
+    path: /healthz
+    port: health
+
+livenessProbe:
+  httpGet:
+    path: /healthz
+    port: health
 ```
 
 For multiple agents on the same server, route by assistant ID and version from the initialization packet:
@@ -313,33 +383,60 @@ The expected stream flow is:
 - `getConversationId(request)`
 - `getAssistantId(request)`
 
-### Auth and TLS
+### Middleware and TLS
 
-Token auth checks incoming gRPC metadata. By default it reads the `authorization` metadata key.
+Use `middleware` when incoming AgentKit calls need validation, logging,
+allowlisting, or request-scoped setup before they reach your agent. Middleware
+receives gRPC metadata, normalized metadata string lookup, method path, and
+peer details. SDK-owned health checks bypass middleware automatically.
 
 ```typescript
+import {
+  AgentKitServer,
+  Middleware,
+  type AgentKitMiddlewareContext,
+} from '@rapidaai/nodejs';
+
+class AuthMiddleware extends Middleware {
+  constructor(private readonly token?: string) {
+    super();
+  }
+
+  handle({ metadataValue, reject }: AgentKitMiddlewareContext): void {
+    if (!this.token) {
+      return;
+    }
+    if (metadataValue('authorization') !== this.token) {
+      reject('Invalid AgentKit token');
+    }
+  }
+}
+
 const server = new AgentKitServer({
   agent: new MyAgent(),
   port: 50051,
-  authConfig: {
-    enabled: true,
-    token: process.env.AGENTKIT_TOKEN,
-  },
+  middleware: [new AuthMiddleware(process.env.AGENTKIT_TOKEN)],
 });
 
 await server.start();
 ```
 
-You can also provide a custom validator:
+Return `false` for default rejection, or call `reject()` for custom gRPC status
+details. Middleware can also be a function and runs in array order:
 
 ```typescript
 const server = new AgentKitServer({
   agent: new MyAgent(),
-  authConfig: {
-    enabled: true,
-    headerKey: 'x-agent-token',
-    validator: (token, metadata) => token === process.env.AGENTKIT_TOKEN,
-  },
+  middleware: [
+    ({ method, peer }) => {
+      console.log('AgentKit request', { method, peer });
+    },
+    ({ metadataValue, reject }) => {
+      if (metadataValue('x-agent-token') !== process.env.AGENTKIT_TOKEN) {
+        reject('Invalid AgentKit token');
+      }
+    },
+  ],
 });
 ```
 
@@ -429,13 +526,13 @@ console.log('Knowledge bases:', response.getKnowledgesList());
 
 ## Build Output
 
-The SDK is built in three formats:
+The SDK publishes a Node-compatible CommonJS bundle with TypeScript definitions:
 
-- **ESM** - `dist/index.mjs` - For use with `import` statements
-- **CJS** - `dist/index.cjs` - For use with `require()` statements  
-- **DTS** - `dist/index.d.ts` / `dist/index.d.mts` - TypeScript type definitions
+- **Runtime** - `dist/index.js` - Works with `require()` and Node ESM `import`
+- **Types** - `dist/index.d.ts` - TypeScript type definitions
 
-All formats are automatically selected based on your module resolution in `package.json`.
+Package exports point both `import` and `require` consumers to the supported
+runtime entry.
 
 ## Development
 

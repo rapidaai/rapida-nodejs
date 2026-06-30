@@ -1,5 +1,7 @@
 import {
+  type Deadline,
   handleBidiStreamingCall,
+  handleUnaryCall,
   Metadata,
   Server,
   ServerCredentials,
@@ -9,10 +11,13 @@ import {
   ServerInterceptor,
   ServerListenerBuilder,
   ServerMethodDefinition,
+  ServiceDefinition,
   UntypedServiceImplementation,
   status,
 } from "@grpc/grpc-js";
 import * as fs from "fs";
+import * as http from "http";
+import type { AddressInfo } from "net";
 
 import { Error as ProtoError } from "@/rapida/clients/protos/common_pb";
 import { TalkInput, TalkOutput } from "@/rapida/clients/protos/agentkit_pb";
@@ -26,6 +31,77 @@ import {
 } from "@/rapida/clients/protos/talk-api_pb";
 
 const { AgentKitService } = require("../clients/protos/agentkit_grpc_pb");
+
+const AGENTKIT_HEALTH_CHECK_PATH = "/grpc.health.v1.Health/Check";
+const DEFAULT_AGENTKIT_HTTP_HEALTH_HOST = "0.0.0.0";
+const DEFAULT_AGENTKIT_HTTP_HEALTH_PORT = 8080;
+const DEFAULT_AGENTKIT_HTTP_HEALTH_PATH = "/healthz";
+
+/**
+ * Standard gRPC health-check status values.
+ *
+ * Kubernetes gRPC probes expect `SERVING` from `grpc.health.v1.Health/Check`.
+ */
+export enum AgentKitHealthServingStatus {
+  UNKNOWN = 0,
+  SERVING = 1,
+  NOT_SERVING = 2,
+  SERVICE_UNKNOWN = 3,
+}
+
+/** Request shape for `grpc.health.v1.Health/Check`. */
+export interface AgentKitHealthCheckRequest {
+  service: string;
+}
+
+/** Response shape for `grpc.health.v1.Health/Check`. */
+export interface AgentKitHealthCheckResponse {
+  status: AgentKitHealthServingStatus;
+}
+
+export type AgentKitHealthCheckHandler = handleUnaryCall<
+  AgentKitHealthCheckRequest,
+  AgentKitHealthCheckResponse
+>;
+
+/**
+ * Optional HTTP health endpoint for Kubernetes HTTP probes.
+ *
+ * This starts a separate HTTP/1 server because the AgentKit gRPC server owns
+ * the gRPC port. The endpoint returns 200 only when health status is `SERVING`.
+ */
+export interface AgentKitHTTPHealthCheckOptions {
+  /** Host/IP to bind. Defaults to "0.0.0.0". */
+  host?: string;
+  /** Port to bind. Defaults to 8080. */
+  port?: number;
+  /** Health endpoint path. Defaults to "/healthz". */
+  path?: string;
+}
+
+interface AgentKitHTTPHealthCheckConfig {
+  host: string;
+  port: number;
+  path: string;
+}
+
+/**
+ * Standard `grpc.health.v1.Health` service definition.
+ *
+ * It is hand-written to avoid requiring generated health-check artifacts in
+ * every SDK package. The wire format matches the public gRPC health protocol.
+ */
+export const AgentKitHealthService = {
+  check: {
+    path: AGENTKIT_HEALTH_CHECK_PATH,
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: serializeHealthCheckRequest,
+    requestDeserialize: deserializeHealthCheckRequest,
+    responseSerialize: serializeHealthCheckResponse,
+    responseDeserialize: deserializeHealthCheckResponse,
+  },
+} satisfies ServiceDefinition<UntypedServiceImplementation>;
 
 /**
  * Key/value input accepted by AgentKit helper methods for tool arguments and
@@ -46,6 +122,135 @@ export type AgentKitCall = ServerDuplexStream<TalkInput, TalkOutput>;
  * gRPC handler signature for the AgentKit `Talk` method.
  */
 export type AgentKitTalkHandler = handleBidiStreamingCall<TalkInput, TalkOutput>;
+
+function serializeHealthCheckRequest(
+  request: AgentKitHealthCheckRequest
+): Buffer {
+  if (!request.service) {
+    return Buffer.alloc(0);
+  }
+
+  const service = Buffer.from(request.service, "utf8");
+  return Buffer.concat([
+    Buffer.from([0x0a]),
+    encodeHealthVarint(service.length),
+    service,
+  ]);
+}
+
+function deserializeHealthCheckRequest(buffer: Buffer): AgentKitHealthCheckRequest {
+  let service = "";
+  let offset = 0;
+
+  while (offset < buffer.length) {
+    const tag = readHealthVarint(buffer, offset);
+    offset = tag.offset;
+    const field = tag.value >> 3;
+    const wireType = tag.value & 0x07;
+
+    if (field === 1 && wireType === 2) {
+      const length = readHealthVarint(buffer, offset);
+      offset = length.offset;
+      service = buffer.subarray(offset, offset + length.value).toString("utf8");
+      offset += length.value;
+      continue;
+    }
+
+    offset = skipHealthField(buffer, offset, wireType);
+  }
+
+  return { service };
+}
+
+function serializeHealthCheckResponse(
+  response: AgentKitHealthCheckResponse
+): Buffer {
+  return Buffer.concat([
+    Buffer.from([0x08]),
+    encodeHealthVarint(response.status),
+  ]);
+}
+
+function deserializeHealthCheckResponse(
+  buffer: Buffer
+): AgentKitHealthCheckResponse {
+  let statusValue = AgentKitHealthServingStatus.UNKNOWN;
+  let offset = 0;
+
+  while (offset < buffer.length) {
+    const tag = readHealthVarint(buffer, offset);
+    offset = tag.offset;
+    const field = tag.value >> 3;
+    const wireType = tag.value & 0x07;
+
+    if (field === 1 && wireType === 0) {
+      const value = readHealthVarint(buffer, offset);
+      offset = value.offset;
+      statusValue = value.value as AgentKitHealthServingStatus;
+      continue;
+    }
+
+    offset = skipHealthField(buffer, offset, wireType);
+  }
+
+  return { status: statusValue };
+}
+
+function encodeHealthVarint(value: number): Buffer {
+  const bytes: number[] = [];
+  let remaining = value >>> 0;
+
+  do {
+    let byte = remaining & 0x7f;
+    remaining >>>= 7;
+    if (remaining > 0) {
+      byte |= 0x80;
+    }
+    bytes.push(byte);
+  } while (remaining > 0);
+
+  return Buffer.from(bytes);
+}
+
+function readHealthVarint(
+  buffer: Buffer,
+  offset: number
+): { value: number; offset: number } {
+  let value = 0;
+  let shift = 0;
+
+  while (offset < buffer.length) {
+    const byte = buffer[offset++];
+    value |= (byte & 0x7f) << shift;
+    if ((byte & 0x80) === 0) {
+      return { value, offset };
+    }
+    shift += 7;
+  }
+
+  throw new Error("Invalid gRPC health-check varint");
+}
+
+function skipHealthField(
+  buffer: Buffer,
+  offset: number,
+  wireType: number
+): number {
+  switch (wireType) {
+    case 0:
+      return readHealthVarint(buffer, offset).offset;
+    case 1:
+      return offset + 8;
+    case 2: {
+      const length = readHealthVarint(buffer, offset);
+      return length.offset + length.value;
+    }
+    case 5:
+      return offset + 4;
+    default:
+      throw new Error(`Unsupported gRPC health-check wire type: ${wireType}`);
+  }
+}
 
 /**
  * Minimal service shape required by `AgentKitServer`.
@@ -69,22 +274,60 @@ export interface SSLConfigOptions {
   caCertPath?: string;
 }
 
-/**
- * Token authentication configuration for incoming AgentKit streams.
- */
-export interface AuthConfigOptions {
-  /** Enables or disables auth enforcement. Defaults to false. */
-  enabled?: boolean;
-  /** Static token expected in incoming gRPC metadata. */
-  token?: string;
-  /** Metadata key used for token lookup. Defaults to "authorization". */
-  headerKey?: string;
+/** Incoming gRPC call context passed to AgentKit middleware. */
+export interface AgentKitMiddlewareContext {
+  /** Incoming gRPC metadata for this AgentKit stream. */
+  metadata: Metadata;
+  /** Full gRPC method path, for example `/talk_api.AgentKit/Talk`. */
+  method: string;
+  /** Remote peer reported by `@grpc/grpc-js`. */
+  peer: string;
+  /** Host reported by `@grpc/grpc-js`. */
+  host: string;
+  /** Deadline reported by `@grpc/grpc-js`. */
+  deadline: Deadline;
+  /** Returns the first metadata value as a string. */
+  metadataValue(key: string): string | undefined;
   /**
-   * Custom token validator. Takes precedence over static token comparison.
+   * Rejects the call before it reaches the agent.
    *
-   * Return true to allow the stream, false to reject it with UNAUTHENTICATED.
+   * Defaults to `UNAUTHENTICATED` with a generic middleware rejection message.
    */
-  validator?: (token: string | undefined, metadata: Metadata) => boolean;
+  reject(details?: string, code?: number, metadata?: Metadata): void;
+}
+
+export type AgentKitMiddlewareResult =
+  | void
+  | boolean
+  | Promise<void | boolean>;
+
+/**
+ * Function middleware that runs before an incoming AgentKit gRPC call reaches
+ * the registered service.
+ */
+export type AgentKitMiddlewareFunction = (
+  context: AgentKitMiddlewareContext
+) => AgentKitMiddlewareResult;
+
+/**
+ * Base class for reusable AgentKit middleware.
+ *
+ * Return false or call `context.reject()` to reject the call. Returning true or
+ * undefined allows the next middleware to run.
+ */
+export abstract class Middleware {
+  abstract handle(context: AgentKitMiddlewareContext): AgentKitMiddlewareResult;
+}
+
+/**
+ * Middleware can be supplied as a function or as a `Middleware` instance.
+ */
+export type AgentKitMiddleware = AgentKitMiddlewareFunction | Middleware;
+
+interface AgentKitMiddlewareRejection {
+  code: number;
+  details: string;
+  metadata: Metadata;
 }
 
 /**
@@ -124,39 +367,13 @@ export class SSLConfig {
 }
 
 /**
- * Runtime token-auth configuration for the AgentKit gRPC server.
- */
-export class AuthConfig {
-  /** Whether token auth is enforced. */
-  enabled: boolean;
-  /** Static token value used when no validator is supplied. */
-  token?: string;
-  /** Metadata key used to read the incoming token. */
-  headerKey: string;
-  /** Optional custom validator for token and metadata. */
-  validator?: (token: string | undefined, metadata: Metadata) => boolean;
-
-  constructor({
-    enabled = false,
-    token,
-    headerKey = "authorization",
-    validator,
-  }: AuthConfigOptions = {}) {
-    this.enabled = enabled;
-    this.token = token;
-    this.headerKey = headerKey;
-    this.validator = validator;
-  }
-}
-
-/**
- * gRPC server interceptor that enforces AgentKit token authentication.
+ * gRPC server interceptor that runs AgentKit middleware.
  *
- * Valid streams continue to the agent handler. Invalid streams are rejected
- * with `UNAUTHENTICATED` before user messages are delivered to the agent.
+ * Accepted calls continue to the service handler. Rejected calls are stopped
+ * before user messages are delivered to the agent.
  */
-export class AuthorizationInterceptor {
-  constructor(private readonly authConfig: AuthConfig) {}
+export class AgentKitMiddlewareInterceptor {
+  constructor(private readonly middleware: AgentKitMiddleware[]) {}
 
   /**
    * Interceptor function passed to `@grpc/grpc-js` Server options.
@@ -167,16 +384,27 @@ export class AuthorizationInterceptor {
   ): ServerInterceptingCall => {
     const listener = new ServerListenerBuilder()
       .withOnReceiveMetadata((metadata, next) => {
-        if (this.isAuthorized(metadata)) {
+        if (this.isHealthCheckMethod(methodDescriptor)) {
           next(metadata);
           return;
         }
 
-        call.sendStatus({
-          code: status.UNAUTHENTICATED,
-          details: "Invalid authorization token",
-          metadata: new Metadata(),
-        });
+        void this.runMiddleware(metadata, methodDescriptor, call)
+          .then((rejection) => {
+            if (!rejection) {
+              next(metadata);
+              return;
+            }
+
+            call.sendStatus(rejection);
+          })
+          .catch(() => {
+            call.sendStatus({
+              code: status.INTERNAL,
+              details: "AgentKit middleware failed",
+              metadata: new Metadata(),
+            });
+          });
       })
       .build();
 
@@ -185,23 +413,78 @@ export class AuthorizationInterceptor {
     });
   };
 
-  private isAuthorized(metadata: Metadata): boolean {
-    if (!this.authConfig.enabled) {
-      return true;
-    }
-
-    const token = this.getMetadataValue(metadata, this.authConfig.headerKey);
-    if (this.authConfig.validator) {
-      return this.authConfig.validator(token, metadata);
-    }
-
-    return token === this.authConfig.token;
+  private getMethodPath(
+    methodDescriptor: ServerMethodDefinition<unknown, unknown>
+  ): string {
+    return (
+      (methodDescriptor as ServerMethodDefinition<unknown, unknown> & {
+        path?: string;
+      }).path || ""
+    );
   }
 
-  private getMetadataValue(
+  private isHealthCheckMethod(
+    methodDescriptor: ServerMethodDefinition<unknown, unknown>
+  ): boolean {
+    return this.getMethodPath(methodDescriptor) === AGENTKIT_HEALTH_CHECK_PATH;
+  }
+
+  private async runMiddleware(
     metadata: Metadata,
-    key: string
-  ): string | undefined {
+    methodDescriptor: ServerMethodDefinition<unknown, unknown>,
+    call: ServerInterceptingCallInterface
+  ): Promise<AgentKitMiddlewareRejection | undefined> {
+    const method = this.getMethodPath(methodDescriptor);
+    let rejection: AgentKitMiddlewareRejection | undefined;
+
+    const context: AgentKitMiddlewareContext = {
+      metadata,
+      method,
+      peer: call.getPeer(),
+      host: call.getHost(),
+      deadline: call.getDeadline(),
+      metadataValue: (key: string) => this.getMetadataValue(metadata, key),
+      reject: (
+        details = "Rejected by AgentKit middleware",
+        code = status.UNAUTHENTICATED,
+        responseMetadata = new Metadata()
+      ) => {
+        rejection = { code, details, metadata: responseMetadata };
+      },
+    };
+
+    for (const middleware of this.middleware) {
+      try {
+        const result = await this.runOne(middleware, context);
+        if (result === false && !rejection) {
+          context.reject();
+        }
+        if (rejection) {
+          return rejection;
+        }
+      } catch {
+        return {
+          code: status.INTERNAL,
+          details: "AgentKit middleware failed",
+          metadata: new Metadata(),
+        };
+      }
+    }
+
+    return undefined;
+  }
+
+  private runOne(
+    middleware: AgentKitMiddleware,
+    context: AgentKitMiddlewareContext
+  ): AgentKitMiddlewareResult {
+    if (typeof middleware === "function") {
+      return middleware(context);
+    }
+    return middleware.handle(context);
+  }
+
+  private getMetadataValue(metadata: Metadata, key: string): string | undefined {
     const value = metadata.get(key)[0];
     if (Buffer.isBuffer(value)) {
       return value.toString();
@@ -500,16 +783,28 @@ export interface AgentKitServerOptions {
   port?: number;
   /** Optional TLS configuration. Omit for an insecure local server. */
   sslConfig?: SSLConfigOptions;
-  /** Optional token auth configuration. */
-  authConfig?: AuthConfigOptions;
+  /** Optional middleware pipeline for incoming AgentKit gRPC calls. */
+  middleware?: AgentKitMiddleware[];
+  /**
+   * Registers the standard `grpc.health.v1.Health/Check` service.
+   *
+   * Enabled by default so Kubernetes gRPC probes can check this same port.
+   */
+  healthCheck?: boolean;
+  /**
+   * Optional HTTP health endpoint for Kubernetes HTTP probes.
+   *
+   * Provide this only when an HTTP probe must be exposed on a separate port.
+   */
+  httpHealthCheck?: AgentKitHTTPHealthCheckOptions;
 }
 
 /**
  * Hosts an AgentKit `Talk` bidirectional gRPC service.
  *
  * This class manages server setup, service registration, optional TLS,
- * optional token auth, and lifecycle state. Agent business logic belongs in
- * the supplied `AgentKitAgent` or compatible service implementation.
+ * optional middleware, and lifecycle state. Agent business logic
+ * belongs in the supplied `AgentKitAgent` or compatible service implementation.
  */
 export class AgentKitServer {
   /** Registered AgentKit service implementation. */
@@ -519,21 +814,29 @@ export class AgentKitServer {
   /** Port the server binds to. */
   readonly port: number;
   private readonly sslConfig?: SSLConfig;
-  private readonly authConfig?: AuthConfig;
+  private readonly middleware: AgentKitMiddleware[];
+  private readonly healthCheck: boolean;
+  private readonly httpHealthCheck?: AgentKitHTTPHealthCheckConfig;
+  private healthServingStatus = AgentKitHealthServingStatus.NOT_SERVING;
   private server?: Server;
+  private httpHealthServer?: http.Server;
 
   constructor({
     agent,
     host = "0.0.0.0",
     port = 50051,
     sslConfig,
-    authConfig,
+    middleware = [],
+    healthCheck = true,
+    httpHealthCheck,
   }: AgentKitServerOptions) {
     this.agent = agent;
     this.host = host;
     this.port = port;
     this.sslConfig = sslConfig ? new SSLConfig(sslConfig) : undefined;
-    this.authConfig = authConfig ? new AuthConfig(authConfig) : undefined;
+    this.middleware = middleware;
+    this.healthCheck = healthCheck;
+    this.httpHealthCheck = this.createHTTPHealthCheckConfig(httpHealthCheck);
   }
 
   /**
@@ -541,11 +844,20 @@ export class AgentKitServer {
    */
   async start(): Promise<void> {
     const interceptors: ServerInterceptor[] = [];
-    if (this.authConfig?.enabled) {
-      interceptors.push(new AuthorizationInterceptor(this.authConfig).intercept);
+    if (this.middleware.length > 0) {
+      interceptors.push(
+        new AgentKitMiddlewareInterceptor(this.middleware).intercept
+      );
     }
 
+    this.healthServingStatus = AgentKitHealthServingStatus.NOT_SERVING;
     this.server = new Server({ interceptors });
+    if (this.healthCheck) {
+      this.server.addService(
+        AgentKitHealthService,
+        this.createHealthService()
+      );
+    }
     this.server.addService(
       AgentKitService,
       this.agent as unknown as UntypedServiceImplementation
@@ -559,11 +871,21 @@ export class AgentKitServer {
       this.server!.bindAsync(this.address, credentials, (error) => {
         if (error) {
           this.server = undefined;
+          this.healthServingStatus = AgentKitHealthServingStatus.NOT_SERVING;
           reject(error);
           return;
         }
         this.server!.start();
-        resolve();
+        this.healthServingStatus = AgentKitHealthServingStatus.SERVING;
+        this.startHTTPHealthCheck()
+          .then(resolve)
+          .catch((httpError) => {
+            this.healthServingStatus = AgentKitHealthServingStatus.NOT_SERVING;
+            this.server?.tryShutdown(() => {
+              this.server = undefined;
+              reject(httpError);
+            });
+          });
       });
     });
   }
@@ -576,21 +898,40 @@ export class AgentKitServer {
    * not passed to the runtime.
    */
   async stop(_grace = 5): Promise<void> {
-    if (!this.server) {
+    if (!this.server && !this.httpHealthServer) {
       return;
     }
 
+    this.healthServingStatus = AgentKitHealthServingStatus.NOT_SERVING;
     const server = this.server;
-    await new Promise<void>((resolve, reject) => {
-      server.tryShutdown((error) => {
-        if (error) {
-          reject(error);
-          return;
-        }
-        resolve();
-      });
-    });
+    const httpHealthServer = this.httpHealthServer;
     this.server = undefined;
+    this.httpHealthServer = undefined;
+
+    await Promise.all([
+      server
+        ? new Promise<void>((resolve, reject) => {
+            server.tryShutdown((error) => {
+              if (error) {
+                reject(error);
+                return;
+              }
+              resolve();
+            });
+          })
+        : Promise.resolve(),
+      httpHealthServer
+        ? new Promise<void>((resolve, reject) => {
+            httpHealthServer.close((error) => {
+              if (error) {
+                reject(error);
+                return;
+              }
+              resolve();
+            });
+          })
+        : Promise.resolve(),
+    ]);
   }
 
   /**
@@ -601,9 +942,132 @@ export class AgentKitServer {
   }
 
   /**
+   * Current response status for the gRPC health-check service.
+   */
+  get healthStatus(): AgentKitHealthServingStatus {
+    return this.healthServingStatus;
+  }
+
+  /**
+   * Bound HTTP health address, when HTTP health is enabled.
+   */
+  get httpHealthAddress(): string | undefined {
+    if (!this.httpHealthCheck) {
+      return undefined;
+    }
+    const address = this.httpHealthServer?.address();
+    if (address && typeof address !== "string") {
+      return `${this.formatHTTPHost(address)}:${address.port}`;
+    }
+    return `${this.httpHealthCheck.host}:${this.httpHealthCheck.port}`;
+  }
+
+  /**
+   * Overrides the health-check status returned from `grpc.health.v1.Health/Check`.
+   *
+   * This is useful when the process is alive but the agent should temporarily
+   * be removed from Kubernetes service endpoints.
+   */
+  setHealthStatus(status: AgentKitHealthServingStatus): void {
+    this.healthServingStatus = status;
+  }
+
+  /**
    * Host and port in `host:port` form.
    */
   get address(): string {
     return `${this.host}:${this.port}`;
+  }
+
+  private createHealthService(): UntypedServiceImplementation {
+    return {
+      check: ((_call, callback) => {
+        callback(null, { status: this.healthServingStatus });
+      }) as AgentKitHealthCheckHandler,
+    };
+  }
+
+  private createHTTPHealthCheckConfig(
+    options?: AgentKitHTTPHealthCheckOptions
+  ): AgentKitHTTPHealthCheckConfig | undefined {
+    if (!options) {
+      return undefined;
+    }
+    return {
+      host: options.host || DEFAULT_AGENTKIT_HTTP_HEALTH_HOST,
+      port: options.port ?? DEFAULT_AGENTKIT_HTTP_HEALTH_PORT,
+      path: options.path || DEFAULT_AGENTKIT_HTTP_HEALTH_PATH,
+    };
+  }
+
+  private async startHTTPHealthCheck(): Promise<void> {
+    if (!this.httpHealthCheck || this.httpHealthServer) {
+      return;
+    }
+
+    this.httpHealthServer = http.createServer((request, response) => {
+      this.handleHTTPHealthCheck(request, response);
+    });
+
+    await new Promise<void>((resolve, reject) => {
+      const server = this.httpHealthServer!;
+      const onError = (error: Error) => {
+        server.off("error", onError);
+        this.httpHealthServer = undefined;
+        reject(error);
+      };
+
+      server.once("error", onError);
+      server.listen(
+        this.httpHealthCheck!.port,
+        this.httpHealthCheck!.host,
+        () => {
+          server.off("error", onError);
+          resolve();
+        }
+      );
+    });
+  }
+
+  private handleHTTPHealthCheck(
+    request: http.IncomingMessage,
+    response: http.ServerResponse
+  ): void {
+    if (!this.httpHealthCheck) {
+      response.writeHead(404).end();
+      return;
+    }
+
+    const path = request.url?.split("?")[0] || "/";
+    if (path !== this.httpHealthCheck.path) {
+      response.writeHead(404).end();
+      return;
+    }
+
+    if (request.method !== "GET" && request.method !== "HEAD") {
+      response.writeHead(405, { allow: "GET, HEAD" }).end();
+      return;
+    }
+
+    const serving =
+      this.healthServingStatus === AgentKitHealthServingStatus.SERVING;
+    const body = JSON.stringify({
+      status:
+        AgentKitHealthServingStatus[this.healthServingStatus] || "UNKNOWN",
+    });
+
+    response.writeHead(serving ? 200 : 503, {
+      "content-type": "application/json",
+      "content-length": Buffer.byteLength(body),
+    });
+    if (request.method === "HEAD") {
+      response.end();
+      return;
+    }
+    response.end(body);
+  }
+
+  private formatHTTPHost(address: AddressInfo): string {
+    return address.family === "IPv6" ? `[${address.address}]` : address.address;
   }
 }
