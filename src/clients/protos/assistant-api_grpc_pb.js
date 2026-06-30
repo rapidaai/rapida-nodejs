@@ -7,8 +7,7 @@ var google_protobuf_timestamp_pb = require('google-protobuf/google/protobuf/time
 var common_pb = require('./common_pb.js');
 var assistant$deployment_pb = require('./assistant-deployment_pb.js');
 var assistant$tool_pb = require('./assistant-tool_pb.js');
-var assistant$analysis_pb = require('./assistant-analysis_pb.js');
-var assistant$webhook_pb = require('./assistant-webhook_pb.js');
+var assistant$http$log_pb = require('./assistant-http-log_pb.js');
 var assistant$knowledge_pb = require('./assistant-knowledge_pb.js');
 var assistant$provider_pb = require('./assistant-provider_pb.js');
 
@@ -56,26 +55,15 @@ function deserialize_GetAllConversationMessageResponse(buffer_arg) {
   return common_pb.GetAllConversationMessageResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_assistant_api_CreateAssistantAnalysisRequest(arg) {
-  if (!(arg instanceof assistant$analysis_pb.CreateAssistantAnalysisRequest)) {
-    throw new Error('Expected argument of type assistant_api.CreateAssistantAnalysisRequest');
+function serialize_assistant_api_CreateAssistantConfigurationRequest(arg) {
+  if (!(arg instanceof assistant$api_pb.CreateAssistantConfigurationRequest)) {
+    throw new Error('Expected argument of type assistant_api.CreateAssistantConfigurationRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_assistant_api_CreateAssistantAnalysisRequest(buffer_arg) {
-  return assistant$analysis_pb.CreateAssistantAnalysisRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_assistant_api_CreateAssistantAuthenticationRequest(arg) {
-  if (!(arg instanceof assistant$api_pb.CreateAssistantAuthenticationRequest)) {
-    throw new Error('Expected argument of type assistant_api.CreateAssistantAuthenticationRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_assistant_api_CreateAssistantAuthenticationRequest(buffer_arg) {
-  return assistant$api_pb.CreateAssistantAuthenticationRequest.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_assistant_api_CreateAssistantConfigurationRequest(buffer_arg) {
+  return assistant$api_pb.CreateAssistantConfigurationRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_assistant_api_CreateAssistantKnowledgeRequest(arg) {
@@ -122,17 +110,6 @@ function deserialize_assistant_api_CreateAssistantTagRequest(buffer_arg) {
   return assistant$api_pb.CreateAssistantTagRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_assistant_api_CreateAssistantTelemetryProviderRequest(arg) {
-  if (!(arg instanceof assistant$api_pb.CreateAssistantTelemetryProviderRequest)) {
-    throw new Error('Expected argument of type assistant_api.CreateAssistantTelemetryProviderRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_assistant_api_CreateAssistantTelemetryProviderRequest(buffer_arg) {
-  return assistant$api_pb.CreateAssistantTelemetryProviderRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_assistant_api_CreateAssistantToolRequest(arg) {
   if (!(arg instanceof assistant$tool_pb.CreateAssistantToolRequest)) {
     throw new Error('Expected argument of type assistant_api.CreateAssistantToolRequest');
@@ -144,26 +121,15 @@ function deserialize_assistant_api_CreateAssistantToolRequest(buffer_arg) {
   return assistant$tool_pb.CreateAssistantToolRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_assistant_api_CreateAssistantWebhookRequest(arg) {
-  if (!(arg instanceof assistant$webhook_pb.CreateAssistantWebhookRequest)) {
-    throw new Error('Expected argument of type assistant_api.CreateAssistantWebhookRequest');
+function serialize_assistant_api_DeleteAssistantConfigurationRequest(arg) {
+  if (!(arg instanceof assistant$api_pb.DeleteAssistantConfigurationRequest)) {
+    throw new Error('Expected argument of type assistant_api.DeleteAssistantConfigurationRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_assistant_api_CreateAssistantWebhookRequest(buffer_arg) {
-  return assistant$webhook_pb.CreateAssistantWebhookRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_assistant_api_DeleteAssistantAnalysisRequest(arg) {
-  if (!(arg instanceof assistant$analysis_pb.DeleteAssistantAnalysisRequest)) {
-    throw new Error('Expected argument of type assistant_api.DeleteAssistantAnalysisRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_assistant_api_DeleteAssistantAnalysisRequest(buffer_arg) {
-  return assistant$analysis_pb.DeleteAssistantAnalysisRequest.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_assistant_api_DeleteAssistantConfigurationRequest(buffer_arg) {
+  return assistant$api_pb.DeleteAssistantConfigurationRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_assistant_api_DeleteAssistantKnowledgeRequest(arg) {
@@ -188,17 +154,6 @@ function deserialize_assistant_api_DeleteAssistantRequest(buffer_arg) {
   return assistant$api_pb.DeleteAssistantRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_assistant_api_DeleteAssistantTelemetryProviderRequest(arg) {
-  if (!(arg instanceof assistant$api_pb.DeleteAssistantTelemetryProviderRequest)) {
-    throw new Error('Expected argument of type assistant_api.DeleteAssistantTelemetryProviderRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_assistant_api_DeleteAssistantTelemetryProviderRequest(buffer_arg) {
-  return assistant$api_pb.DeleteAssistantTelemetryProviderRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_assistant_api_DeleteAssistantToolRequest(arg) {
   if (!(arg instanceof assistant$tool_pb.DeleteAssistantToolRequest)) {
     throw new Error('Expected argument of type assistant_api.DeleteAssistantToolRequest');
@@ -210,70 +165,48 @@ function deserialize_assistant_api_DeleteAssistantToolRequest(buffer_arg) {
   return assistant$tool_pb.DeleteAssistantToolRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_assistant_api_DeleteAssistantWebhookRequest(arg) {
-  if (!(arg instanceof assistant$webhook_pb.DeleteAssistantWebhookRequest)) {
-    throw new Error('Expected argument of type assistant_api.DeleteAssistantWebhookRequest');
+function serialize_assistant_api_GetAllAssistantConfigurationRequest(arg) {
+  if (!(arg instanceof assistant$api_pb.GetAllAssistantConfigurationRequest)) {
+    throw new Error('Expected argument of type assistant_api.GetAllAssistantConfigurationRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_assistant_api_DeleteAssistantWebhookRequest(buffer_arg) {
-  return assistant$webhook_pb.DeleteAssistantWebhookRequest.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_assistant_api_GetAllAssistantConfigurationRequest(buffer_arg) {
+  return assistant$api_pb.GetAllAssistantConfigurationRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_assistant_api_DisableAssistantAuthenticationRequest(arg) {
-  if (!(arg instanceof assistant$api_pb.DisableAssistantAuthenticationRequest)) {
-    throw new Error('Expected argument of type assistant_api.DisableAssistantAuthenticationRequest');
+function serialize_assistant_api_GetAllAssistantConfigurationResponse(arg) {
+  if (!(arg instanceof assistant$api_pb.GetAllAssistantConfigurationResponse)) {
+    throw new Error('Expected argument of type assistant_api.GetAllAssistantConfigurationResponse');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_assistant_api_DisableAssistantAuthenticationRequest(buffer_arg) {
-  return assistant$api_pb.DisableAssistantAuthenticationRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_assistant_api_GetAllAssistantAnalysisRequest(arg) {
-  if (!(arg instanceof assistant$analysis_pb.GetAllAssistantAnalysisRequest)) {
-    throw new Error('Expected argument of type assistant_api.GetAllAssistantAnalysisRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_assistant_api_GetAllAssistantAnalysisRequest(buffer_arg) {
-  return assistant$analysis_pb.GetAllAssistantAnalysisRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_assistant_api_GetAllAssistantAnalysisResponse(arg) {
-  if (!(arg instanceof assistant$analysis_pb.GetAllAssistantAnalysisResponse)) {
-    throw new Error('Expected argument of type assistant_api.GetAllAssistantAnalysisResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_assistant_api_GetAllAssistantAnalysisResponse(buffer_arg) {
-  return assistant$analysis_pb.GetAllAssistantAnalysisResponse.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_assistant_api_GetAllAssistantConfigurationResponse(buffer_arg) {
+  return assistant$api_pb.GetAllAssistantConfigurationResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_assistant_api_GetAllAssistantHTTPLogRequest(arg) {
-  if (!(arg instanceof assistant$webhook_pb.GetAllAssistantHTTPLogRequest)) {
+  if (!(arg instanceof assistant$http$log_pb.GetAllAssistantHTTPLogRequest)) {
     throw new Error('Expected argument of type assistant_api.GetAllAssistantHTTPLogRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_assistant_api_GetAllAssistantHTTPLogRequest(buffer_arg) {
-  return assistant$webhook_pb.GetAllAssistantHTTPLogRequest.deserializeBinary(new Uint8Array(buffer_arg));
+  return assistant$http$log_pb.GetAllAssistantHTTPLogRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_assistant_api_GetAllAssistantHTTPLogResponse(arg) {
-  if (!(arg instanceof assistant$webhook_pb.GetAllAssistantHTTPLogResponse)) {
+  if (!(arg instanceof assistant$http$log_pb.GetAllAssistantHTTPLogResponse)) {
     throw new Error('Expected argument of type assistant_api.GetAllAssistantHTTPLogResponse');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_assistant_api_GetAllAssistantHTTPLogResponse(buffer_arg) {
-  return assistant$webhook_pb.GetAllAssistantHTTPLogResponse.deserializeBinary(new Uint8Array(buffer_arg));
+  return assistant$http$log_pb.GetAllAssistantHTTPLogResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_assistant_api_GetAllAssistantKnowledgeRequest(arg) {
@@ -364,50 +297,6 @@ function deserialize_assistant_api_GetAllAssistantResponse(buffer_arg) {
   return assistant$api_pb.GetAllAssistantResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_assistant_api_GetAllAssistantTelemetryProviderRequest(arg) {
-  if (!(arg instanceof assistant$api_pb.GetAllAssistantTelemetryProviderRequest)) {
-    throw new Error('Expected argument of type assistant_api.GetAllAssistantTelemetryProviderRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_assistant_api_GetAllAssistantTelemetryProviderRequest(buffer_arg) {
-  return assistant$api_pb.GetAllAssistantTelemetryProviderRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_assistant_api_GetAllAssistantTelemetryProviderResponse(arg) {
-  if (!(arg instanceof assistant$api_pb.GetAllAssistantTelemetryProviderResponse)) {
-    throw new Error('Expected argument of type assistant_api.GetAllAssistantTelemetryProviderResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_assistant_api_GetAllAssistantTelemetryProviderResponse(buffer_arg) {
-  return assistant$api_pb.GetAllAssistantTelemetryProviderResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_assistant_api_GetAllAssistantTelemetryRequest(arg) {
-  if (!(arg instanceof assistant$api_pb.GetAllAssistantTelemetryRequest)) {
-    throw new Error('Expected argument of type assistant_api.GetAllAssistantTelemetryRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_assistant_api_GetAllAssistantTelemetryRequest(buffer_arg) {
-  return assistant$api_pb.GetAllAssistantTelemetryRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_assistant_api_GetAllAssistantTelemetryResponse(arg) {
-  if (!(arg instanceof assistant$api_pb.GetAllAssistantTelemetryResponse)) {
-    throw new Error('Expected argument of type assistant_api.GetAllAssistantTelemetryResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_assistant_api_GetAllAssistantTelemetryResponse(buffer_arg) {
-  return assistant$api_pb.GetAllAssistantTelemetryResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_assistant_api_GetAllAssistantToolLogRequest(arg) {
   if (!(arg instanceof assistant$tool_pb.GetAllAssistantToolLogRequest)) {
     throw new Error('Expected argument of type assistant_api.GetAllAssistantToolLogRequest');
@@ -452,28 +341,6 @@ function deserialize_assistant_api_GetAllAssistantToolResponse(buffer_arg) {
   return assistant$tool_pb.GetAllAssistantToolResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_assistant_api_GetAllAssistantWebhookRequest(arg) {
-  if (!(arg instanceof assistant$webhook_pb.GetAllAssistantWebhookRequest)) {
-    throw new Error('Expected argument of type assistant_api.GetAllAssistantWebhookRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_assistant_api_GetAllAssistantWebhookRequest(buffer_arg) {
-  return assistant$webhook_pb.GetAllAssistantWebhookRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_assistant_api_GetAllAssistantWebhookResponse(arg) {
-  if (!(arg instanceof assistant$webhook_pb.GetAllAssistantWebhookResponse)) {
-    throw new Error('Expected argument of type assistant_api.GetAllAssistantWebhookResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_assistant_api_GetAllAssistantWebhookResponse(buffer_arg) {
-  return assistant$webhook_pb.GetAllAssistantWebhookResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_assistant_api_GetAllMessageRequest(arg) {
   if (!(arg instanceof assistant$api_pb.GetAllMessageRequest)) {
     throw new Error('Expected argument of type assistant_api.GetAllMessageRequest');
@@ -496,48 +363,26 @@ function deserialize_assistant_api_GetAllMessageResponse(buffer_arg) {
   return assistant$api_pb.GetAllMessageResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_assistant_api_GetAssistantAnalysisRequest(arg) {
-  if (!(arg instanceof assistant$analysis_pb.GetAssistantAnalysisRequest)) {
-    throw new Error('Expected argument of type assistant_api.GetAssistantAnalysisRequest');
+function serialize_assistant_api_GetAssistantConfigurationRequest(arg) {
+  if (!(arg instanceof assistant$api_pb.GetAssistantConfigurationRequest)) {
+    throw new Error('Expected argument of type assistant_api.GetAssistantConfigurationRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_assistant_api_GetAssistantAnalysisRequest(buffer_arg) {
-  return assistant$analysis_pb.GetAssistantAnalysisRequest.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_assistant_api_GetAssistantConfigurationRequest(buffer_arg) {
+  return assistant$api_pb.GetAssistantConfigurationRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_assistant_api_GetAssistantAnalysisResponse(arg) {
-  if (!(arg instanceof assistant$analysis_pb.GetAssistantAnalysisResponse)) {
-    throw new Error('Expected argument of type assistant_api.GetAssistantAnalysisResponse');
+function serialize_assistant_api_GetAssistantConfigurationResponse(arg) {
+  if (!(arg instanceof assistant$api_pb.GetAssistantConfigurationResponse)) {
+    throw new Error('Expected argument of type assistant_api.GetAssistantConfigurationResponse');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_assistant_api_GetAssistantAnalysisResponse(buffer_arg) {
-  return assistant$analysis_pb.GetAssistantAnalysisResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_assistant_api_GetAssistantAuthenticationRequest(arg) {
-  if (!(arg instanceof assistant$api_pb.GetAssistantAuthenticationRequest)) {
-    throw new Error('Expected argument of type assistant_api.GetAssistantAuthenticationRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_assistant_api_GetAssistantAuthenticationRequest(buffer_arg) {
-  return assistant$api_pb.GetAssistantAuthenticationRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_assistant_api_GetAssistantAuthenticationResponse(arg) {
-  if (!(arg instanceof assistant$api_pb.GetAssistantAuthenticationResponse)) {
-    throw new Error('Expected argument of type assistant_api.GetAssistantAuthenticationResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_assistant_api_GetAssistantAuthenticationResponse(buffer_arg) {
-  return assistant$api_pb.GetAssistantAuthenticationResponse.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_assistant_api_GetAssistantConfigurationResponse(buffer_arg) {
+  return assistant$api_pb.GetAssistantConfigurationResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_assistant_api_GetAssistantConversationRequest(arg) {
@@ -563,25 +408,25 @@ function deserialize_assistant_api_GetAssistantConversationResponse(buffer_arg) 
 }
 
 function serialize_assistant_api_GetAssistantHTTPLogRequest(arg) {
-  if (!(arg instanceof assistant$webhook_pb.GetAssistantHTTPLogRequest)) {
+  if (!(arg instanceof assistant$http$log_pb.GetAssistantHTTPLogRequest)) {
     throw new Error('Expected argument of type assistant_api.GetAssistantHTTPLogRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_assistant_api_GetAssistantHTTPLogRequest(buffer_arg) {
-  return assistant$webhook_pb.GetAssistantHTTPLogRequest.deserializeBinary(new Uint8Array(buffer_arg));
+  return assistant$http$log_pb.GetAssistantHTTPLogRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_assistant_api_GetAssistantHTTPLogResponse(arg) {
-  if (!(arg instanceof assistant$webhook_pb.GetAssistantHTTPLogResponse)) {
+  if (!(arg instanceof assistant$http$log_pb.GetAssistantHTTPLogResponse)) {
     throw new Error('Expected argument of type assistant_api.GetAssistantHTTPLogResponse');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_assistant_api_GetAssistantHTTPLogResponse(buffer_arg) {
-  return assistant$webhook_pb.GetAssistantHTTPLogResponse.deserializeBinary(new Uint8Array(buffer_arg));
+  return assistant$http$log_pb.GetAssistantHTTPLogResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_assistant_api_GetAssistantKnowledgeRequest(arg) {
@@ -639,28 +484,6 @@ function deserialize_assistant_api_GetAssistantResponse(buffer_arg) {
   return assistant$api_pb.GetAssistantResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_assistant_api_GetAssistantTelemetryProviderRequest(arg) {
-  if (!(arg instanceof assistant$api_pb.GetAssistantTelemetryProviderRequest)) {
-    throw new Error('Expected argument of type assistant_api.GetAssistantTelemetryProviderRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_assistant_api_GetAssistantTelemetryProviderRequest(buffer_arg) {
-  return assistant$api_pb.GetAssistantTelemetryProviderRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_assistant_api_GetAssistantTelemetryProviderResponse(arg) {
-  if (!(arg instanceof assistant$api_pb.GetAssistantTelemetryProviderResponse)) {
-    throw new Error('Expected argument of type assistant_api.GetAssistantTelemetryProviderResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_assistant_api_GetAssistantTelemetryProviderResponse(buffer_arg) {
-  return assistant$api_pb.GetAssistantTelemetryProviderResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_assistant_api_GetAssistantToolLogRequest(arg) {
   if (!(arg instanceof assistant$tool_pb.GetAssistantToolLogRequest)) {
     throw new Error('Expected argument of type assistant_api.GetAssistantToolLogRequest');
@@ -705,48 +528,26 @@ function deserialize_assistant_api_GetAssistantToolResponse(buffer_arg) {
   return assistant$tool_pb.GetAssistantToolResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_assistant_api_GetAssistantWebhookRequest(arg) {
-  if (!(arg instanceof assistant$webhook_pb.GetAssistantWebhookRequest)) {
-    throw new Error('Expected argument of type assistant_api.GetAssistantWebhookRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_assistant_api_GetAssistantWebhookRequest(buffer_arg) {
-  return assistant$webhook_pb.GetAssistantWebhookRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_assistant_api_GetAssistantWebhookResponse(arg) {
-  if (!(arg instanceof assistant$webhook_pb.GetAssistantWebhookResponse)) {
-    throw new Error('Expected argument of type assistant_api.GetAssistantWebhookResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_assistant_api_GetAssistantWebhookResponse(buffer_arg) {
-  return assistant$webhook_pb.GetAssistantWebhookResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_assistant_api_RetryAssistantHTTPLogRequest(arg) {
-  if (!(arg instanceof assistant$webhook_pb.RetryAssistantHTTPLogRequest)) {
+  if (!(arg instanceof assistant$http$log_pb.RetryAssistantHTTPLogRequest)) {
     throw new Error('Expected argument of type assistant_api.RetryAssistantHTTPLogRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_assistant_api_RetryAssistantHTTPLogRequest(buffer_arg) {
-  return assistant$webhook_pb.RetryAssistantHTTPLogRequest.deserializeBinary(new Uint8Array(buffer_arg));
+  return assistant$http$log_pb.RetryAssistantHTTPLogRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_assistant_api_UpdateAssistantAnalysisRequest(arg) {
-  if (!(arg instanceof assistant$analysis_pb.UpdateAssistantAnalysisRequest)) {
-    throw new Error('Expected argument of type assistant_api.UpdateAssistantAnalysisRequest');
+function serialize_assistant_api_UpdateAssistantConfigurationRequest(arg) {
+  if (!(arg instanceof assistant$api_pb.UpdateAssistantConfigurationRequest)) {
+    throw new Error('Expected argument of type assistant_api.UpdateAssistantConfigurationRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_assistant_api_UpdateAssistantAnalysisRequest(buffer_arg) {
-  return assistant$analysis_pb.UpdateAssistantAnalysisRequest.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_assistant_api_UpdateAssistantConfigurationRequest(buffer_arg) {
+  return assistant$api_pb.UpdateAssistantConfigurationRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_assistant_api_UpdateAssistantDetailRequest(arg) {
@@ -771,17 +572,6 @@ function deserialize_assistant_api_UpdateAssistantKnowledgeRequest(buffer_arg) {
   return assistant$knowledge_pb.UpdateAssistantKnowledgeRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_assistant_api_UpdateAssistantTelemetryProviderRequest(arg) {
-  if (!(arg instanceof assistant$api_pb.UpdateAssistantTelemetryProviderRequest)) {
-    throw new Error('Expected argument of type assistant_api.UpdateAssistantTelemetryProviderRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_assistant_api_UpdateAssistantTelemetryProviderRequest(buffer_arg) {
-  return assistant$api_pb.UpdateAssistantTelemetryProviderRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_assistant_api_UpdateAssistantToolRequest(arg) {
   if (!(arg instanceof assistant$tool_pb.UpdateAssistantToolRequest)) {
     throw new Error('Expected argument of type assistant_api.UpdateAssistantToolRequest');
@@ -802,17 +592,6 @@ function serialize_assistant_api_UpdateAssistantVersionRequest(arg) {
 
 function deserialize_assistant_api_UpdateAssistantVersionRequest(buffer_arg) {
   return assistant$provider_pb.UpdateAssistantVersionRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_assistant_api_UpdateAssistantWebhookRequest(arg) {
-  if (!(arg instanceof assistant$webhook_pb.UpdateAssistantWebhookRequest)) {
-    throw new Error('Expected argument of type assistant_api.UpdateAssistantWebhookRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_assistant_api_UpdateAssistantWebhookRequest(buffer_arg) {
-  return assistant$webhook_pb.UpdateAssistantWebhookRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 
@@ -949,104 +728,60 @@ var AssistantServiceService = exports.AssistantServiceService = {
     responseSerialize: serialize_assistant_api_GetAllMessageResponse,
     responseDeserialize: deserialize_assistant_api_GetAllMessageResponse,
   },
-  getAllAssistantTelemetry: {
-    path: '/assistant_api.AssistantService/GetAllAssistantTelemetry',
+  getAssistantConfiguration: {
+    path: '/assistant_api.AssistantService/GetAssistantConfiguration',
     requestStream: false,
     responseStream: false,
-    requestType: assistant$api_pb.GetAllAssistantTelemetryRequest,
-    responseType: assistant$api_pb.GetAllAssistantTelemetryResponse,
-    requestSerialize: serialize_assistant_api_GetAllAssistantTelemetryRequest,
-    requestDeserialize: deserialize_assistant_api_GetAllAssistantTelemetryRequest,
-    responseSerialize: serialize_assistant_api_GetAllAssistantTelemetryResponse,
-    responseDeserialize: deserialize_assistant_api_GetAllAssistantTelemetryResponse,
+    requestType: assistant$api_pb.GetAssistantConfigurationRequest,
+    responseType: assistant$api_pb.GetAssistantConfigurationResponse,
+    requestSerialize: serialize_assistant_api_GetAssistantConfigurationRequest,
+    requestDeserialize: deserialize_assistant_api_GetAssistantConfigurationRequest,
+    responseSerialize: serialize_assistant_api_GetAssistantConfigurationResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantConfigurationResponse,
   },
-  getAssistantTelemetryProvider: {
-    path: '/assistant_api.AssistantService/GetAssistantTelemetryProvider',
+  getAllAssistantConfiguration: {
+    path: '/assistant_api.AssistantService/GetAllAssistantConfiguration',
     requestStream: false,
     responseStream: false,
-    requestType: assistant$api_pb.GetAssistantTelemetryProviderRequest,
-    responseType: assistant$api_pb.GetAssistantTelemetryProviderResponse,
-    requestSerialize: serialize_assistant_api_GetAssistantTelemetryProviderRequest,
-    requestDeserialize: deserialize_assistant_api_GetAssistantTelemetryProviderRequest,
-    responseSerialize: serialize_assistant_api_GetAssistantTelemetryProviderResponse,
-    responseDeserialize: deserialize_assistant_api_GetAssistantTelemetryProviderResponse,
+    requestType: assistant$api_pb.GetAllAssistantConfigurationRequest,
+    responseType: assistant$api_pb.GetAllAssistantConfigurationResponse,
+    requestSerialize: serialize_assistant_api_GetAllAssistantConfigurationRequest,
+    requestDeserialize: deserialize_assistant_api_GetAllAssistantConfigurationRequest,
+    responseSerialize: serialize_assistant_api_GetAllAssistantConfigurationResponse,
+    responseDeserialize: deserialize_assistant_api_GetAllAssistantConfigurationResponse,
   },
-  getAllAssistantTelemetryProvider: {
-    path: '/assistant_api.AssistantService/GetAllAssistantTelemetryProvider',
+  createAssistantConfiguration: {
+    path: '/assistant_api.AssistantService/CreateAssistantConfiguration',
     requestStream: false,
     responseStream: false,
-    requestType: assistant$api_pb.GetAllAssistantTelemetryProviderRequest,
-    responseType: assistant$api_pb.GetAllAssistantTelemetryProviderResponse,
-    requestSerialize: serialize_assistant_api_GetAllAssistantTelemetryProviderRequest,
-    requestDeserialize: deserialize_assistant_api_GetAllAssistantTelemetryProviderRequest,
-    responseSerialize: serialize_assistant_api_GetAllAssistantTelemetryProviderResponse,
-    responseDeserialize: deserialize_assistant_api_GetAllAssistantTelemetryProviderResponse,
+    requestType: assistant$api_pb.CreateAssistantConfigurationRequest,
+    responseType: assistant$api_pb.GetAssistantConfigurationResponse,
+    requestSerialize: serialize_assistant_api_CreateAssistantConfigurationRequest,
+    requestDeserialize: deserialize_assistant_api_CreateAssistantConfigurationRequest,
+    responseSerialize: serialize_assistant_api_GetAssistantConfigurationResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantConfigurationResponse,
   },
-  createAssistantTelemetryProvider: {
-    path: '/assistant_api.AssistantService/CreateAssistantTelemetryProvider',
+  updateAssistantConfiguration: {
+    path: '/assistant_api.AssistantService/UpdateAssistantConfiguration',
     requestStream: false,
     responseStream: false,
-    requestType: assistant$api_pb.CreateAssistantTelemetryProviderRequest,
-    responseType: assistant$api_pb.GetAssistantTelemetryProviderResponse,
-    requestSerialize: serialize_assistant_api_CreateAssistantTelemetryProviderRequest,
-    requestDeserialize: deserialize_assistant_api_CreateAssistantTelemetryProviderRequest,
-    responseSerialize: serialize_assistant_api_GetAssistantTelemetryProviderResponse,
-    responseDeserialize: deserialize_assistant_api_GetAssistantTelemetryProviderResponse,
+    requestType: assistant$api_pb.UpdateAssistantConfigurationRequest,
+    responseType: assistant$api_pb.GetAssistantConfigurationResponse,
+    requestSerialize: serialize_assistant_api_UpdateAssistantConfigurationRequest,
+    requestDeserialize: deserialize_assistant_api_UpdateAssistantConfigurationRequest,
+    responseSerialize: serialize_assistant_api_GetAssistantConfigurationResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantConfigurationResponse,
   },
-  updateAssistantTelemetryProvider: {
-    path: '/assistant_api.AssistantService/UpdateAssistantTelemetryProvider',
+  deleteAssistantConfiguration: {
+    path: '/assistant_api.AssistantService/DeleteAssistantConfiguration',
     requestStream: false,
     responseStream: false,
-    requestType: assistant$api_pb.UpdateAssistantTelemetryProviderRequest,
-    responseType: assistant$api_pb.GetAssistantTelemetryProviderResponse,
-    requestSerialize: serialize_assistant_api_UpdateAssistantTelemetryProviderRequest,
-    requestDeserialize: deserialize_assistant_api_UpdateAssistantTelemetryProviderRequest,
-    responseSerialize: serialize_assistant_api_GetAssistantTelemetryProviderResponse,
-    responseDeserialize: deserialize_assistant_api_GetAssistantTelemetryProviderResponse,
-  },
-  deleteAssistantTelemetryProvider: {
-    path: '/assistant_api.AssistantService/DeleteAssistantTelemetryProvider',
-    requestStream: false,
-    responseStream: false,
-    requestType: assistant$api_pb.DeleteAssistantTelemetryProviderRequest,
-    responseType: assistant$api_pb.GetAssistantTelemetryProviderResponse,
-    requestSerialize: serialize_assistant_api_DeleteAssistantTelemetryProviderRequest,
-    requestDeserialize: deserialize_assistant_api_DeleteAssistantTelemetryProviderRequest,
-    responseSerialize: serialize_assistant_api_GetAssistantTelemetryProviderResponse,
-    responseDeserialize: deserialize_assistant_api_GetAssistantTelemetryProviderResponse,
-  },
-  createAssistantAuthentication: {
-    path: '/assistant_api.AssistantService/CreateAssistantAuthentication',
-    requestStream: false,
-    responseStream: false,
-    requestType: assistant$api_pb.CreateAssistantAuthenticationRequest,
-    responseType: assistant$api_pb.GetAssistantAuthenticationResponse,
-    requestSerialize: serialize_assistant_api_CreateAssistantAuthenticationRequest,
-    requestDeserialize: deserialize_assistant_api_CreateAssistantAuthenticationRequest,
-    responseSerialize: serialize_assistant_api_GetAssistantAuthenticationResponse,
-    responseDeserialize: deserialize_assistant_api_GetAssistantAuthenticationResponse,
-  },
-  getAssistantAuthentication: {
-    path: '/assistant_api.AssistantService/GetAssistantAuthentication',
-    requestStream: false,
-    responseStream: false,
-    requestType: assistant$api_pb.GetAssistantAuthenticationRequest,
-    responseType: assistant$api_pb.GetAssistantAuthenticationResponse,
-    requestSerialize: serialize_assistant_api_GetAssistantAuthenticationRequest,
-    requestDeserialize: deserialize_assistant_api_GetAssistantAuthenticationRequest,
-    responseSerialize: serialize_assistant_api_GetAssistantAuthenticationResponse,
-    responseDeserialize: deserialize_assistant_api_GetAssistantAuthenticationResponse,
-  },
-  disableAssistantAuthentication: {
-    path: '/assistant_api.AssistantService/DisableAssistantAuthentication',
-    requestStream: false,
-    responseStream: false,
-    requestType: assistant$api_pb.DisableAssistantAuthenticationRequest,
-    responseType: assistant$api_pb.GetAssistantAuthenticationResponse,
-    requestSerialize: serialize_assistant_api_DisableAssistantAuthenticationRequest,
-    requestDeserialize: deserialize_assistant_api_DisableAssistantAuthenticationRequest,
-    responseSerialize: serialize_assistant_api_GetAssistantAuthenticationResponse,
-    responseDeserialize: deserialize_assistant_api_GetAssistantAuthenticationResponse,
+    requestType: assistant$api_pb.DeleteAssistantConfigurationRequest,
+    responseType: assistant$api_pb.GetAssistantConfigurationResponse,
+    requestSerialize: serialize_assistant_api_DeleteAssistantConfigurationRequest,
+    requestDeserialize: deserialize_assistant_api_DeleteAssistantConfigurationRequest,
+    responseSerialize: serialize_assistant_api_GetAssistantConfigurationResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantConfigurationResponse,
   },
   getAllAssistantConversation: {
     path: '/assistant_api.AssistantService/GetAllAssistantConversation',
@@ -1075,8 +810,8 @@ getAssistantHTTPLog: {
     path: '/assistant_api.AssistantService/GetAssistantHTTPLog',
     requestStream: false,
     responseStream: false,
-    requestType: assistant$webhook_pb.GetAssistantHTTPLogRequest,
-    responseType: assistant$webhook_pb.GetAssistantHTTPLogResponse,
+    requestType: assistant$http$log_pb.GetAssistantHTTPLogRequest,
+    responseType: assistant$http$log_pb.GetAssistantHTTPLogResponse,
     requestSerialize: serialize_assistant_api_GetAssistantHTTPLogRequest,
     requestDeserialize: deserialize_assistant_api_GetAssistantHTTPLogRequest,
     responseSerialize: serialize_assistant_api_GetAssistantHTTPLogResponse,
@@ -1086,8 +821,8 @@ getAssistantHTTPLog: {
     path: '/assistant_api.AssistantService/GetAllAssistantHTTPLog',
     requestStream: false,
     responseStream: false,
-    requestType: assistant$webhook_pb.GetAllAssistantHTTPLogRequest,
-    responseType: assistant$webhook_pb.GetAllAssistantHTTPLogResponse,
+    requestType: assistant$http$log_pb.GetAllAssistantHTTPLogRequest,
+    responseType: assistant$http$log_pb.GetAllAssistantHTTPLogResponse,
     requestSerialize: serialize_assistant_api_GetAllAssistantHTTPLogRequest,
     requestDeserialize: deserialize_assistant_api_GetAllAssistantHTTPLogRequest,
     responseSerialize: serialize_assistant_api_GetAllAssistantHTTPLogResponse,
@@ -1097,67 +832,12 @@ getAssistantHTTPLog: {
     path: '/assistant_api.AssistantService/RetryAssistantHTTPLog',
     requestStream: false,
     responseStream: false,
-    requestType: assistant$webhook_pb.RetryAssistantHTTPLogRequest,
-    responseType: assistant$webhook_pb.GetAssistantHTTPLogResponse,
+    requestType: assistant$http$log_pb.RetryAssistantHTTPLogRequest,
+    responseType: assistant$http$log_pb.GetAssistantHTTPLogResponse,
     requestSerialize: serialize_assistant_api_RetryAssistantHTTPLogRequest,
     requestDeserialize: deserialize_assistant_api_RetryAssistantHTTPLogRequest,
     responseSerialize: serialize_assistant_api_GetAssistantHTTPLogResponse,
     responseDeserialize: deserialize_assistant_api_GetAssistantHTTPLogResponse,
-  },
-  getAllAssistantWebhook: {
-    path: '/assistant_api.AssistantService/GetAllAssistantWebhook',
-    requestStream: false,
-    responseStream: false,
-    requestType: assistant$webhook_pb.GetAllAssistantWebhookRequest,
-    responseType: assistant$webhook_pb.GetAllAssistantWebhookResponse,
-    requestSerialize: serialize_assistant_api_GetAllAssistantWebhookRequest,
-    requestDeserialize: deserialize_assistant_api_GetAllAssistantWebhookRequest,
-    responseSerialize: serialize_assistant_api_GetAllAssistantWebhookResponse,
-    responseDeserialize: deserialize_assistant_api_GetAllAssistantWebhookResponse,
-  },
-  getAssistantWebhook: {
-    path: '/assistant_api.AssistantService/GetAssistantWebhook',
-    requestStream: false,
-    responseStream: false,
-    requestType: assistant$webhook_pb.GetAssistantWebhookRequest,
-    responseType: assistant$webhook_pb.GetAssistantWebhookResponse,
-    requestSerialize: serialize_assistant_api_GetAssistantWebhookRequest,
-    requestDeserialize: deserialize_assistant_api_GetAssistantWebhookRequest,
-    responseSerialize: serialize_assistant_api_GetAssistantWebhookResponse,
-    responseDeserialize: deserialize_assistant_api_GetAssistantWebhookResponse,
-  },
-  createAssistantWebhook: {
-    path: '/assistant_api.AssistantService/CreateAssistantWebhook',
-    requestStream: false,
-    responseStream: false,
-    requestType: assistant$webhook_pb.CreateAssistantWebhookRequest,
-    responseType: assistant$webhook_pb.GetAssistantWebhookResponse,
-    requestSerialize: serialize_assistant_api_CreateAssistantWebhookRequest,
-    requestDeserialize: deserialize_assistant_api_CreateAssistantWebhookRequest,
-    responseSerialize: serialize_assistant_api_GetAssistantWebhookResponse,
-    responseDeserialize: deserialize_assistant_api_GetAssistantWebhookResponse,
-  },
-  updateAssistantWebhook: {
-    path: '/assistant_api.AssistantService/UpdateAssistantWebhook',
-    requestStream: false,
-    responseStream: false,
-    requestType: assistant$webhook_pb.UpdateAssistantWebhookRequest,
-    responseType: assistant$webhook_pb.GetAssistantWebhookResponse,
-    requestSerialize: serialize_assistant_api_UpdateAssistantWebhookRequest,
-    requestDeserialize: deserialize_assistant_api_UpdateAssistantWebhookRequest,
-    responseSerialize: serialize_assistant_api_GetAssistantWebhookResponse,
-    responseDeserialize: deserialize_assistant_api_GetAssistantWebhookResponse,
-  },
-  deleteAssistantWebhook: {
-    path: '/assistant_api.AssistantService/DeleteAssistantWebhook',
-    requestStream: false,
-    responseStream: false,
-    requestType: assistant$webhook_pb.DeleteAssistantWebhookRequest,
-    responseType: assistant$webhook_pb.GetAssistantWebhookResponse,
-    requestSerialize: serialize_assistant_api_DeleteAssistantWebhookRequest,
-    requestDeserialize: deserialize_assistant_api_DeleteAssistantWebhookRequest,
-    responseSerialize: serialize_assistant_api_GetAssistantWebhookResponse,
-    responseDeserialize: deserialize_assistant_api_GetAssistantWebhookResponse,
   },
   // tool log
 getAssistantToolLog: {
@@ -1181,62 +861,6 @@ getAssistantToolLog: {
     requestDeserialize: deserialize_assistant_api_GetAllAssistantToolLogRequest,
     responseSerialize: serialize_assistant_api_GetAllAssistantToolLogResponse,
     responseDeserialize: deserialize_assistant_api_GetAllAssistantToolLogResponse,
-  },
-  //   analysis
-getAssistantAnalysis: {
-    path: '/assistant_api.AssistantService/GetAssistantAnalysis',
-    requestStream: false,
-    responseStream: false,
-    requestType: assistant$analysis_pb.GetAssistantAnalysisRequest,
-    responseType: assistant$analysis_pb.GetAssistantAnalysisResponse,
-    requestSerialize: serialize_assistant_api_GetAssistantAnalysisRequest,
-    requestDeserialize: deserialize_assistant_api_GetAssistantAnalysisRequest,
-    responseSerialize: serialize_assistant_api_GetAssistantAnalysisResponse,
-    responseDeserialize: deserialize_assistant_api_GetAssistantAnalysisResponse,
-  },
-  updateAssistantAnalysis: {
-    path: '/assistant_api.AssistantService/UpdateAssistantAnalysis',
-    requestStream: false,
-    responseStream: false,
-    requestType: assistant$analysis_pb.UpdateAssistantAnalysisRequest,
-    responseType: assistant$analysis_pb.GetAssistantAnalysisResponse,
-    requestSerialize: serialize_assistant_api_UpdateAssistantAnalysisRequest,
-    requestDeserialize: deserialize_assistant_api_UpdateAssistantAnalysisRequest,
-    responseSerialize: serialize_assistant_api_GetAssistantAnalysisResponse,
-    responseDeserialize: deserialize_assistant_api_GetAssistantAnalysisResponse,
-  },
-  createAssistantAnalysis: {
-    path: '/assistant_api.AssistantService/CreateAssistantAnalysis',
-    requestStream: false,
-    responseStream: false,
-    requestType: assistant$analysis_pb.CreateAssistantAnalysisRequest,
-    responseType: assistant$analysis_pb.GetAssistantAnalysisResponse,
-    requestSerialize: serialize_assistant_api_CreateAssistantAnalysisRequest,
-    requestDeserialize: deserialize_assistant_api_CreateAssistantAnalysisRequest,
-    responseSerialize: serialize_assistant_api_GetAssistantAnalysisResponse,
-    responseDeserialize: deserialize_assistant_api_GetAssistantAnalysisResponse,
-  },
-  deleteAssistantAnalysis: {
-    path: '/assistant_api.AssistantService/DeleteAssistantAnalysis',
-    requestStream: false,
-    responseStream: false,
-    requestType: assistant$analysis_pb.DeleteAssistantAnalysisRequest,
-    responseType: assistant$analysis_pb.GetAssistantAnalysisResponse,
-    requestSerialize: serialize_assistant_api_DeleteAssistantAnalysisRequest,
-    requestDeserialize: deserialize_assistant_api_DeleteAssistantAnalysisRequest,
-    responseSerialize: serialize_assistant_api_GetAssistantAnalysisResponse,
-    responseDeserialize: deserialize_assistant_api_GetAssistantAnalysisResponse,
-  },
-  getAllAssistantAnalysis: {
-    path: '/assistant_api.AssistantService/GetAllAssistantAnalysis',
-    requestStream: false,
-    responseStream: false,
-    requestType: assistant$analysis_pb.GetAllAssistantAnalysisRequest,
-    responseType: assistant$analysis_pb.GetAllAssistantAnalysisResponse,
-    requestSerialize: serialize_assistant_api_GetAllAssistantAnalysisRequest,
-    requestDeserialize: deserialize_assistant_api_GetAllAssistantAnalysisRequest,
-    responseSerialize: serialize_assistant_api_GetAllAssistantAnalysisResponse,
-    responseDeserialize: deserialize_assistant_api_GetAllAssistantAnalysisResponse,
   },
   // assistant tool
 createAssistantTool: {

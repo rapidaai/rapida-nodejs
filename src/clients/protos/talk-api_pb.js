@@ -1718,7 +1718,8 @@ proto.talk_api.ConversationBridgeUserAudio.prototype.toObject = function(opt_inc
  */
 proto.talk_api.ConversationBridgeUserAudio.toObject = function(includeInstance, msg) {
   var f, obj = {
-    audio: msg.getAudio_asB64()
+    audio: msg.getAudio_asB64(),
+    time: (f = msg.getTime()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1759,6 +1760,11 @@ proto.talk_api.ConversationBridgeUserAudio.deserializeBinaryFromReader = functio
       var value = /** @type {!Uint8Array} */ (reader.readBytes());
       msg.setAudio(value);
       break;
+    case 2:
+      var value = new google_protobuf_timestamp_pb.Timestamp;
+      reader.readMessage(value,google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader);
+      msg.setTime(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -1793,6 +1799,14 @@ proto.talk_api.ConversationBridgeUserAudio.serializeBinaryToWriter = function(me
     writer.writeBytes(
       1,
       f
+    );
+  }
+  f = message.getTime();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
     );
   }
 };
@@ -1840,6 +1854,43 @@ proto.talk_api.ConversationBridgeUserAudio.prototype.setAudio = function(value) 
 };
 
 
+/**
+ * optional google.protobuf.Timestamp time = 2;
+ * @return {?proto.google.protobuf.Timestamp}
+ */
+proto.talk_api.ConversationBridgeUserAudio.prototype.getTime = function() {
+  return /** @type{?proto.google.protobuf.Timestamp} */ (
+    jspb.Message.getWrapperField(this, google_protobuf_timestamp_pb.Timestamp, 2));
+};
+
+
+/**
+ * @param {?proto.google.protobuf.Timestamp|undefined} value
+ * @return {!proto.talk_api.ConversationBridgeUserAudio} returns this
+*/
+proto.talk_api.ConversationBridgeUserAudio.prototype.setTime = function(value) {
+  return jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.talk_api.ConversationBridgeUserAudio} returns this
+ */
+proto.talk_api.ConversationBridgeUserAudio.prototype.clearTime = function() {
+  return this.setTime(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.talk_api.ConversationBridgeUserAudio.prototype.hasTime = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
 
 
 
@@ -1872,7 +1923,8 @@ proto.talk_api.ConversationBridgeOperatorAudio.prototype.toObject = function(opt
  */
 proto.talk_api.ConversationBridgeOperatorAudio.toObject = function(includeInstance, msg) {
   var f, obj = {
-    audio: msg.getAudio_asB64()
+    audio: msg.getAudio_asB64(),
+    time: (f = msg.getTime()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1913,6 +1965,11 @@ proto.talk_api.ConversationBridgeOperatorAudio.deserializeBinaryFromReader = fun
       var value = /** @type {!Uint8Array} */ (reader.readBytes());
       msg.setAudio(value);
       break;
+    case 2:
+      var value = new google_protobuf_timestamp_pb.Timestamp;
+      reader.readMessage(value,google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader);
+      msg.setTime(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -1947,6 +2004,14 @@ proto.talk_api.ConversationBridgeOperatorAudio.serializeBinaryToWriter = functio
     writer.writeBytes(
       1,
       f
+    );
+  }
+  f = message.getTime();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
     );
   }
 };
@@ -1991,6 +2056,43 @@ proto.talk_api.ConversationBridgeOperatorAudio.prototype.getAudio_asU8 = functio
  */
 proto.talk_api.ConversationBridgeOperatorAudio.prototype.setAudio = function(value) {
   return jspb.Message.setProto3BytesField(this, 1, value);
+};
+
+
+/**
+ * optional google.protobuf.Timestamp time = 2;
+ * @return {?proto.google.protobuf.Timestamp}
+ */
+proto.talk_api.ConversationBridgeOperatorAudio.prototype.getTime = function() {
+  return /** @type{?proto.google.protobuf.Timestamp} */ (
+    jspb.Message.getWrapperField(this, google_protobuf_timestamp_pb.Timestamp, 2));
+};
+
+
+/**
+ * @param {?proto.google.protobuf.Timestamp|undefined} value
+ * @return {!proto.talk_api.ConversationBridgeOperatorAudio} returns this
+*/
+proto.talk_api.ConversationBridgeOperatorAudio.prototype.setTime = function(value) {
+  return jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.talk_api.ConversationBridgeOperatorAudio} returns this
+ */
+proto.talk_api.ConversationBridgeOperatorAudio.prototype.clearTime = function() {
+  return this.setTime(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.talk_api.ConversationBridgeOperatorAudio.prototype.hasTime = function() {
+  return jspb.Message.getField(this, 2) != null;
 };
 
 

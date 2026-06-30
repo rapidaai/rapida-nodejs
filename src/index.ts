@@ -42,6 +42,7 @@ export {
   AuthorizationInterceptor,
   SSLConfig,
 } from "@/rapida/agentkit";
+export * from "@/rapida/agentkit/v2";
 
 export {
   HEADER_ENVIRONMENT_KEY,
@@ -118,18 +119,8 @@ export {
   GetMessages,
   GetAllAssistantConversation,
   GetAllAssistantConversationMessage,
-  GetAllAssistantWebhook,
-  CreateWebhook,
-  UpdateWebhook,
-  GetAssistantWebhook,
-  DeleteAssistantWebhook,
   GetAssistantConversation,
   DeleteAssistant,
-  GetAllAssistantAnalysis,
-  CreateAnalysis,
-  UpdateAnalysis,
-  GetAssistantAnalysis,
-  DeleteAssistantAnalysis,
   GetAllHTTPLog,
   GetHTTPLog,
   GetAllAssistantTool,
@@ -251,6 +242,20 @@ export {
 } from "@/rapida/clients/protos/agentkit_pb";
 
 /* ========================================================================== */
+/* Proto Message Exports - Observability API                                  */
+/* ========================================================================== */
+
+export {
+  GetAllTelemetryRequest,
+  GetAllTelemetryResponse,
+  ObservabilityEventRecord,
+  ObservabilityLogRecord,
+  ObservabilityMetricRecord,
+  ObservabilityRecord,
+  ObservabilityRecordKind,
+} from "@/rapida/clients/protos/observability-api_pb";
+
+/* ========================================================================== */
 /* Proto Message Exports - Assistant API                                     */
 /* ========================================================================== */
 
@@ -271,21 +276,6 @@ export {
   GetAssistantConversationRequest,
   GetAssistantConversationResponse,
 } from "@/rapida/clients/protos/assistant-api_pb";
-
-/* ========================================================================== */
-/* Proto Message Exports - Assistant Analysis                                */
-/* ========================================================================== */
-
-export {
-  AssistantAnalysis,
-  CreateAssistantAnalysisRequest,
-  UpdateAssistantAnalysisRequest,
-  GetAssistantAnalysisRequest,
-  DeleteAssistantAnalysisRequest,
-  GetAssistantAnalysisResponse,
-  GetAllAssistantAnalysisRequest,
-  GetAllAssistantAnalysisResponse,
-} from "@/rapida/clients/protos/assistant-analysis_pb";
 
 /* ========================================================================== */
 /* Proto Message Exports - Assistant Deployment                              */
@@ -353,24 +343,17 @@ export {
 } from "@/rapida/clients/protos/assistant-tool_pb";
 
 /* ========================================================================== */
-/* Proto Message Exports - Assistant Webhook                                 */
+/* Proto Message Exports - Assistant HTTP Log                                */
 /* ========================================================================== */
 
 export {
-  AssistantWebhook,
   AssistantHTTPLog,
-  CreateAssistantWebhookRequest,
-  UpdateAssistantWebhookRequest,
-  GetAssistantWebhookRequest,
-  DeleteAssistantWebhookRequest,
-  GetAssistantWebhookResponse,
-  GetAllAssistantWebhookRequest,
-  GetAllAssistantWebhookResponse,
   GetAllAssistantHTTPLogRequest,
   GetAssistantHTTPLogRequest,
   GetAssistantHTTPLogResponse,
   GetAllAssistantHTTPLogResponse,
-} from "@/rapida/clients/protos/assistant-webhook_pb";
+  RetryAssistantHTTPLogRequest,
+} from "@/rapida/clients/protos/assistant-http-log_pb";
 
 /* ========================================================================== */
 /* Proto Message Exports - Audit Logging API                                 */
@@ -617,10 +600,10 @@ export {
   GetProjectResponse,
   GetAllProjectRequest,
   GetAllProjectResponse,
-  AddUsersToProjectRequest,
+  AddUserToProjectsRequest,
   ArchiveProjectRequest,
   ArchiveProjectResponse,
-  AddUsersToProjectResponse,
+  AddUserToProjectsResponse,
   ProjectCredential,
   CreateProjectCredentialRequest,
   GetAllProjectCredentialRequest,

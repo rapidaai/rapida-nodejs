@@ -405,8 +405,8 @@ export class AgentKitAgent implements AgentKitServiceImplementation {
    * Returns user text from a text `ConversationUserMessage`.
    */
   getUserText(request: TalkInput): string | undefined {
-    const message = request.getMessage();
-    if (request.hasMessage() && message?.hasText()) {
+    const message = request.getUser();
+    if (request.hasUser() && message?.hasText()) {
       return message.getText();
     }
     return undefined;
@@ -416,8 +416,8 @@ export class AgentKitAgent implements AgentKitServiceImplementation {
    * Returns the user message ID from any message request.
    */
   getMessageId(request: TalkInput): string | undefined {
-    if (request.hasMessage()) {
-      return request.getMessage()?.getId();
+    if (request.getUser()) {
+      return request.getUser()?.getId();
     }
     return undefined;
   }
@@ -461,21 +461,21 @@ export class AgentKitAgent implements AgentKitServiceImplementation {
    * Checks whether a request contains `ConversationUserMessage`.
    */
   isMessageRequest(request: TalkInput): boolean {
-    return request.hasMessage();
+    return request.hasUser();
   }
 
   /**
    * Checks whether a request contains a text user message.
    */
   isTextMessage(request: TalkInput): boolean {
-    return request.hasMessage() && Boolean(request.getMessage()?.hasText());
+    return request.hasUser() && Boolean(request.getUser()?.hasText());
   }
 
   /**
    * Checks whether a request contains an audio user message.
    */
   isAudioMessage(request: TalkInput): boolean {
-    return request.hasMessage() && Boolean(request.getMessage()?.hasAudio());
+    return request.hasUser() && Boolean(request.getUser()?.hasAudio());
   }
 
   private setMapValues(

@@ -94,6 +94,9 @@ interface IOrganizationServiceService extends grpc.ServiceDefinition<grpc.Untype
   getOrganization: grpc.MethodDefinition<web_api_pb.GetOrganizationRequest, web_api_pb.GetOrganizationResponse>;
   updateOrganization: grpc.MethodDefinition<web_api_pb.UpdateOrganizationRequest, web_api_pb.UpdateOrganizationResponse>;
   updateBillingInformation: grpc.MethodDefinition<web_api_pb.UpdateBillingInformationRequest, common_pb.BaseResponse>;
+  inviteUserToOrganization: grpc.MethodDefinition<web_api_pb.InviteUserToOrganizationRequest, web_api_pb.InviteUserToOrganizationResponse>;
+  updateUserOrganizationRole: grpc.MethodDefinition<web_api_pb.UpdateUserOrganizationRoleRequest, web_api_pb.UpdateUserOrganizationRoleResponse>;
+  deleteUserFromOrganization: grpc.MethodDefinition<web_api_pb.DeleteUserFromOrganizationRequest, web_api_pb.DeleteUserFromOrganizationResponse>;
 }
 
 export const OrganizationServiceService: IOrganizationServiceService;
@@ -103,6 +106,9 @@ export interface IOrganizationServiceServer extends grpc.UntypedServiceImplement
   getOrganization: grpc.handleUnaryCall<web_api_pb.GetOrganizationRequest, web_api_pb.GetOrganizationResponse>;
   updateOrganization: grpc.handleUnaryCall<web_api_pb.UpdateOrganizationRequest, web_api_pb.UpdateOrganizationResponse>;
   updateBillingInformation: grpc.handleUnaryCall<web_api_pb.UpdateBillingInformationRequest, common_pb.BaseResponse>;
+  inviteUserToOrganization: grpc.handleUnaryCall<web_api_pb.InviteUserToOrganizationRequest, web_api_pb.InviteUserToOrganizationResponse>;
+  updateUserOrganizationRole: grpc.handleUnaryCall<web_api_pb.UpdateUserOrganizationRoleRequest, web_api_pb.UpdateUserOrganizationRoleResponse>;
+  deleteUserFromOrganization: grpc.handleUnaryCall<web_api_pb.DeleteUserFromOrganizationRequest, web_api_pb.DeleteUserFromOrganizationResponse>;
 }
 
 export class OrganizationServiceClient extends grpc.Client {
@@ -119,6 +125,15 @@ export class OrganizationServiceClient extends grpc.Client {
   updateBillingInformation(argument: web_api_pb.UpdateBillingInformationRequest, callback: grpc.requestCallback<common_pb.BaseResponse>): grpc.ClientUnaryCall;
   updateBillingInformation(argument: web_api_pb.UpdateBillingInformationRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<common_pb.BaseResponse>): grpc.ClientUnaryCall;
   updateBillingInformation(argument: web_api_pb.UpdateBillingInformationRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<common_pb.BaseResponse>): grpc.ClientUnaryCall;
+  inviteUserToOrganization(argument: web_api_pb.InviteUserToOrganizationRequest, callback: grpc.requestCallback<web_api_pb.InviteUserToOrganizationResponse>): grpc.ClientUnaryCall;
+  inviteUserToOrganization(argument: web_api_pb.InviteUserToOrganizationRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<web_api_pb.InviteUserToOrganizationResponse>): grpc.ClientUnaryCall;
+  inviteUserToOrganization(argument: web_api_pb.InviteUserToOrganizationRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<web_api_pb.InviteUserToOrganizationResponse>): grpc.ClientUnaryCall;
+  updateUserOrganizationRole(argument: web_api_pb.UpdateUserOrganizationRoleRequest, callback: grpc.requestCallback<web_api_pb.UpdateUserOrganizationRoleResponse>): grpc.ClientUnaryCall;
+  updateUserOrganizationRole(argument: web_api_pb.UpdateUserOrganizationRoleRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<web_api_pb.UpdateUserOrganizationRoleResponse>): grpc.ClientUnaryCall;
+  updateUserOrganizationRole(argument: web_api_pb.UpdateUserOrganizationRoleRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<web_api_pb.UpdateUserOrganizationRoleResponse>): grpc.ClientUnaryCall;
+  deleteUserFromOrganization(argument: web_api_pb.DeleteUserFromOrganizationRequest, callback: grpc.requestCallback<web_api_pb.DeleteUserFromOrganizationResponse>): grpc.ClientUnaryCall;
+  deleteUserFromOrganization(argument: web_api_pb.DeleteUserFromOrganizationRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<web_api_pb.DeleteUserFromOrganizationResponse>): grpc.ClientUnaryCall;
+  deleteUserFromOrganization(argument: web_api_pb.DeleteUserFromOrganizationRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<web_api_pb.DeleteUserFromOrganizationResponse>): grpc.ClientUnaryCall;
 }
 
 interface IProjectServiceService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
@@ -126,7 +141,8 @@ interface IProjectServiceService extends grpc.ServiceDefinition<grpc.UntypedServ
   updateProject: grpc.MethodDefinition<web_api_pb.UpdateProjectRequest, web_api_pb.UpdateProjectResponse>;
   getProject: grpc.MethodDefinition<web_api_pb.GetProjectRequest, web_api_pb.GetProjectResponse>;
   getAllProject: grpc.MethodDefinition<web_api_pb.GetAllProjectRequest, web_api_pb.GetAllProjectResponse>;
-  addUsersToProject: grpc.MethodDefinition<web_api_pb.AddUsersToProjectRequest, web_api_pb.AddUsersToProjectResponse>;
+  addUserToProjects: grpc.MethodDefinition<web_api_pb.AddUserToProjectsRequest, web_api_pb.AddUserToProjectsResponse>;
+  deleteUserFromProject: grpc.MethodDefinition<web_api_pb.DeleteUserFromProjectRequest, web_api_pb.DeleteUserFromProjectResponse>;
   archiveProject: grpc.MethodDefinition<web_api_pb.ArchiveProjectRequest, web_api_pb.ArchiveProjectResponse>;
   createProjectCredential: grpc.MethodDefinition<web_api_pb.CreateProjectCredentialRequest, web_api_pb.CreateProjectCredentialResponse>;
   getAllProjectCredential: grpc.MethodDefinition<web_api_pb.GetAllProjectCredentialRequest, web_api_pb.GetAllProjectCredentialResponse>;
@@ -139,7 +155,8 @@ export interface IProjectServiceServer extends grpc.UntypedServiceImplementation
   updateProject: grpc.handleUnaryCall<web_api_pb.UpdateProjectRequest, web_api_pb.UpdateProjectResponse>;
   getProject: grpc.handleUnaryCall<web_api_pb.GetProjectRequest, web_api_pb.GetProjectResponse>;
   getAllProject: grpc.handleUnaryCall<web_api_pb.GetAllProjectRequest, web_api_pb.GetAllProjectResponse>;
-  addUsersToProject: grpc.handleUnaryCall<web_api_pb.AddUsersToProjectRequest, web_api_pb.AddUsersToProjectResponse>;
+  addUserToProjects: grpc.handleUnaryCall<web_api_pb.AddUserToProjectsRequest, web_api_pb.AddUserToProjectsResponse>;
+  deleteUserFromProject: grpc.handleUnaryCall<web_api_pb.DeleteUserFromProjectRequest, web_api_pb.DeleteUserFromProjectResponse>;
   archiveProject: grpc.handleUnaryCall<web_api_pb.ArchiveProjectRequest, web_api_pb.ArchiveProjectResponse>;
   createProjectCredential: grpc.handleUnaryCall<web_api_pb.CreateProjectCredentialRequest, web_api_pb.CreateProjectCredentialResponse>;
   getAllProjectCredential: grpc.handleUnaryCall<web_api_pb.GetAllProjectCredentialRequest, web_api_pb.GetAllProjectCredentialResponse>;
@@ -159,9 +176,12 @@ export class ProjectServiceClient extends grpc.Client {
   getAllProject(argument: web_api_pb.GetAllProjectRequest, callback: grpc.requestCallback<web_api_pb.GetAllProjectResponse>): grpc.ClientUnaryCall;
   getAllProject(argument: web_api_pb.GetAllProjectRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<web_api_pb.GetAllProjectResponse>): grpc.ClientUnaryCall;
   getAllProject(argument: web_api_pb.GetAllProjectRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<web_api_pb.GetAllProjectResponse>): grpc.ClientUnaryCall;
-  addUsersToProject(argument: web_api_pb.AddUsersToProjectRequest, callback: grpc.requestCallback<web_api_pb.AddUsersToProjectResponse>): grpc.ClientUnaryCall;
-  addUsersToProject(argument: web_api_pb.AddUsersToProjectRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<web_api_pb.AddUsersToProjectResponse>): grpc.ClientUnaryCall;
-  addUsersToProject(argument: web_api_pb.AddUsersToProjectRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<web_api_pb.AddUsersToProjectResponse>): grpc.ClientUnaryCall;
+  addUserToProjects(argument: web_api_pb.AddUserToProjectsRequest, callback: grpc.requestCallback<web_api_pb.AddUserToProjectsResponse>): grpc.ClientUnaryCall;
+  addUserToProjects(argument: web_api_pb.AddUserToProjectsRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<web_api_pb.AddUserToProjectsResponse>): grpc.ClientUnaryCall;
+  addUserToProjects(argument: web_api_pb.AddUserToProjectsRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<web_api_pb.AddUserToProjectsResponse>): grpc.ClientUnaryCall;
+  deleteUserFromProject(argument: web_api_pb.DeleteUserFromProjectRequest, callback: grpc.requestCallback<web_api_pb.DeleteUserFromProjectResponse>): grpc.ClientUnaryCall;
+  deleteUserFromProject(argument: web_api_pb.DeleteUserFromProjectRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<web_api_pb.DeleteUserFromProjectResponse>): grpc.ClientUnaryCall;
+  deleteUserFromProject(argument: web_api_pb.DeleteUserFromProjectRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<web_api_pb.DeleteUserFromProjectResponse>): grpc.ClientUnaryCall;
   archiveProject(argument: web_api_pb.ArchiveProjectRequest, callback: grpc.requestCallback<web_api_pb.ArchiveProjectResponse>): grpc.ClientUnaryCall;
   archiveProject(argument: web_api_pb.ArchiveProjectRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<web_api_pb.ArchiveProjectResponse>): grpc.ClientUnaryCall;
   archiveProject(argument: web_api_pb.ArchiveProjectRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<web_api_pb.ArchiveProjectResponse>): grpc.ClientUnaryCall;

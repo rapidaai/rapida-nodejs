@@ -17,26 +17,26 @@ function deserialize_BaseResponse(buffer_arg) {
   return common_pb.BaseResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_web_api_AddUsersToProjectRequest(arg) {
-  if (!(arg instanceof web$api_pb.AddUsersToProjectRequest)) {
-    throw new Error('Expected argument of type web_api.AddUsersToProjectRequest');
+function serialize_web_api_AddUserToProjectsRequest(arg) {
+  if (!(arg instanceof web$api_pb.AddUserToProjectsRequest)) {
+    throw new Error('Expected argument of type web_api.AddUserToProjectsRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_web_api_AddUsersToProjectRequest(buffer_arg) {
-  return web$api_pb.AddUsersToProjectRequest.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_web_api_AddUserToProjectsRequest(buffer_arg) {
+  return web$api_pb.AddUserToProjectsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_web_api_AddUsersToProjectResponse(arg) {
-  if (!(arg instanceof web$api_pb.AddUsersToProjectResponse)) {
-    throw new Error('Expected argument of type web_api.AddUsersToProjectResponse');
+function serialize_web_api_AddUserToProjectsResponse(arg) {
+  if (!(arg instanceof web$api_pb.AddUserToProjectsResponse)) {
+    throw new Error('Expected argument of type web_api.AddUserToProjectsResponse');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_web_api_AddUsersToProjectResponse(buffer_arg) {
-  return web$api_pb.AddUsersToProjectResponse.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_web_api_AddUserToProjectsResponse(buffer_arg) {
+  return web$api_pb.AddUserToProjectsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_web_api_ArchiveProjectRequest(arg) {
@@ -204,6 +204,50 @@ function deserialize_web_api_CreateProjectResponse(buffer_arg) {
   return web$api_pb.CreateProjectResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_web_api_DeleteUserFromOrganizationRequest(arg) {
+  if (!(arg instanceof web$api_pb.DeleteUserFromOrganizationRequest)) {
+    throw new Error('Expected argument of type web_api.DeleteUserFromOrganizationRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_web_api_DeleteUserFromOrganizationRequest(buffer_arg) {
+  return web$api_pb.DeleteUserFromOrganizationRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_web_api_DeleteUserFromOrganizationResponse(arg) {
+  if (!(arg instanceof web$api_pb.DeleteUserFromOrganizationResponse)) {
+    throw new Error('Expected argument of type web_api.DeleteUserFromOrganizationResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_web_api_DeleteUserFromOrganizationResponse(buffer_arg) {
+  return web$api_pb.DeleteUserFromOrganizationResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_web_api_DeleteUserFromProjectRequest(arg) {
+  if (!(arg instanceof web$api_pb.DeleteUserFromProjectRequest)) {
+    throw new Error('Expected argument of type web_api.DeleteUserFromProjectRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_web_api_DeleteUserFromProjectRequest(buffer_arg) {
+  return web$api_pb.DeleteUserFromProjectRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_web_api_DeleteUserFromProjectResponse(arg) {
+  if (!(arg instanceof web$api_pb.DeleteUserFromProjectResponse)) {
+    throw new Error('Expected argument of type web_api.DeleteUserFromProjectResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_web_api_DeleteUserFromProjectResponse(buffer_arg) {
+  return web$api_pb.DeleteUserFromProjectResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_web_api_ForgotPasswordRequest(arg) {
   if (!(arg instanceof web$api_pb.ForgotPasswordRequest)) {
     throw new Error('Expected argument of type web_api.ForgotPasswordRequest');
@@ -358,6 +402,28 @@ function deserialize_web_api_GetUserResponse(buffer_arg) {
   return web$api_pb.GetUserResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_web_api_InviteUserToOrganizationRequest(arg) {
+  if (!(arg instanceof web$api_pb.InviteUserToOrganizationRequest)) {
+    throw new Error('Expected argument of type web_api.InviteUserToOrganizationRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_web_api_InviteUserToOrganizationRequest(buffer_arg) {
+  return web$api_pb.InviteUserToOrganizationRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_web_api_InviteUserToOrganizationResponse(arg) {
+  if (!(arg instanceof web$api_pb.InviteUserToOrganizationResponse)) {
+    throw new Error('Expected argument of type web_api.InviteUserToOrganizationResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_web_api_InviteUserToOrganizationResponse(buffer_arg) {
+  return web$api_pb.InviteUserToOrganizationResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_web_api_RegisterUserRequest(arg) {
   if (!(arg instanceof web$api_pb.RegisterUserRequest)) {
     throw new Error('Expected argument of type web_api.RegisterUserRequest');
@@ -455,6 +521,28 @@ function serialize_web_api_UpdateProjectResponse(arg) {
 
 function deserialize_web_api_UpdateProjectResponse(buffer_arg) {
   return web$api_pb.UpdateProjectResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_web_api_UpdateUserOrganizationRoleRequest(arg) {
+  if (!(arg instanceof web$api_pb.UpdateUserOrganizationRoleRequest)) {
+    throw new Error('Expected argument of type web_api.UpdateUserOrganizationRoleRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_web_api_UpdateUserOrganizationRoleRequest(buffer_arg) {
+  return web$api_pb.UpdateUserOrganizationRoleRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_web_api_UpdateUserOrganizationRoleResponse(arg) {
+  if (!(arg instanceof web$api_pb.UpdateUserOrganizationRoleResponse)) {
+    throw new Error('Expected argument of type web_api.UpdateUserOrganizationRoleResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_web_api_UpdateUserOrganizationRoleResponse(buffer_arg) {
+  return web$api_pb.UpdateUserOrganizationRoleResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_web_api_UpdateUserRequest(arg) {
@@ -707,6 +795,39 @@ var OrganizationServiceService = exports.OrganizationServiceService = {
     responseSerialize: serialize_BaseResponse,
     responseDeserialize: deserialize_BaseResponse,
   },
+  inviteUserToOrganization: {
+    path: '/web_api.OrganizationService/InviteUserToOrganization',
+    requestStream: false,
+    responseStream: false,
+    requestType: web$api_pb.InviteUserToOrganizationRequest,
+    responseType: web$api_pb.InviteUserToOrganizationResponse,
+    requestSerialize: serialize_web_api_InviteUserToOrganizationRequest,
+    requestDeserialize: deserialize_web_api_InviteUserToOrganizationRequest,
+    responseSerialize: serialize_web_api_InviteUserToOrganizationResponse,
+    responseDeserialize: deserialize_web_api_InviteUserToOrganizationResponse,
+  },
+  updateUserOrganizationRole: {
+    path: '/web_api.OrganizationService/UpdateUserOrganizationRole',
+    requestStream: false,
+    responseStream: false,
+    requestType: web$api_pb.UpdateUserOrganizationRoleRequest,
+    responseType: web$api_pb.UpdateUserOrganizationRoleResponse,
+    requestSerialize: serialize_web_api_UpdateUserOrganizationRoleRequest,
+    requestDeserialize: deserialize_web_api_UpdateUserOrganizationRoleRequest,
+    responseSerialize: serialize_web_api_UpdateUserOrganizationRoleResponse,
+    responseDeserialize: deserialize_web_api_UpdateUserOrganizationRoleResponse,
+  },
+  deleteUserFromOrganization: {
+    path: '/web_api.OrganizationService/DeleteUserFromOrganization',
+    requestStream: false,
+    responseStream: false,
+    requestType: web$api_pb.DeleteUserFromOrganizationRequest,
+    responseType: web$api_pb.DeleteUserFromOrganizationResponse,
+    requestSerialize: serialize_web_api_DeleteUserFromOrganizationRequest,
+    requestDeserialize: deserialize_web_api_DeleteUserFromOrganizationRequest,
+    responseSerialize: serialize_web_api_DeleteUserFromOrganizationResponse,
+    responseDeserialize: deserialize_web_api_DeleteUserFromOrganizationResponse,
+  },
 };
 
 exports.OrganizationServiceClient = grpc.makeGenericClientConstructor(OrganizationServiceService, 'OrganizationService');
@@ -755,16 +876,27 @@ var ProjectServiceService = exports.ProjectServiceService = {
     responseSerialize: serialize_web_api_GetAllProjectResponse,
     responseDeserialize: deserialize_web_api_GetAllProjectResponse,
   },
-  addUsersToProject: {
-    path: '/web_api.ProjectService/AddUsersToProject',
+  addUserToProjects: {
+    path: '/web_api.ProjectService/AddUserToProjects',
     requestStream: false,
     responseStream: false,
-    requestType: web$api_pb.AddUsersToProjectRequest,
-    responseType: web$api_pb.AddUsersToProjectResponse,
-    requestSerialize: serialize_web_api_AddUsersToProjectRequest,
-    requestDeserialize: deserialize_web_api_AddUsersToProjectRequest,
-    responseSerialize: serialize_web_api_AddUsersToProjectResponse,
-    responseDeserialize: deserialize_web_api_AddUsersToProjectResponse,
+    requestType: web$api_pb.AddUserToProjectsRequest,
+    responseType: web$api_pb.AddUserToProjectsResponse,
+    requestSerialize: serialize_web_api_AddUserToProjectsRequest,
+    requestDeserialize: deserialize_web_api_AddUserToProjectsRequest,
+    responseSerialize: serialize_web_api_AddUserToProjectsResponse,
+    responseDeserialize: deserialize_web_api_AddUserToProjectsResponse,
+  },
+  deleteUserFromProject: {
+    path: '/web_api.ProjectService/DeleteUserFromProject',
+    requestStream: false,
+    responseStream: false,
+    requestType: web$api_pb.DeleteUserFromProjectRequest,
+    responseType: web$api_pb.DeleteUserFromProjectResponse,
+    requestSerialize: serialize_web_api_DeleteUserFromProjectRequest,
+    requestDeserialize: deserialize_web_api_DeleteUserFromProjectRequest,
+    responseSerialize: serialize_web_api_DeleteUserFromProjectResponse,
+    responseDeserialize: deserialize_web_api_DeleteUserFromProjectResponse,
   },
   archiveProject: {
     path: '/web_api.ProjectService/ArchiveProject',

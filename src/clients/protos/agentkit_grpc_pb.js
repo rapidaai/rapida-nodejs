@@ -5,6 +5,7 @@ var grpc = require('@grpc/grpc-js');
 var agentkit_pb = require('./agentkit_pb.js');
 var common_pb = require('./common_pb.js');
 var talk$api_pb = require('./talk-api_pb.js');
+var observability$api_pb = require('./observability-api_pb.js');
 
 function serialize_talk_api_TalkInput(arg) {
   if (!(arg instanceof agentkit_pb.TalkInput)) {

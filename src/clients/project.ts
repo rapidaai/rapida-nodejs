@@ -25,7 +25,7 @@
  */
 
 import {
-  AddUsersToProjectRequest,
+  AddUserToProjectsRequest,
   CreateProjectRequest,
   CreateProjectResponse,
   GetAllProjectResponse,
@@ -35,12 +35,13 @@ import {
   GetProjectRequest,
   ArchiveProjectResponse,
   ArchiveProjectRequest,
-  AddUsersToProjectResponse,
+  AddUserToProjectsResponse,
   GetAllProjectCredentialResponse,
   GetAllProjectCredentialRequest,
   CreateProjectCredentialRequest,
   CreateProjectCredentialResponse,
   GetAllProjectRequest,
+  ProjectRoleAssignment,
 } from "@/rapida/clients/protos/web-api_pb";
 import { Criteria, Paginate } from "@/rapida/clients/protos/common_pb";
 import {
@@ -54,29 +55,35 @@ import { ServiceError } from "@grpc/grpc-js";
  * Adds users to a project with specified roles.
  *
  * @param connectionConfig - The connection configuration.
- * @param email - The email address of the user to add.
+ * @param userId - The ID of the user to add.
  * @param role - The role to assign to the user.
  * @param projectIds - List of project IDs to which the user will be added.
  * @param authHeader - Authentication headers for the request.
- * @returns Promise<AddUsersToProjectResponse> - The response containing the result of adding users.
+ * @returns Promise<AddUserToProjectsResponse> - The response containing the result of adding users.
  */
 export function AddUsersToProject(
   connectionConfig: ConnectionConfig,
-  email: string,
+  userId: string,
   role: string,
   projectIds: string[],
   authHeader: ClientAuthInfo | UserAuthInfo
-): Promise<AddUsersToProjectResponse> {
+): Promise<AddUserToProjectsResponse> {
   return new Promise((resolve, reject) => {
-    const requestObject = new AddUsersToProjectRequest();
-    requestObject.setEmail(email);
-    requestObject.setRole(role);
-    requestObject.setProjectidsList(projectIds);
+    const requestObject = new AddUserToProjectsRequest();
+    requestObject.setUserid(userId);
+    requestObject.setProjectrolesList(
+      projectIds.map((projectId) => {
+        const projectRole = new ProjectRoleAssignment();
+        projectRole.setProjectid(projectId);
+        projectRole.setProjectrole(role);
+        return projectRole;
+      })
+    );
 
-    connectionConfig.projectClient.addUsersToProject(
+    connectionConfig.projectClient.addUserToProjects(
       requestObject,
       WithAuthContext(authHeader),
-      (err: ServiceError, response: AddUsersToProjectResponse) => {
+      (err: ServiceError, response: AddUserToProjectsResponse) => {
         if (err) reject(err);
         else resolve(response);
       }

@@ -55,16 +55,6 @@ import {
 } from "@/rapida/clients/protos/assistant-api_pb";
 
 import {
-  GetAssistantAnalysisResponse,
-  GetAssistantAnalysisRequest,
-  UpdateAssistantAnalysisRequest,
-  CreateAssistantAnalysisRequest,
-  GetAllAssistantAnalysisResponse,
-  GetAllAssistantAnalysisRequest,
-  DeleteAssistantAnalysisRequest,
-} from "@/rapida/clients/protos/assistant-analysis_pb";
-
-import {
   GetAssistantToolResponse,
   GetAssistantToolRequest,
   UpdateAssistantToolRequest,
@@ -89,18 +79,11 @@ import {
 } from "@/rapida/clients/protos/assistant-knowledge_pb";
 
 import {
-  DeleteAssistantWebhookRequest,
   GetAssistantHTTPLogRequest,
   GetAllAssistantHTTPLogRequest,
   GetAssistantHTTPLogResponse,
-  GetAssistantWebhookResponse,
-  CreateAssistantWebhookRequest,
-  UpdateAssistantWebhookRequest,
   GetAllAssistantHTTPLogResponse,
-  GetAssistantWebhookRequest,
-  GetAllAssistantWebhookRequest,
-  GetAllAssistantWebhookResponse,
-} from "@/rapida/clients/protos/assistant-webhook_pb";
+} from "@/rapida/clients/protos/assistant-http-log_pb";
 import { ServiceError } from "@grpc/grpc-js";
 import {
   UserAuthInfo,
@@ -292,108 +275,6 @@ export function GetAllAssistantConversationMessage(
   });
 }
 
-export function GetAllAssistantWebhook(
-  config: ConnectionConfig,
-  req: GetAllAssistantWebhookRequest,
-  auth?: UserAuthInfo | ClientAuthInfo
-): Promise<GetAllAssistantWebhookResponse> {
-  return new Promise((resolve, reject) => {
-    config.assistantClient.getAllAssistantWebhook(
-      req,
-      WithAuthContext(auth || config.auth),
-      (
-        err: ServiceError | null,
-        response: GetAllAssistantWebhookResponse | null
-      ) => {
-        if (err) reject(err);
-        else resolve(response!);
-      }
-    );
-  });
-}
-
-export function CreateWebhook(
-  config: ConnectionConfig,
-  req: CreateAssistantWebhookRequest,
-  auth?: UserAuthInfo | ClientAuthInfo
-): Promise<GetAssistantWebhookResponse> {
-  return new Promise((resolve, reject) => {
-    config.assistantClient.createAssistantWebhook(
-      req,
-      WithAuthContext(auth || config.auth),
-      (
-        err: ServiceError | null,
-        response: GetAssistantWebhookResponse | null
-      ) => {
-        if (err) reject(err);
-        else resolve(response!);
-      }
-    );
-  });
-}
-
-// Repeat similar approach for the rest of the functions previously defined.
-
-export function UpdateWebhook(
-  config: ConnectionConfig,
-  req: UpdateAssistantWebhookRequest,
-  auth?: UserAuthInfo | ClientAuthInfo
-): Promise<GetAssistantWebhookResponse> {
-  return new Promise((resolve, reject) => {
-    config.assistantClient.updateAssistantWebhook(
-      req,
-      WithAuthContext(auth || config.auth),
-      (
-        err: ServiceError | null,
-        response: GetAssistantWebhookResponse | null
-      ) => {
-        if (err) reject(err);
-        else resolve(response!);
-      }
-    );
-  });
-}
-
-export function GetAssistantWebhook(
-  config: ConnectionConfig,
-  req: GetAssistantWebhookRequest,
-  auth?: UserAuthInfo | ClientAuthInfo
-): Promise<GetAssistantWebhookResponse> {
-  return new Promise((resolve, reject) => {
-    config.assistantClient.getAssistantWebhook(
-      req,
-      WithAuthContext(auth || config.auth),
-      (
-        err: ServiceError | null,
-        response: GetAssistantWebhookResponse | null
-      ) => {
-        if (err) reject(err);
-        else resolve(response!);
-      }
-    );
-  });
-}
-
-export function DeleteAssistantWebhook(
-  config: ConnectionConfig,
-  req: DeleteAssistantWebhookRequest,
-  auth?: UserAuthInfo | ClientAuthInfo
-): Promise<GetAssistantWebhookResponse> {
-  return new Promise((resolve, reject) => {
-    config.assistantClient.deleteAssistantWebhook(
-      req,
-      WithAuthContext(auth || config.auth),
-      (
-        err: ServiceError | null,
-        response: GetAssistantWebhookResponse | null
-      ) => {
-        if (err) reject(err);
-        else resolve(response!);
-      }
-    );
-  });
-}
-
 export function GetAssistantConversation(
   config: ConnectionConfig,
   req: GetAssistantConversationRequest,
@@ -424,106 +305,6 @@ export function DeleteAssistant(
       req,
       WithAuthContext(auth || config.auth),
       (err: ServiceError | null, response: GetAssistantResponse | null) => {
-        if (err) reject(err);
-        else resolve(response!);
-      }
-    );
-  });
-}
-
-export function GetAllAssistantAnalysis(
-  config: ConnectionConfig,
-  req: GetAllAssistantAnalysisRequest,
-  auth?: UserAuthInfo | ClientAuthInfo
-): Promise<GetAllAssistantAnalysisResponse> {
-  return new Promise((resolve, reject) => {
-    config.assistantClient.getAllAssistantAnalysis(
-      req,
-      WithAuthContext(auth || config.auth),
-      (
-        err: ServiceError | null,
-        response: GetAllAssistantAnalysisResponse | null
-      ) => {
-        if (err) reject(err);
-        else resolve(response!);
-      }
-    );
-  });
-}
-
-export function CreateAnalysis(
-  config: ConnectionConfig,
-  req: CreateAssistantAnalysisRequest,
-  auth?: UserAuthInfo | ClientAuthInfo
-): Promise<GetAssistantAnalysisResponse> {
-  return new Promise((resolve, reject) => {
-    config.assistantClient.createAssistantAnalysis(
-      req,
-      WithAuthContext(auth || config.auth),
-      (
-        err: ServiceError | null,
-        response: GetAssistantAnalysisResponse | null
-      ) => {
-        if (err) reject(err);
-        else resolve(response!);
-      }
-    );
-  });
-}
-
-export function UpdateAnalysis(
-  config: ConnectionConfig,
-  req: UpdateAssistantAnalysisRequest,
-  auth?: UserAuthInfo | ClientAuthInfo
-): Promise<GetAssistantAnalysisResponse> {
-  return new Promise((resolve, reject) => {
-    config.assistantClient.updateAssistantAnalysis(
-      req,
-      WithAuthContext(auth || config.auth),
-      (
-        err: ServiceError | null,
-        response: GetAssistantAnalysisResponse | null
-      ) => {
-        if (err) reject(err);
-        else resolve(response!);
-      }
-    );
-  });
-}
-
-export function GetAssistantAnalysis(
-  config: ConnectionConfig,
-  req: GetAssistantAnalysisRequest,
-  auth?: UserAuthInfo | ClientAuthInfo
-): Promise<GetAssistantAnalysisResponse> {
-  return new Promise((resolve, reject) => {
-    config.assistantClient.getAssistantAnalysis(
-      req,
-      WithAuthContext(auth || config.auth),
-      (
-        err: ServiceError | null,
-        response: GetAssistantAnalysisResponse | null
-      ) => {
-        if (err) reject(err);
-        else resolve(response!);
-      }
-    );
-  });
-}
-
-export function DeleteAssistantAnalysis(
-  config: ConnectionConfig,
-  req: DeleteAssistantAnalysisRequest,
-  auth?: UserAuthInfo | ClientAuthInfo
-): Promise<GetAssistantAnalysisResponse> {
-  return new Promise((resolve, reject) => {
-    config.assistantClient.deleteAssistantAnalysis(
-      req,
-      WithAuthContext(auth || config.auth),
-      (
-        err: ServiceError | null,
-        response: GetAssistantAnalysisResponse | null
-      ) => {
         if (err) reject(err);
         else resolve(response!);
       }

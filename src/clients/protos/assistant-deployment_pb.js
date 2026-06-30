@@ -781,7 +781,8 @@ proto.assistant_api.AssistantWebpluginDeployment.toObject = function(includeInst
     maxsessionduration: jspb.Message.getFieldWithDefault(msg, 29, "0"),
     idealtimeout: jspb.Message.getFieldWithDefault(msg, 30, "0"),
     idealtimeoutmessage: jspb.Message.getFieldWithDefault(msg, 31, ""),
-    idealtimeoutbackoff: jspb.Message.getFieldWithDefault(msg, 32, "0")
+    idealtimeoutbackoff: jspb.Message.getFieldWithDefault(msg, 32, "0"),
+    greetinginterruptible: jspb.Message.getBooleanFieldWithDefault(msg, 33, false)
   };
 
   if (includeInstance) {
@@ -897,6 +898,10 @@ proto.assistant_api.AssistantWebpluginDeployment.deserializeBinaryFromReader = f
     case 32:
       var value = /** @type {string} */ (reader.readUint64String());
       msg.setIdealtimeoutbackoff(value);
+      break;
+    case 33:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setGreetinginterruptible(value);
       break;
     default:
       reader.skipField();
@@ -1061,6 +1066,13 @@ proto.assistant_api.AssistantWebpluginDeployment.serializeBinaryToWriter = funct
   if (parseInt(f, 10) !== 0) {
     writer.writeUint64String(
       32,
+      f
+    );
+  }
+  f = /** @type {boolean} */ (jspb.Message.getField(message, 33));
+  if (f != null) {
+    writer.writeBool(
+      33,
       f
     );
   }
@@ -1540,6 +1552,42 @@ proto.assistant_api.AssistantWebpluginDeployment.prototype.setIdealtimeoutbackof
 };
 
 
+/**
+ * optional bool greetingInterruptible = 33;
+ * @return {boolean}
+ */
+proto.assistant_api.AssistantWebpluginDeployment.prototype.getGreetinginterruptible = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 33, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.assistant_api.AssistantWebpluginDeployment} returns this
+ */
+proto.assistant_api.AssistantWebpluginDeployment.prototype.setGreetinginterruptible = function(value) {
+  return jspb.Message.setField(this, 33, value);
+};
+
+
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.assistant_api.AssistantWebpluginDeployment} returns this
+ */
+proto.assistant_api.AssistantWebpluginDeployment.prototype.clearGreetinginterruptible = function() {
+  return jspb.Message.setField(this, 33, undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.assistant_api.AssistantWebpluginDeployment.prototype.hasGreetinginterruptible = function() {
+  return jspb.Message.getField(this, 33) != null;
+};
+
+
 
 /**
  * List of repeated fields within this message type.
@@ -1594,7 +1642,8 @@ proto.assistant_api.AssistantPhoneDeployment.toObject = function(includeInstance
     maxsessionduration: jspb.Message.getFieldWithDefault(msg, 29, "0"),
     idealtimeout: jspb.Message.getFieldWithDefault(msg, 30, "0"),
     idealtimeoutmessage: jspb.Message.getFieldWithDefault(msg, 31, ""),
-    idealtimeoutbackoff: jspb.Message.getFieldWithDefault(msg, 32, "0")
+    idealtimeoutbackoff: jspb.Message.getFieldWithDefault(msg, 32, "0"),
+    greetinginterruptible: jspb.Message.getBooleanFieldWithDefault(msg, 33, false)
   };
 
   if (includeInstance) {
@@ -1695,6 +1744,10 @@ proto.assistant_api.AssistantPhoneDeployment.deserializeBinaryFromReader = funct
     case 32:
       var value = /** @type {string} */ (reader.readUint64String());
       msg.setIdealtimeoutbackoff(value);
+      break;
+    case 33:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setGreetinginterruptible(value);
       break;
     default:
       reader.skipField();
@@ -1832,6 +1885,13 @@ proto.assistant_api.AssistantPhoneDeployment.serializeBinaryToWriter = function(
   if (parseInt(f, 10) !== 0) {
     writer.writeUint64String(
       32,
+      f
+    );
+  }
+  f = /** @type {boolean} */ (jspb.Message.getField(message, 33));
+  if (f != null) {
+    writer.writeBool(
+      33,
       f
     );
   }
@@ -2240,6 +2300,42 @@ proto.assistant_api.AssistantPhoneDeployment.prototype.setIdealtimeoutbackoff = 
 };
 
 
+/**
+ * optional bool greetingInterruptible = 33;
+ * @return {boolean}
+ */
+proto.assistant_api.AssistantPhoneDeployment.prototype.getGreetinginterruptible = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 33, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.assistant_api.AssistantPhoneDeployment} returns this
+ */
+proto.assistant_api.AssistantPhoneDeployment.prototype.setGreetinginterruptible = function(value) {
+  return jspb.Message.setField(this, 33, value);
+};
+
+
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.assistant_api.AssistantPhoneDeployment} returns this
+ */
+proto.assistant_api.AssistantPhoneDeployment.prototype.clearGreetinginterruptible = function() {
+  return jspb.Message.setField(this, 33, undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.assistant_api.AssistantPhoneDeployment.prototype.hasGreetinginterruptible = function() {
+  return jspb.Message.getField(this, 33) != null;
+};
+
+
 
 /**
  * List of repeated fields within this message type.
@@ -2295,7 +2391,8 @@ proto.assistant_api.AssistantWhatsappDeployment.toObject = function(includeInsta
     maxsessionduration: jspb.Message.getFieldWithDefault(msg, 29, "0"),
     idealtimeout: jspb.Message.getFieldWithDefault(msg, 30, "0"),
     idealtimeoutmessage: jspb.Message.getFieldWithDefault(msg, 31, ""),
-    idealtimeoutbackoff: jspb.Message.getFieldWithDefault(msg, 32, "0")
+    idealtimeoutbackoff: jspb.Message.getFieldWithDefault(msg, 32, "0"),
+    greetinginterruptible: jspb.Message.getBooleanFieldWithDefault(msg, 33, false)
   };
 
   if (includeInstance) {
@@ -2400,6 +2497,10 @@ proto.assistant_api.AssistantWhatsappDeployment.deserializeBinaryFromReader = fu
     case 32:
       var value = /** @type {string} */ (reader.readUint64String());
       msg.setIdealtimeoutbackoff(value);
+      break;
+    case 33:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setGreetinginterruptible(value);
       break;
     default:
       reader.skipField();
@@ -2544,6 +2645,13 @@ proto.assistant_api.AssistantWhatsappDeployment.serializeBinaryToWriter = functi
   if (parseInt(f, 10) !== 0) {
     writer.writeUint64String(
       32,
+      f
+    );
+  }
+  f = /** @type {boolean} */ (jspb.Message.getField(message, 33));
+  if (f != null) {
+    writer.writeBool(
+      33,
       f
     );
   }
@@ -2970,6 +3078,42 @@ proto.assistant_api.AssistantWhatsappDeployment.prototype.setIdealtimeoutbackoff
 };
 
 
+/**
+ * optional bool greetingInterruptible = 33;
+ * @return {boolean}
+ */
+proto.assistant_api.AssistantWhatsappDeployment.prototype.getGreetinginterruptible = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 33, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.assistant_api.AssistantWhatsappDeployment} returns this
+ */
+proto.assistant_api.AssistantWhatsappDeployment.prototype.setGreetinginterruptible = function(value) {
+  return jspb.Message.setField(this, 33, value);
+};
+
+
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.assistant_api.AssistantWhatsappDeployment} returns this
+ */
+proto.assistant_api.AssistantWhatsappDeployment.prototype.clearGreetinginterruptible = function() {
+  return jspb.Message.setField(this, 33, undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.assistant_api.AssistantWhatsappDeployment.prototype.hasGreetinginterruptible = function() {
+  return jspb.Message.getField(this, 33) != null;
+};
+
+
 
 
 
@@ -3015,7 +3159,8 @@ proto.assistant_api.AssistantDebuggerDeployment.toObject = function(includeInsta
     maxsessionduration: jspb.Message.getFieldWithDefault(msg, 29, "0"),
     idealtimeout: jspb.Message.getFieldWithDefault(msg, 30, "0"),
     idealtimeoutmessage: jspb.Message.getFieldWithDefault(msg, 31, ""),
-    idealtimeoutbackoff: jspb.Message.getFieldWithDefault(msg, 32, "0")
+    idealtimeoutbackoff: jspb.Message.getFieldWithDefault(msg, 32, "0"),
+    greetinginterruptible: jspb.Message.getBooleanFieldWithDefault(msg, 33, false)
   };
 
   if (includeInstance) {
@@ -3111,6 +3256,10 @@ proto.assistant_api.AssistantDebuggerDeployment.deserializeBinaryFromReader = fu
     case 32:
       var value = /** @type {string} */ (reader.readUint64String());
       msg.setIdealtimeoutbackoff(value);
+      break;
+    case 33:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setGreetinginterruptible(value);
       break;
     default:
       reader.skipField();
@@ -3240,6 +3389,13 @@ proto.assistant_api.AssistantDebuggerDeployment.serializeBinaryToWriter = functi
   if (parseInt(f, 10) !== 0) {
     writer.writeUint64String(
       32,
+      f
+    );
+  }
+  f = /** @type {boolean} */ (jspb.Message.getField(message, 33));
+  if (f != null) {
+    writer.writeBool(
+      33,
       f
     );
   }
@@ -3610,6 +3766,42 @@ proto.assistant_api.AssistantDebuggerDeployment.prototype.setIdealtimeoutbackoff
 };
 
 
+/**
+ * optional bool greetingInterruptible = 33;
+ * @return {boolean}
+ */
+proto.assistant_api.AssistantDebuggerDeployment.prototype.getGreetinginterruptible = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 33, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.assistant_api.AssistantDebuggerDeployment} returns this
+ */
+proto.assistant_api.AssistantDebuggerDeployment.prototype.setGreetinginterruptible = function(value) {
+  return jspb.Message.setField(this, 33, value);
+};
+
+
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.assistant_api.AssistantDebuggerDeployment} returns this
+ */
+proto.assistant_api.AssistantDebuggerDeployment.prototype.clearGreetinginterruptible = function() {
+  return jspb.Message.setField(this, 33, undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.assistant_api.AssistantDebuggerDeployment.prototype.hasGreetinginterruptible = function() {
+  return jspb.Message.getField(this, 33) != null;
+};
+
+
 
 
 
@@ -3654,7 +3846,8 @@ proto.assistant_api.AssistantApiDeployment.toObject = function(includeInstance, 
     maxsessionduration: jspb.Message.getFieldWithDefault(msg, 29, "0"),
     idealtimeout: jspb.Message.getFieldWithDefault(msg, 30, "0"),
     idealtimeoutmessage: jspb.Message.getFieldWithDefault(msg, 31, ""),
-    idealtimeoutbackoff: jspb.Message.getFieldWithDefault(msg, 32, "0")
+    idealtimeoutbackoff: jspb.Message.getFieldWithDefault(msg, 32, "0"),
+    greetinginterruptible: jspb.Message.getBooleanFieldWithDefault(msg, 33, false)
   };
 
   if (includeInstance) {
@@ -3746,6 +3939,10 @@ proto.assistant_api.AssistantApiDeployment.deserializeBinaryFromReader = functio
     case 32:
       var value = /** @type {string} */ (reader.readUint64String());
       msg.setIdealtimeoutbackoff(value);
+      break;
+    case 33:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setGreetinginterruptible(value);
       break;
     default:
       reader.skipField();
@@ -3868,6 +4065,13 @@ proto.assistant_api.AssistantApiDeployment.serializeBinaryToWriter = function(me
   if (parseInt(f, 10) !== 0) {
     writer.writeUint64String(
       32,
+      f
+    );
+  }
+  f = /** @type {boolean} */ (jspb.Message.getField(message, 33));
+  if (f != null) {
+    writer.writeBool(
+      33,
       f
     );
   }
@@ -4217,6 +4421,42 @@ proto.assistant_api.AssistantApiDeployment.prototype.getIdealtimeoutbackoff = fu
  */
 proto.assistant_api.AssistantApiDeployment.prototype.setIdealtimeoutbackoff = function(value) {
   return jspb.Message.setProto3StringIntField(this, 32, value);
+};
+
+
+/**
+ * optional bool greetingInterruptible = 33;
+ * @return {boolean}
+ */
+proto.assistant_api.AssistantApiDeployment.prototype.getGreetinginterruptible = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 33, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.assistant_api.AssistantApiDeployment} returns this
+ */
+proto.assistant_api.AssistantApiDeployment.prototype.setGreetinginterruptible = function(value) {
+  return jspb.Message.setField(this, 33, value);
+};
+
+
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.assistant_api.AssistantApiDeployment} returns this
+ */
+proto.assistant_api.AssistantApiDeployment.prototype.clearGreetinginterruptible = function() {
+  return jspb.Message.setField(this, 33, undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.assistant_api.AssistantApiDeployment.prototype.hasGreetinginterruptible = function() {
+  return jspb.Message.getField(this, 33) != null;
 };
 
 

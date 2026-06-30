@@ -57,7 +57,7 @@ function talkInputText(messageId = "msg-1", text = "hello"): TalkInput {
   message.setCompleted(true);
 
   const input = new TalkInput();
-  input.setMessage(message);
+  input.setUser(message);
   return input;
 }
 
@@ -67,7 +67,7 @@ function talkInputAudio(messageId = "msg-a"): TalkInput {
   message.setAudio(new Uint8Array([0, 1, 2]));
 
   const input = new TalkInput();
-  input.setMessage(message);
+  input.setUser(message);
   return input;
 }
 

@@ -67,6 +67,180 @@ The SDK provides clients for the following Rapida services:
 
 AgentKit lets you host a custom voice AI agent behind the `AgentKit.Talk` bidirectional gRPC stream. The SDK handles the gRPC server, optional token authentication, optional TLS, and response/request helper methods. Your agent owns the LLM integration, tool execution, and conversation logic.
 
+### AgentKit V2
+
+AgentKit v2 creates one `Agent` instance per conversation. Application code does not need to manage concurrent streams manually; each instance gets its own `contextId`, assistant metadata, and `state`.
+
+```typescript
+import {
+  Agent,
+  AgentKitServer,
+} from '@rapidaai/nodejs';
+
+class SupportAgent extends Agent {
+  async onUser(user) {
+    this.state.history ??= [];
+    this.state.history.push({
+      role: 'user',
+      content: user.text,
+    });
+
+    await this.reply(`You said: ${user.text}`);
+  }
+
+  async onClose() {
+    console.log('conversation closed', this.contextId);
+  }
+}
+
+const server = new AgentKitServer({
+  agent: Agent.runner(SupportAgent),
+  port: 50051,
+});
+
+await server.start();
+```
+
+For multiple agents on the same server, route by assistant ID and version from the initialization packet:
+
+```typescript
+class SalesAgent extends Agent {
+  async onUser(user) {
+    await this.reply(`Sales received: ${user.text}`);
+  }
+}
+
+const server = new AgentKitServer({
+  agent: Agent.runner({
+    default: SupportAgent,
+    agents: [
+      {
+        assistantId: 'asst_support',
+        version: 'v1',
+        agent: SupportAgent,
+      },
+      {
+        assistantId: 'asst_sales',
+        version: 'v2',
+        agent: SalesAgent,
+      },
+    ],
+  }),
+  port: 50051,
+});
+```
+
+Use `createAgent` when the agent constructor needs dependencies:
+
+```typescript
+class ModelBackedSupportAgent extends Agent {
+  constructor(conversation, private readonly deps) {
+    super(conversation);
+  }
+}
+
+const server = new AgentKitServer({
+  agent: Agent.runner({
+    createAgent: (conversation, initialization) =>
+      new ModelBackedSupportAgent(conversation, {
+        assistantId: initialization.assistantId,
+        model,
+      }),
+  }),
+  port: 50051,
+});
+```
+
+`Agent` lifecycle methods are optional:
+
+- `onInitialization(initialization)`
+- `onConfiguration(configuration)`
+- `onUser(user)`
+- `onAssistant(assistant)`
+- `onInterruption(interruption)`
+- `onToolCall(toolCall)`
+- `onToolCallResult(result)`
+- `onClose()`
+- `onError(error)`
+
+Convenience methods available on every `Agent` instance:
+
+- `reply(message)`
+- `sendAssistant(message)`
+- `sendUser(message)`
+- `callTool(payload)`
+- `sendToolResult(payload)`
+- `interrupt(id?)`
+- `transfer(args?)`
+- `endConversation(args?)`
+- `error(payload)`
+- `observability(record)`
+- `log(payload)`
+- `event(payload)`
+- `metric(payload)`
+- `close()`
+
+AgentKit v2 emits automatic observability records for conversation lifecycle
+events, user-message handling duration, and errors. Disable it when needed:
+
+```typescript
+const server = new AgentKitServer({
+  agent: Agent.runner({
+    default: SupportAgent,
+    instrumentation: false,
+  }),
+  port: 50051,
+});
+```
+
+Or attach app-level scope and dimensions to automatic SDK records:
+
+```typescript
+const server = new AgentKitServer({
+  agent: Agent.runner({
+    default: SupportAgent,
+    instrumentation: {
+      scope: 'agentkit.production',
+      component: 'support-agent',
+      attributes: {
+        region: 'us-east',
+      },
+    },
+  }),
+});
+```
+
+Agents can also push explicit logs, events, and metrics:
+
+```typescript
+class SupportAgent extends Agent {
+  async onUser(user) {
+    await this.log({
+      level: 'info',
+      message: 'Handling user message',
+      attributes: {
+        messageId: user.id,
+      },
+    });
+
+    await this.event({
+      event: 'support.user_message.received',
+      attributes: {
+        messageId: user.id,
+      },
+    });
+
+    await this.metric({
+      name: 'support.user_text_length',
+      value: user.text?.length || 0,
+      description: 'Length of the incoming user text',
+    });
+
+    await this.reply('Done');
+  }
+}
+```
+
 ### Basic AgentKit Server
 
 ```typescript

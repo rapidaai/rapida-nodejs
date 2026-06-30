@@ -7569,7 +7569,8 @@ proto.AssistantConversationRecording.toObject = function(includeInstance, msg) {
   var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, "0"),
     assistantrecordingurl: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    userrecordingurl: jspb.Message.getFieldWithDefault(msg, 3, "")
+    userrecordingurl: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    conversationrecordingurl: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
   if (includeInstance) {
@@ -7618,6 +7619,10 @@ proto.AssistantConversationRecording.deserializeBinaryFromReader = function(msg,
       var value = /** @type {string} */ (reader.readString());
       msg.setUserrecordingurl(value);
       break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setConversationrecordingurl(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -7665,6 +7670,13 @@ proto.AssistantConversationRecording.serializeBinaryToWriter = function(message,
   if (f.length > 0) {
     writer.writeString(
       3,
+      f
+    );
+  }
+  f = message.getConversationrecordingurl();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
       f
     );
   }
@@ -7722,6 +7734,24 @@ proto.AssistantConversationRecording.prototype.getUserrecordingurl = function() 
  */
 proto.AssistantConversationRecording.prototype.setUserrecordingurl = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional string conversationRecordingUrl = 4;
+ * @return {string}
+ */
+proto.AssistantConversationRecording.prototype.getConversationrecordingurl = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.AssistantConversationRecording} returns this
+ */
+proto.AssistantConversationRecording.prototype.setConversationrecordingurl = function(value) {
+  return jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
