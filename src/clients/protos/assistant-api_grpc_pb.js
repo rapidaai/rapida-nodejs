@@ -407,6 +407,28 @@ function deserialize_assistant_api_GetAssistantConversationResponse(buffer_arg) 
   return assistant$api_pb.GetAssistantConversationResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_assistant_api_GetAssistantDashboardRequest(arg) {
+  if (!(arg instanceof assistant$api_pb.GetAssistantDashboardRequest)) {
+    throw new Error('Expected argument of type assistant_api.GetAssistantDashboardRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAssistantDashboardRequest(buffer_arg) {
+  return assistant$api_pb.GetAssistantDashboardRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_assistant_api_GetAssistantDashboardResponse(arg) {
+  if (!(arg instanceof assistant$api_pb.GetAssistantDashboardResponse)) {
+    throw new Error('Expected argument of type assistant_api.GetAssistantDashboardResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_assistant_api_GetAssistantDashboardResponse(buffer_arg) {
+  return assistant$api_pb.GetAssistantDashboardResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_assistant_api_GetAssistantHTTPLogRequest(arg) {
   if (!(arg instanceof assistant$http$log_pb.GetAssistantHTTPLogRequest)) {
     throw new Error('Expected argument of type assistant_api.GetAssistantHTTPLogRequest');
@@ -727,6 +749,17 @@ var AssistantServiceService = exports.AssistantServiceService = {
     requestDeserialize: deserialize_assistant_api_GetAllMessageRequest,
     responseSerialize: serialize_assistant_api_GetAllMessageResponse,
     responseDeserialize: deserialize_assistant_api_GetAllMessageResponse,
+  },
+  getAssistantDashboard: {
+    path: '/assistant_api.AssistantService/GetAssistantDashboard',
+    requestStream: false,
+    responseStream: false,
+    requestType: assistant$api_pb.GetAssistantDashboardRequest,
+    responseType: assistant$api_pb.GetAssistantDashboardResponse,
+    requestSerialize: serialize_assistant_api_GetAssistantDashboardRequest,
+    requestDeserialize: deserialize_assistant_api_GetAssistantDashboardRequest,
+    responseSerialize: serialize_assistant_api_GetAssistantDashboardResponse,
+    responseDeserialize: deserialize_assistant_api_GetAssistantDashboardResponse,
   },
   getAssistantConfiguration: {
     path: '/assistant_api.AssistantService/GetAssistantConfiguration',

@@ -24,6 +24,7 @@ interface IAssistantServiceService extends grpc.ServiceDefinition<grpc.UntypedSe
   getAllAssistantMessage: grpc.MethodDefinition<assistant_api_pb.GetAllAssistantMessageRequest, assistant_api_pb.GetAllAssistantMessageResponse>;
   getAllConversationMessage: grpc.MethodDefinition<common_pb.GetAllConversationMessageRequest, common_pb.GetAllConversationMessageResponse>;
   getAllMessage: grpc.MethodDefinition<assistant_api_pb.GetAllMessageRequest, assistant_api_pb.GetAllMessageResponse>;
+  getAssistantDashboard: grpc.MethodDefinition<assistant_api_pb.GetAssistantDashboardRequest, assistant_api_pb.GetAssistantDashboardResponse>;
   getAssistantConfiguration: grpc.MethodDefinition<assistant_api_pb.GetAssistantConfigurationRequest, assistant_api_pb.GetAssistantConfigurationResponse>;
   getAllAssistantConfiguration: grpc.MethodDefinition<assistant_api_pb.GetAllAssistantConfigurationRequest, assistant_api_pb.GetAllAssistantConfigurationResponse>;
   createAssistantConfiguration: grpc.MethodDefinition<assistant_api_pb.CreateAssistantConfigurationRequest, assistant_api_pb.GetAssistantConfigurationResponse>;
@@ -63,6 +64,7 @@ export interface IAssistantServiceServer extends grpc.UntypedServiceImplementati
   getAllAssistantMessage: grpc.handleUnaryCall<assistant_api_pb.GetAllAssistantMessageRequest, assistant_api_pb.GetAllAssistantMessageResponse>;
   getAllConversationMessage: grpc.handleUnaryCall<common_pb.GetAllConversationMessageRequest, common_pb.GetAllConversationMessageResponse>;
   getAllMessage: grpc.handleUnaryCall<assistant_api_pb.GetAllMessageRequest, assistant_api_pb.GetAllMessageResponse>;
+  getAssistantDashboard: grpc.handleUnaryCall<assistant_api_pb.GetAssistantDashboardRequest, assistant_api_pb.GetAssistantDashboardResponse>;
   getAssistantConfiguration: grpc.handleUnaryCall<assistant_api_pb.GetAssistantConfigurationRequest, assistant_api_pb.GetAssistantConfigurationResponse>;
   getAllAssistantConfiguration: grpc.handleUnaryCall<assistant_api_pb.GetAllAssistantConfigurationRequest, assistant_api_pb.GetAllAssistantConfigurationResponse>;
   createAssistantConfiguration: grpc.handleUnaryCall<assistant_api_pb.CreateAssistantConfigurationRequest, assistant_api_pb.GetAssistantConfigurationResponse>;
@@ -125,6 +127,9 @@ export class AssistantServiceClient extends grpc.Client {
   getAllMessage(argument: assistant_api_pb.GetAllMessageRequest, callback: grpc.requestCallback<assistant_api_pb.GetAllMessageResponse>): grpc.ClientUnaryCall;
   getAllMessage(argument: assistant_api_pb.GetAllMessageRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<assistant_api_pb.GetAllMessageResponse>): grpc.ClientUnaryCall;
   getAllMessage(argument: assistant_api_pb.GetAllMessageRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<assistant_api_pb.GetAllMessageResponse>): grpc.ClientUnaryCall;
+  getAssistantDashboard(argument: assistant_api_pb.GetAssistantDashboardRequest, callback: grpc.requestCallback<assistant_api_pb.GetAssistantDashboardResponse>): grpc.ClientUnaryCall;
+  getAssistantDashboard(argument: assistant_api_pb.GetAssistantDashboardRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<assistant_api_pb.GetAssistantDashboardResponse>): grpc.ClientUnaryCall;
+  getAssistantDashboard(argument: assistant_api_pb.GetAssistantDashboardRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<assistant_api_pb.GetAssistantDashboardResponse>): grpc.ClientUnaryCall;
   getAssistantConfiguration(argument: assistant_api_pb.GetAssistantConfigurationRequest, callback: grpc.requestCallback<assistant_api_pb.GetAssistantConfigurationResponse>): grpc.ClientUnaryCall;
   getAssistantConfiguration(argument: assistant_api_pb.GetAssistantConfigurationRequest, metadataOrOptions: grpc.Metadata | grpc.CallOptions | null, callback: grpc.requestCallback<assistant_api_pb.GetAssistantConfigurationResponse>): grpc.ClientUnaryCall;
   getAssistantConfiguration(argument: assistant_api_pb.GetAssistantConfigurationRequest, metadata: grpc.Metadata | null, options: grpc.CallOptions | null, callback: grpc.requestCallback<assistant_api_pb.GetAssistantConfigurationResponse>): grpc.ClientUnaryCall;

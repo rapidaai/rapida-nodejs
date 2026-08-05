@@ -5,6 +5,8 @@ import {
   AgentAssistantMessage,
   AgentConfiguration,
   AgentConversation,
+  AgentControlActions,
+  AgentControlTypes,
   AgentInitialization,
   AgentRunner,
   AgentToolCall,
@@ -258,6 +260,33 @@ describe("AgentRunner", () => {
     );
   });
 
+  it("builds control output packets", () => {
+    const block = runner.controlMessage({
+      id: "m-1",
+      action: AgentControlActions.block,
+      types: [AgentControlTypes.bargeIn, AgentControlTypes.userAudio],
+    });
+    const unblock = runner.controlMessage({
+      id: "m-1",
+      action: AgentControlActions.unblock,
+      types: [AgentControlTypes.bargeIn],
+    });
+
+    expect(block.getDataCase()).toBe(TalkOutput.DataCase.CONTROL);
+    expect(block.getControl()?.getId()).toBe("m-1");
+    expect(block.getControl()?.getAction()).toBe(AgentControlActions.block);
+    expect(block.getControl()?.getTypesList()).toEqual([
+      AgentControlTypes.bargeIn,
+      AgentControlTypes.userAudio,
+    ]);
+
+    expect(unblock.getDataCase()).toBe(TalkOutput.DataCase.CONTROL);
+    expect(unblock.getControl()?.getAction()).toBe(AgentControlActions.unblock);
+    expect(unblock.getControl()?.getTypesList()).toEqual([
+      AgentControlTypes.bargeIn,
+    ]);
+  });
+
   it("builds observability log, event and metric output packets", () => {
     const log = runner.observabilityMessage(
       runner.logRecord({
@@ -305,6 +334,35 @@ describe("AgentRunner", () => {
       "custom.latency_ms"
     );
     expect(metric.getObservability()?.getMetric()?.getValue()).toBe("42");
+  });
+
+  it("lets agents block and unblock control packet targets", async () => {
+    class ControlAgent extends Agent {
+      async onUser(user: AgentUserMessage) {
+        await this.block([AgentControlTypes.bargeIn], user.id);
+        await this.unblock([AgentControlTypes.bargeIn], user.id);
+      }
+    }
+
+    const call = new FakeAgentKitCall();
+    Agent.runner(ControlAgent).talk(call as any);
+
+    call.emit("data", inputWithInitialization());
+    call.emit("data", inputWithUser("m-control", "hold"));
+    await flushStream();
+
+    const controls = call.write.mock.calls
+      .map(([packet]) => packet as TalkOutput)
+      .filter((packet) => packet.getDataCase() === TalkOutput.DataCase.CONTROL)
+      .map((packet) => packet.getControl());
+
+    expect(controls).toHaveLength(2);
+    expect(controls[0]?.getId()).toBe("m-control");
+    expect(controls[0]?.getAction()).toBe(AgentControlActions.block);
+    expect(controls[0]?.getTypesList()).toEqual([AgentControlTypes.bargeIn]);
+    expect(controls[1]?.getId()).toBe("m-control");
+    expect(controls[1]?.getAction()).toBe(AgentControlActions.unblock);
+    expect(controls[1]?.getTypesList()).toEqual([AgentControlTypes.bargeIn]);
   });
 
   it("names transfer and end-conversation action tool calls", async () => {

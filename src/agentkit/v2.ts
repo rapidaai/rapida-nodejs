@@ -7,7 +7,11 @@ import { randomUUID } from "crypto";
 import { Timestamp } from "google-protobuf/google/protobuf/timestamp_pb";
 
 import { Error as ProtoError } from "@/rapida/clients/protos/common_pb";
-import { TalkInput, TalkOutput } from "@/rapida/clients/protos/agentkit_pb";
+import {
+  ConversationControl,
+  TalkInput,
+  TalkOutput,
+} from "@/rapida/clients/protos/agentkit_pb";
 import {
   ObservabilityEventRecord,
   ObservabilityLogRecord,
@@ -64,6 +68,27 @@ export type AgentInterruptionType =
 
 /** Generated proto enum type for tool-call action packets. */
 export type AgentToolCallAction = ToolCallActionMap[keyof ToolCallActionMap];
+
+/** Generated proto enum type for control packet actions. */
+export type AgentControlAction =
+  ConversationControl.ActionMap[keyof ConversationControl.ActionMap];
+
+/** Generated proto enum type for controlled packet targets. */
+export type AgentControlType =
+  ConversationControl.TypeMap[keyof ConversationControl.TypeMap];
+
+/** Friendly aliases for control packet actions. */
+export const AgentControlActions = {
+  block: ConversationControl.Action.CONTROL_ACTION_BLOCK,
+  unblock: ConversationControl.Action.CONTROL_ACTION_UNBLOCK,
+} as const;
+
+/** Friendly aliases for control packet targets. */
+export const AgentControlTypes = {
+  userAudio: ConversationControl.Type.CONTROL_TYPE_USER_AUDIO,
+  userText: ConversationControl.Type.CONTROL_TYPE_USER_TEXT,
+  bargeIn: ConversationControl.Type.CONTROL_TYPE_BARGE_IN,
+} as const;
 
 /** Generated proto enum type for observability records. */
 export type AgentObservabilityRecordKind =
@@ -217,6 +242,16 @@ export interface AgentToolResultPayload {
   result?: unknown;
   /** When false, `success=false` is added to the result map if not present. */
   success?: boolean;
+}
+
+/** Payload for controlling selected Rapida-side conversation packet handling. */
+export interface AgentControlPayload {
+  /** Packet/context ID. Defaults to the active user message ID in helpers. */
+  id?: string;
+  /** Control action to apply. */
+  action: AgentControlAction;
+  /** Rapida-side packet targets to block or unblock. */
+  types: AgentControlType[];
 }
 
 interface AgentToolActionPayload {
@@ -443,6 +478,29 @@ export class AgentConversation {
     return this.send(this.runner.interruptionMessage({ id }));
   }
 
+  /** Sends a raw control packet. */
+  control(payload: AgentControlPayload): Promise<void> {
+    return this.send(this.runner.controlMessage(payload));
+  }
+
+  /** Blocks selected Rapida-side packet targets. */
+  block(types: AgentControlType[], id = this.activeMessageId): Promise<void> {
+    return this.control({
+      id,
+      action: AgentControlActions.block,
+      types,
+    });
+  }
+
+  /** Unblocks selected Rapida-side packet targets. */
+  unblock(types: AgentControlType[], id = this.activeMessageId): Promise<void> {
+    return this.control({
+      id,
+      action: AgentControlActions.unblock,
+      types,
+    });
+  }
+
   /** Requests conversation transfer through the tool-call action channel. */
   transfer(
     args?: AgentStringMap | null,
@@ -611,6 +669,21 @@ export class Agent {
   /** Sends an interruption packet. */
   interrupt(id?: string): Promise<void> {
     return this.conversation.interrupt(id);
+  }
+
+  /** Sends a raw control packet. */
+  control(payload: AgentControlPayload): Promise<void> {
+    return this.conversation.control(payload);
+  }
+
+  /** Blocks selected Rapida-side packet targets. */
+  block(types: AgentControlType[], id?: string): Promise<void> {
+    return this.conversation.block(types, id);
+  }
+
+  /** Unblocks selected Rapida-side packet targets. */
+  unblock(types: AgentControlType[], id?: string): Promise<void> {
+    return this.conversation.unblock(types, id);
   }
 
   /** Requests conversation transfer. */
@@ -934,6 +1007,15 @@ export class AgentRunner<T extends Agent = Agent> {
     return this.response({ interruption });
   }
 
+  /** Builds a control output packet. */
+  controlMessage(payload: AgentControlPayload): TalkOutput {
+    const control = new ConversationControl();
+    control.setId(payload.id || "");
+    control.setAction(payload.action);
+    control.setTypesList(payload.types);
+    return this.response({ control });
+  }
+
   /** Builds a tool-call output packet. */
   toolCallMessage(payload: AgentToolCallPayload): TalkOutput {
     const toolCall = new ConversationToolCall();
@@ -1085,6 +1167,7 @@ export class AgentRunner<T extends Agent = Agent> {
     toolCallResult,
     error,
     observability,
+    control,
   }: {
     code?: number;
     success?: boolean;
@@ -1096,6 +1179,7 @@ export class AgentRunner<T extends Agent = Agent> {
     toolCallResult?: ConversationToolCallResult;
     error?: ProtoError;
     observability?: ObservabilityRecord;
+    control?: ConversationControl;
   } = {}): TalkOutput {
     const output = new TalkOutput();
     output.setCode(code);
@@ -1108,6 +1192,7 @@ export class AgentRunner<T extends Agent = Agent> {
     if (toolCallResult) output.setToolcallresult(toolCallResult);
     if (error) output.setError(error);
     if (observability) output.setObservability(observability);
+    if (control) output.setControl(control);
     return output;
   }
 
