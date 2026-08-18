@@ -262,11 +262,12 @@ export {
 /* ========================================================================== */
 /* Proto Message Exports - Assistant API                                     */
 /* ========================================================================== */
-
+export {
+  CreateAssistantProviderRequest
+} from "@/rapida/clients/protos/assistant-provider_pb";
 export {
   Assistant,
   CreateAssistantRequest,
-  CreateAssistantProviderRequest,
   CreateAssistantTagRequest,
   GetAssistantRequest,
   DeleteAssistantRequest,

@@ -254,6 +254,14 @@ export interface AgentControlPayload {
   types: AgentControlType[];
 }
 
+/** Payload for block/unblock convenience helpers. */
+export interface AgentControlOptions {
+  /** Packet/context ID. Defaults to the active user message ID in helpers. */
+  id?: string;
+  /** Rapida-side packet targets to block or unblock. */
+  types: AgentControlType[];
+}
+
 interface AgentToolActionPayload {
   id?: string;
   toolId?: string;
@@ -484,7 +492,7 @@ export class AgentConversation {
   }
 
   /** Blocks selected Rapida-side packet targets. */
-  block(types: AgentControlType[], id = this.activeMessageId): Promise<void> {
+  block({ id = this.activeMessageId, types }: AgentControlOptions): Promise<void> {
     return this.control({
       id,
       action: AgentControlActions.block,
@@ -493,7 +501,7 @@ export class AgentConversation {
   }
 
   /** Unblocks selected Rapida-side packet targets. */
-  unblock(types: AgentControlType[], id = this.activeMessageId): Promise<void> {
+  unblock({ id = this.activeMessageId, types }: AgentControlOptions): Promise<void> {
     return this.control({
       id,
       action: AgentControlActions.unblock,
@@ -677,13 +685,13 @@ export class Agent {
   }
 
   /** Blocks selected Rapida-side packet targets. */
-  block(types: AgentControlType[], id?: string): Promise<void> {
-    return this.conversation.block(types, id);
+  block(payload: AgentControlOptions): Promise<void> {
+    return this.conversation.block(payload);
   }
 
   /** Unblocks selected Rapida-side packet targets. */
-  unblock(types: AgentControlType[], id?: string): Promise<void> {
-    return this.conversation.unblock(types, id);
+  unblock(payload: AgentControlOptions): Promise<void> {
+    return this.conversation.unblock(payload);
   }
 
   /** Requests conversation transfer. */

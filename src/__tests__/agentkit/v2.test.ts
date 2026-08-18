@@ -339,8 +339,11 @@ describe("AgentRunner", () => {
   it("lets agents block and unblock control packet targets", async () => {
     class ControlAgent extends Agent {
       async onUser(user: AgentUserMessage) {
-        await this.block([AgentControlTypes.bargeIn], user.id);
-        await this.unblock([AgentControlTypes.bargeIn], user.id);
+        await this.block({ id: user.id, types: [AgentControlTypes.bargeIn] });
+        await this.unblock({
+          id: user.id,
+          types: [AgentControlTypes.bargeIn],
+        });
       }
     }
 
