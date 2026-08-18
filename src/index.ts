@@ -109,10 +109,7 @@ export {
   getClientInfo,
   WithClientContext,
 } from "@/rapida/clients/index";
-export {
-  GeneralConnect,
-  GetConnectorFiles,
-} from "@/rapida/clients/connect";
+export { GeneralConnect, GetConnectorFiles } from "@/rapida/clients/connect";
 export {
   CreateOrganization,
   UpdateOrganization,
@@ -246,10 +243,7 @@ export {
 /* Proto Message Exports - AgentKit                                           */
 /* ========================================================================== */
 
-export {
-  TalkInput,
-  TalkOutput,
-} from "@/rapida/clients/protos/agentkit_pb";
+export { TalkInput, TalkOutput } from "@/rapida/clients/protos/agentkit_pb";
 
 /* ========================================================================== */
 /* Proto Message Exports - Observability API                                  */
@@ -272,6 +266,7 @@ export {
 export {
   Assistant,
   CreateAssistantRequest,
+  CreateAssistantProviderRequest,
   CreateAssistantTagRequest,
   GetAssistantRequest,
   DeleteAssistantRequest,
